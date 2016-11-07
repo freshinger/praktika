@@ -6,7 +6,6 @@
 
 namespace AppBundle\Entity;
 
-use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -14,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @author dciecior
  */
-class User extends BaseUser{
+class User {
     protected $id;
     
     /**
