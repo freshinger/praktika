@@ -1,0 +1,31 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                    http://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
+
+      <entity name="AppBundle\Entity\Firma" table="companies">
+          <id name="id" type="integer">
+              <generator strategy="AUTO" />
+          </id>
+
+          <field name="name" type="string" />
+		  <field name="street" type="string" />
+		  <field name="city" type="string" />
+		  <field name="postcode" type="integer" />
+		  <field name="website" type="string" />
+		  <field name="description" type="string" />
+		  
+		  <many-to-many field="ansprechpartner" target-entity="Ansprechpartner">
+            <join-table name="ansprechpartner_firma">
+                <join-columns>
+                    <join-column name="firma_id" referenced-column-name="id" />
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="ansprechpartner_id" referenced-column-name="id" unique="true" />
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>
+		
+      </entity>
+</doctrine-mapping>
+

@@ -1,0 +1,22 @@
+<!-- config/xml/Product.dcm.xml -->
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                    http://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
+
+      <entity name="AppBundle\Entity\Teilnehmer" table="participant">
+          <id name="id" type="integer">
+              <generator strategy="AUTO" />
+          </id>
+
+          <field name="firstname" type="string" />
+          <field name="lastname" type="string" />
+          <field name="street" type="string" />
+          <field name="city" type="string" />
+          <field name="postcode" type="integer" />
+          <field name="phone" type="string" />
+          <one-to-one field="logindaten" target-entity="Logindaten">
+            <join-column name="logindaten_id" referenced-column-name="id" />
+          </one-to-one>
+      </entity>
+</doctrine-mapping>
