@@ -14,9 +14,9 @@ class Kontakt
     private $id;
 
     /**
-     * @var \Teilnehmer
+     * @var \User
      */
-    private $teilnehmer;
+    private $user;
 
     /**
      * @var \Ansprechpartner
@@ -40,26 +40,26 @@ class Kontakt
     }
 
     /**
-     * Set teilnehmer
+     * Set user
      *
-     * @param \Teilnehmer $teilnehmer
+     * @param \User $user
      * @return Kontakt
      */
-    public function setTeilnehmer(\Teilnehmer $teilnehmer = null)
+    public function setTeilnehmer(\User $user = null)
     {
-        $this->teilnehmer = $teilnehmer;
+        $this->user = $user;
 
         return $this;
     }
 
     /**
-     * Get teilnehmer
+     * Get user
      *
-     * @return \Teilnehmer 
+     * @return \User
      */
-    public function getTeilnehmer()
+    public function getUser()
     {
-        return $this->teilnehmer;
+        return $this->user;
     }
 
     /**

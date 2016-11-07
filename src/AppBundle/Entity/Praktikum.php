@@ -31,7 +31,7 @@ class Praktikum
     /**
      * @var \Teilnehmer
      */
-    private $teilnehmer;
+    private $user;
 
     /**
      * @var \Firma
@@ -124,21 +124,21 @@ class Praktikum
      * @param \Teilnehmer $teilnehmer
      * @return Praktikum
      */
-    public function setTeilnehmer(\Teilnehmer $teilnehmer = null)
+    public function setUser(\User $user = null)
     {
-        $this->teilnehmer = $teilnehmer;
+        $this->user = $user;
 
         return $this;
     }
 
     /**
-     * Get teilnehmer
+     * Get user
      *
-     * @return \Teilnehmer 
+     * @return \User
      */
-    public function getTeilnehmer()
+    public function getUser()
     {
-        return $this->teilnehmer;
+        return $this->user;
     }
 
     /**
