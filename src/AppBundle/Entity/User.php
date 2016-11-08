@@ -6,15 +6,15 @@
 
 namespace AppBundle\Entity;
 
-use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
-/**
- * Description of User
- *
- * @author dciecior
+ /**
+ * @ORM\Entity
+ * @UniqueEntity(fields="email", message="Email wird bereits verwendet")
  */
-class User extends BaseUser{
+class User{
     protected $id;
     
     /**
@@ -185,9 +185,14 @@ class User extends BaseUser{
         return $this->phone;
     }
     
-    public function __construct()
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
     {
-        parent::__construct();
+        return $this->id;
     }
 }
 

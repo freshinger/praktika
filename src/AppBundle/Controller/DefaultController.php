@@ -18,4 +18,26 @@ class DefaultController extends Controller
             'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
         ));
     }
+    
+    /**
+	 * @Route("/create/register", name="register")
+	 */
+	public function userAction(Request $request){
+		$user = new User();
+		$form = $this->createForm(UserType::class, $user);
+		$form->handleRequest($request);
+        
+        // Teilnehmer in die Datenbank aufnehmen
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+            
+            return $this->redirectToRoute(
+                'regLogindata',
+                array('id' => $user->getId()));
+        }
+		return $this->render('default/form/register.html.twig', array(
+            'form' => $form->createView()));
+	}
 }
