@@ -14,7 +14,11 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Entity
  * @UniqueEntity(fields="email", message="Email wird bereits verwendet")
  */
+<<<<<<< HEAD
 class User{
+=======
+class User {
+>>>>>>> f9635921131489c03a43ae02f4730b866e1db790
     protected $id;
     
     /**
