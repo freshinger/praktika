@@ -34,7 +34,7 @@ class DefaultController extends Controller
             $em->flush();
             
             return $this->redirectToRoute(
-                'regLogindata',
+                'register',
                 array('id' => $user->getId()));
         }
 		return $this->render('default/form/register.html.twig', array(
