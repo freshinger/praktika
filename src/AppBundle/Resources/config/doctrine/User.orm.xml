@@ -12,6 +12,7 @@ and open the template in the editor.
             <generator strategy="AUTO"/>
         </id>
         
+        <field name="username" type="string" unique="true" />
         <field name="email" type="string" unique="true" />
         <field name="password" type="string" />
         <field name="firstname" type="string" nullable="true" />

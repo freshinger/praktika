@@ -22,7 +22,7 @@ class DefaultController extends Controller
     }
     
     /**
-	 * @Route("/create/register", name="register")
+	 * @Route("/create/user", name="registration")
 	 */
 	public function userAction(Request $request){
 		$user = new User();
@@ -33,19 +33,35 @@ class DefaultController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 			
+			$factory = $this->get('security.encoder_factory');
+			
+			$encoder = $factory->getEncoder($user);
+			$password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
+			$user->setPassword($password);
+			/*$password = $this->get('security.password_encoder')->encodePassword($user, $user->getPassword());
+            $user->setPassword($password);*/
+			
 			/*$plainPassword = $request->request->get('_password');
 			$encoder = $this->container->get('security.password_encoder');
-			$encoded = $encoder->encodePassword($user, $plainPassword);
+			$encoded = $encoder->encodePassword($plainPassword);
 			$user->setPassword($encoded);*/
 			
             $em->persist($user);
             $em->flush();
             
             return $this->redirectToRoute(
-                'register',
+                'registration',
                 array('id' => $user->getId()));
         }
-		return $this->render('default/form/register.html.twig', array(
+		return $this->render('default/form/registration.html.twig', array(
             'form' => $form->createView()));
 	}
+	
+	/**
+     * @Route("/admin")
+     */
+    public function adminAction()
+    {
+        return new Response('<html><body>Admin page!</body></html>');
+    }
 }

@@ -4,7 +4,6 @@ security:
     encoders:
         AppBundle\Entity\User:
             algorithm: plaintext
-            #cost: 12
 
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
@@ -14,7 +13,7 @@ security:
         our_db_provider:
             entity:
                 class: AppBundle:User
-                property: email
+                property: password
                 # if you're using multiple entity managers
                 # manager_name: customer
 
@@ -38,3 +37,11 @@ security:
             
             #pattern:    ^/
             #provider: our_db_provider
+            
+        default:
+            anonymous: ~
+            http_basic: ~
+                
+    access_control:
+        # require ROLE_ADMIN for /admin*
+        - { path: ^/admin, roles: ROLE_ADMIN }

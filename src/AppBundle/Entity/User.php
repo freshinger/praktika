@@ -14,6 +14,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  /**
  * @ORM\Entity(repositoryClass="AppBundle\Entity\UserRepository")
  * @UniqueEntity(fields="email", message="Email wird bereits verwendet")
+ * @UniqueEntity(fields="username", message="Benutzername wird bereits verwendet")
  */
 class User implements UserInterface, \Serializable{
     /**
@@ -36,6 +37,12 @@ class User implements UserInterface, \Serializable{
      * @Assert\Length(max = 4096)
      */
     private $password;
+    
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     */
+    private $username;
     
     /**
      * @ORM\Column(name="is_active", type="boolean")
@@ -100,9 +107,9 @@ class User implements UserInterface, \Serializable{
      * @param string $username
      * @return User
      */
-    public function setUsername($email)
+    public function setUsername($username)
     {
-        $this->email = $email;
+        $this->username = $username;
 
         return $this;
     }
@@ -114,7 +121,7 @@ class User implements UserInterface, \Serializable{
      */
     public function getUsername()
     {
-        return $this->email;
+        return $this->username;
     }
     
     /**
