@@ -3,7 +3,7 @@
 security:
     encoders:
         AppBundle\Entity\User:
-            algorithm: plaintext
+            algorithm: bcrypt
 
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
@@ -13,7 +13,7 @@ security:
         our_db_provider:
             entity:
                 class: AppBundle:User
-                property: password
+                property: username
                 # if you're using multiple entity managers
                 # manager_name: customer
 
