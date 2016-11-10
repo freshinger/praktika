@@ -7,6 +7,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\User;
 use AppBundle\Form\UserType;
+use AppBundle\Entity\Firma;
+use AppBundle\Form\FirmaType;
 
 class DefaultController extends Controller
 {
@@ -63,5 +65,43 @@ class DefaultController extends Controller
     public function adminAction()
     {
         return new Response('<html><body>Admin page!</body></html>');
+    }
+    
+    /**
+    * @Route("/create/success/{name}", name="form_success")
+    */
+    public function successAction($name)
+    {
+
+           return $this->render('default/form/firma_success.html.twig', array(
+                   'name' => $name
+           ));
+    }
+
+    /**
+    * @Route("/create/firma", name="formfirma")
+    */
+    public function firmaAction(Request $request)
+    {
+           $firma = new Firma();
+           $form = $this->createForm('AppBundle\Form\FirmaType', $firma);
+
+           $form->handleRequest($request);
+
+           if($form->isSubmitted() && $form->isValid()){
+                   $firma = $form->getData();
+
+                   $em = $this->getDoctrine()->getManager();
+                   $em->persist($firma);
+                   $em->flush();
+
+                   return $this->redirectToRoute('form_success', array(
+                           'name' => $firma->getName()
+                   ));
+           }
+
+           return $this->render('default/form/firma.html.twig', array(
+                   'form' => $form->createView()
+           ));
     }
 }
