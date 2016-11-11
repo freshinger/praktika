@@ -40,24 +40,24 @@ class DefaultController extends Controller
 			$encoder = $factory->getEncoder($user);
 			$password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
 			$user->setPassword($password);
-			/*$password = $this->get('security.password_encoder')->encodePassword($user, $user->getPassword());
-            $user->setPassword($password);*/
-			
-			/*$plainPassword = $request->request->get('_password');
-			$encoder = $this->container->get('security.password_encoder');
-			$encoded = $encoder->encodePassword($plainPassword);
-			$user->setPassword($encoded);*/
 			
             $em->persist($user);
             $em->flush();
             
-            return $this->redirectToRoute(
-                'registration',
-                array('id' => $user->getId()));
+            return $this->redirectToRoute('reg_success',array(
+				'id' => $user->getId()));
         }
 		return $this->render('default/form/registration.html.twig', array(
             'form' => $form->createView()));
 	}
+	
+	/**
+    * @Route("/create/user/{id}", name="reg_success")
+    */
+    public function regsuccessAction($email){
+           return $this->render('default/form/registration_success.html.twig', array(
+                   'email' => $user->getEmail));
+    }
 	
 	/**
      * @Route("/admin")
@@ -70,12 +70,9 @@ class DefaultController extends Controller
     /**
     * @Route("/create/success/{name}", name="form_success")
     */
-    public function successAction($name)
-    {
-
+    public function successAction($name){
            return $this->render('default/form/firma_success.html.twig', array(
-                   'name' => $name
-           ));
+                   'name' => $name));
     }
 
     /**
@@ -96,7 +93,7 @@ class DefaultController extends Controller
                    $em->flush();
 
                    return $this->redirectToRoute('form_success', array(
-                           'name' => $firma->getName()
+						'name' => $firma->getName()
                    ));
            }
 
