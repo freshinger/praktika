@@ -9,6 +9,8 @@ use AppBundle\Entity\User;
 use AppBundle\Form\UserType;
 use AppBundle\Entity\Firma;
 use AppBundle\Form\FirmaType;
+use AppBundle\Entity\Ansprechpartner;
+use AppBundle\Form\AnsprechpartnerType;
 
 class DefaultController extends Controller
 {
@@ -68,11 +70,14 @@ class DefaultController extends Controller
     }
     
     /**
-    * @Route("/create/success/{name}", name="form_success")
+    * @Route("/create/success/firma/{name}", name="form_success")
     */
-    public function successAction($name){
+
+    public function successfirmaAction($name)
+    {
            return $this->render('default/form/firma_success.html.twig', array(
-                   'name' => $name));
+                   'name' => $name
+			));
     }
 
     /**
@@ -101,4 +106,44 @@ class DefaultController extends Controller
                    'form' => $form->createView()
            ));
     }
+    
+    /**
+    * @Route("/create/success/contact/{name}", name="contact_success")
+    */
+    public function successContactAction($name)
+    {
+
+           return $this->render('default/form/contact_success.html.twig', array(
+                   'name' => $name
+           ));
+    }
+
+    /**
+    * @Route("/create/contact", name="formcontact")
+    */
+    public function contactAction(Request $request)
+    {
+           $ansprechpartner = new Ansprechpartner();
+           $form = $this->createForm('AppBundle\Form\AnsprechpartnerType', $ansprechpartner);
+
+           $form->handleRequest($request);
+
+           if($form->isSubmitted() && $form->isValid()){
+                   $firma = $form->getData();
+
+                   $em = $this->getDoctrine()->getManager();
+                   $em->persist($firma);
+                   $em->flush();
+
+                   return $this->redirectToRoute('contact_success', array(
+                           'name' => $ansprechpartner->getPrename(). " " .
+                                $ansprechpartner->getSurname()
+                   ));
+           }
+
+           return $this->render('default/form/contact.html.twig', array(
+                   'form' => $form->createView()
+           ));
+    }
+    
 }
