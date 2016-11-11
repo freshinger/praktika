@@ -11,8 +11,12 @@ class Ansprechpartner
     /**
      * @var string
      */
-    private $name;
-
+    private $prename;
+    
+    /**
+     * @var string
+     */
+    private $surname;
     /**
      * @var string
      */
@@ -35,26 +39,49 @@ class Ansprechpartner
 
 
     /**
-     * Set name
+     * Set Prename
      *
      * @param string $name
      * @return Ansprechpartner
      */
-    public function setName($name)
+    public function setPrename($name)
     {
-        $this->name = $name;
+        $this->prename = $name;
 
         return $this;
     }
 
     /**
-     * Get name
+     * Get Prename
      *
      * @return string 
      */
-    public function getName()
+    public function getPrename()
     {
-        return $this->name;
+        return $this->prename;
+    }
+    
+    /**
+     * Set Surname
+     *
+     * @param string $name
+     * @return Ansprechpartner
+     */
+    public function setSurname($name)
+    {
+        $this->surname = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get Surname
+     *
+     * @return string 
+     */
+    public function getSurname()
+    {
+        return $this->surname;
     }
 
     /**

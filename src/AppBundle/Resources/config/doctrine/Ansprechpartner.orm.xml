@@ -9,7 +9,8 @@
               <generator strategy="AUTO" />
           </id>
 
-          <field name="name" type="string" />
+          <field name="prename" type="string" />
+          <field name="surname" type="string" />
           <field name="position" type="string" />
           <field name="phone" type="string" />
           <field name="email" type="string" />
