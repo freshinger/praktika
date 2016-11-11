@@ -28,7 +28,8 @@ class FirmaType extends AbstractType
                         // used to render a select box, check boxes or radios
                         // 'multiple' => true,
                         // 'expanded' => true,
-                        'required' => false
+                        'required' => false,
+                        'empty_data' => null
                         ))
 		;
 	}
