@@ -159,7 +159,7 @@ class Ansprechpartner
     }
 
     
-    public function setFirma(\Firma $firma)
+    public function setFirma(\Appbundle\Entity\Firma $firma)
     {
         $this->arbeitgeber = $firma;
 
