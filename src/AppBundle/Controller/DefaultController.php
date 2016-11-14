@@ -35,7 +35,7 @@ class DefaultController extends Controller
         
         // Teilnehmer in die Datenbank aufnehmen
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+			$em = $this->getDoctrine()->getManager();
 			
 			$factory = $this->get('security.encoder_factory');
 			
@@ -47,18 +47,20 @@ class DefaultController extends Controller
             $em->flush();
             
             return $this->redirectToRoute('reg_success',array(
-				'id' => $user->getId()));
+				'id' => $user->getId(),
+				'email' => $user->getEmail()));
         }
 		return $this->render('default/form/registration.html.twig', array(
-            'form' => $form->createView()));
+			'form' => $form->createView()));
 	}
 	
 	/**
-    * @Route("/create/user/{id}", name="reg_success")
+    * @Route("/create/success/user/{id}/{email}", name="reg_success")
     */
-    public function regsuccessAction($email){
+    public function regsuccessAction($id, $email){
            return $this->render('default/form/registration_success.html.twig', array(
-                   'email' => $user->getEmail));
+					'id' => $id,
+					'email' => $email));
     }
 	
 	/**

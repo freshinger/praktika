@@ -2,4 +2,7 @@
 
 {% block body %}
 	<h1>Die Firma: {{ name }} wurde erfolgreich in die Datenbank &uuml;bertragen!</h1>
+    
+    <br>Kontaktdaten <a href="{{ path('formcontact') }}">hinzufügen</a>
+    <br>Später hinzufügen und zurück zur <a href="{{ path('homepage') }}">Hauptseite</a>
 {% endblock %}
