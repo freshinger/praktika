@@ -1,14 +1,17 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <form name="createuser" action="./userAnlegen.php" method="post">
-		<label for="searchbar">Name:</label>
-		<input name="searchbar" type="text" size="50" onkeyup="checkvalue('value', this.value);"><br>
+    <form name="search" action="" method="post">
+		<label for="searchbar">Firmensuche:</label><br>
+		<input name="searchbar" type="text" size="50" onkeyup="checkvalue('value', this.value);">
+        <input name="search" type="button" value="Suchen"></input><br>
+        Suchen nach Firmenname, Telefonnumer oder Webadresse
     </form>
 {% endblock %}
 
 {% block javascripts %}
-    {% javascripts '@src/Resources/public/js/*' %}
+    {% javascripts '@AppBundle/Resources/public/js/*'
+                    '@AppBundle/Resources/public/js/searchtool.js'%}
         <script type="text/javascript" src="{{ searchtool.js }}"></script>
     {% endjavascripts %}
 {% endblock %}
