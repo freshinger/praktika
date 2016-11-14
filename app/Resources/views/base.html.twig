@@ -4,9 +4,14 @@
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
+        {% block navbar %}
+            <a href="{{ path('login') }}">Login</a>
+            <a href="{{ path('registration') }}">registrieren</a><br>
+            <a href="{{ path('formfirma') }}">Firma eintragen</a>
+            {#<a href="{{ path('formcontact') }}">Ansprechpartner eintragen</a>#}
+        {% endblock %}<br><br>
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
     </body>

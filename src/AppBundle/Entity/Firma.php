@@ -211,7 +211,7 @@ class Firma
      * @param \Ansprechpartner $ansprechpartner
      * @return Firma
      */
-    public function addAnsprechpartner(\Ansprechpartner $ansprechpartner)
+    public function addAnsprechpartner(\AppBundle\Entity\Ansprechpartner $ansprechpartner)
     {
         $this->ansprechpartner[] = $ansprechpartner;
         
@@ -223,7 +223,7 @@ class Firma
      *
      * @param \Ansprechpartner $ansprechpartner
      */
-    public function removeAnsprechpartner(\Ansprechpartner $ansprechpartner)
+    public function removeAnsprechpartner(\AppBundle\Entity\Ansprechpartner $ansprechpartner)
     {
         $this->ansprechpartner->removeElement($ansprechpartner);
     }

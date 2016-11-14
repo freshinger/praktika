@@ -64,12 +64,12 @@ class User implements UserInterface, \Serializable{
     /**
      * @var string
      */
-    private $firstname;
+    private $prename;
 
     /**
      * @var string
      */
-    private $lastname;
+    private $surname;
 
     /**
      * @var string
@@ -195,49 +195,49 @@ class User implements UserInterface, \Serializable{
     
 
     /**
-     * Set firstname
+     * Set prename
      *
-     * @param string $firstname
+     * @param string $prename
      * @return User
      */
-    public function setFirstname($firstname)
+    public function setPrename($prename)
     {
-        $this->firstname = $firstname;
+        $this->prename = $prename;
 
         return $this;
     }
 
     /**
-     * Get firstname
+     * Get prename
      *
      * @return string 
      */
-    public function getFirstname()
+    public function getPrename()
     {
-        return $this->firstname;
+        return $this->prename;
     }
 
     /**
-     * Set lastname
+     * Set surname
      *
-     * @param string $lastname
+     * @param string $surname
      * @return User
      */
-    public function setLastname($lastname)
+    public function setSurname($surname)
     {
-        $this->lastname = $lastname;
+        $this->surname = $surname;
 
         return $this;
     }
 
     /**
-     * Get lastname
+     * Get surname
      *
      * @return string 
      */
-    public function getLastname()
+    public function getSurname()
     {
-        return $this->lastname;
+        return $this->surname;
     }
 
     /**

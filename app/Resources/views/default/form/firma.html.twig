@@ -1,41 +1,58 @@
 {% extends 'base.html.twig' %}
-
+{% block stylesheets %}
+<style>
+label {
+  width: 100px;
+  display: inline-block;
+  border-bottom: solid 1px;
+}
+li {
+  
+  list-style-type: none;
+}
+</style>
+{% endblock %}
 {% block body %}
     <h2>Erstelle einen neuen Firmeneintrag</h2>    
     {{ form_start(form) }}
     <fieldset>
         <legend>Bitte Firmendaten eingeben</legend>
-        <ul>
-            <li>
-                {{ form_label(form.name, 'Firmenname') }}: {{ form_widget(form.name) }}
-                {{ form_errors(form.name) }}
-            </li>
-            <li>
-                {{ form_label(form.street, 'Strasse') }}: {{ form_widget(form.street) }}
-                {{ form_errors(form.street) }}
-            </li>
-            <li>
-                {{ form_label(form.city, 'Stadt') }}: {{ form_widget(form.city) }}
-                {{ form_errors(form.city) }}
-            </li>
-            <li>
-                {{ form_label(form.postcode, 'PLZ') }}: {{ form_widget(form.postcode) }}
-                {{ form_errors(form.postcode) }}
-            </li>
-            <li>
-                {{ form_label(form.website, 'Website') }}: {{ form_widget(form.website) }}
-                {{ form_errors(form.website) }}
-            </li>
-            <li>
-                {{ form_label(form.description, 'Beschreibung') }}: {{ form_widget(form.description) }}
-                {{ form_errors(form.description) }}
-            </li>
-            <li>
-                {{ form_label(form.ansprechpartner, 'Ansprechpartner') }}: {{ form_widget(form.ansprechpartner) }}
-                {{ form_errors(form.ansprechpartner) }}
-            </li>
-        </ul>
+        <table>
+            <tr>
+                <td>{{ form_label(form.name, 'Firmenname') }}</td>
+                <td>{{ form_widget(form.name) }}</td>
+                <td>{{ form_errors(form.name) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.street, 'Strasse') }}</td>
+                <td>{{ form_widget(form.street) }}</td>
+                <td>{{ form_errors(form.street) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.city, 'Stadt') }}</td>
+                <td>{{ form_widget(form.city) }}</td>
+                <td>{{ form_errors(form.city) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.postcode, 'PLZ') }}</td>
+                <td>{{ form_widget(form.postcode) }}</td>
+                <td>{{ form_errors(form.postcode) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.website, 'Website') }}</td>
+                <td>{{ form_widget(form.website) }}</td>
+                <td>{{ form_errors(form.website) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.description, 'Beschreibung') }}</td>
+                <td>{{ form_widget(form.description) }}</td>
+                <td>{{ form_errors(form.description) }}</td>
+            </tr>
+        </table>
         <input type="submit" value="erstelle Firma">
     </fieldset>
+    {{ form_errors(form) }}
     {{ form_end(form) }}
+    
+    <br>Zurück zur <a href="{{ path('homepage') }}">Hauptseite</a>
 {% endblock %}

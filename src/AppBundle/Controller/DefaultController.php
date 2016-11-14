@@ -35,31 +35,33 @@ class DefaultController extends Controller
         
         // Teilnehmer in die Datenbank aufnehmen
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+			$em = $this->getDoctrine()->getManager();
 			
 			$factory = $this->get('security.encoder_factory');
 			
 			$encoder = $factory->getEncoder($user);
 			$password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
 			$user->setPassword($password);
-			/*$password = $this->get('security.password_encoder')->encodePassword($user, $user->getPassword());
-            $user->setPassword($password);*/
-			
-			/*$plainPassword = $request->request->get('_password');
-			$encoder = $this->container->get('security.password_encoder');
-			$encoded = $encoder->encodePassword($plainPassword);
-			$user->setPassword($encoded);*/
 			
             $em->persist($user);
             $em->flush();
             
-            return $this->redirectToRoute(
-                'registration',
-                array('id' => $user->getId()));
+            return $this->redirectToRoute('reg_success',array(
+				'id' => $user->getId(),
+				'email' => $user->getEmail()));
         }
 		return $this->render('default/form/registration.html.twig', array(
-            'form' => $form->createView()));
+			'form' => $form->createView()));
 	}
+	
+	/**
+    * @Route("/create/success/user/{id}/{email}", name="reg_success")
+    */
+    public function regsuccessAction($id, $email){
+           return $this->render('default/form/registration_success.html.twig', array(
+					'id' => $id,
+					'email' => $email));
+    }
 	
 	/**
      * @Route("/admin")
@@ -70,14 +72,15 @@ class DefaultController extends Controller
     }
     
     /**
-    * @Route("/create/success/firma/{name}", name="form_success")
+    * @Route("/create/success/firma/{name}/{id}", name="form_success")
     */
-    public function successfirmaAction($name)
-    {
 
+    public function successfirmaAction($name, $id)
+    {
            return $this->render('default/form/firma_success.html.twig', array(
-                   'name' => $name
-           ));
+                   'name' => $name,
+                   'id' => $id
+			));
     }
 
     /**
@@ -98,7 +101,8 @@ class DefaultController extends Controller
                    $em->flush();
 
                    return $this->redirectToRoute('form_success', array(
-                           'name' => $firma->getName()
+						'name' => $firma->getName(),
+                                                'id' => $firma->getId()
                    ));
            }
 
@@ -119,9 +123,9 @@ class DefaultController extends Controller
     }
 
     /**
-    * @Route("/create/contact", name="formcontact")
+    * @Route("/create/contact/for/{id}", name="formcontact")
     */
-    public function contactAction(Request $request)
+    public function contactAction(Request $request, $id)
     {
            $ansprechpartner = new Ansprechpartner();
            $form = $this->createForm('AppBundle\Form\AnsprechpartnerType', $ansprechpartner);
@@ -129,10 +133,12 @@ class DefaultController extends Controller
            $form->handleRequest($request);
 
            if($form->isSubmitted() && $form->isValid()){
-                   $firma = $form->getData();
-
+                   $firma = $this->getDoctrine()
+                           ->getRepository('AppBundle:Firma')
+                           ->find($id);
+                   $ansprechpartner->setFirma($firma);
                    $em = $this->getDoctrine()->getManager();
-                   $em->persist($firma);
+                   $em->persist($ansprechpartner);
                    $em->flush();
 
                    return $this->redirectToRoute('contact_success', array(

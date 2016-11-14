@@ -1,8 +1,53 @@
 {% extends 'base.html.twig' %}
-
+{% block stylesheets %}
+<style>
+label {
+  width: 100px;
+  display: inline-block;
+  border-bottom: solid 1px;
+}
+li {
+  
+  list-style-type: none;
+}
+</style>
+{% endblock %}
 {% block body %}
+    <h2>Trage einen neuen Ansprechpartner ein</h2> 
     {{ form_start(form) }}
-    {{ form_widget(form) }}
+    <fieldset>
+        <legend>Bitte Daten vom Ansprechpartner eingeben</legend>
+        <table>
+            <tr>
+                <td>{{ form_label(form.prename, 'Vorname') }}</td>
+                <td>{{ form_widget(form.prename) }}</td>
+                <td>{{ form_errors(form.prename) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.surname, 'Nachname') }}</td>
+                <td>{{ form_widget(form.surname) }}</td>
+                <td>{{ form_errors(form.surname) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.position, 'Position') }}</td>
+                <td>{{ form_widget(form.position) }}</td>
+                <td>{{ form_errors(form.position) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.phone, 'Telefon') }}</td>
+                <td>{{ form_widget(form.phone) }}</td>
+                <td>{{ form_errors(form.phone) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.email, 'E-Mail') }}</td>
+                <td>{{ form_widget(form.email) }}</td>
+                <td>{{ form_errors(form.email) }}</td>
+            </tr>
+        </table>
     <input type="submit" value="erstelle Ansprechpartner">
+    </fieldset>
+    {{ form_errors(form) }}
     {{ form_end(form) }}
+    
+    <br>Zurück zur <a href="{{ path('homepage') }}">Hauptseite</a>
 {% endblock %}
