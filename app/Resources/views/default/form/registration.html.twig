@@ -17,24 +17,28 @@ li {
     {{ form_start(form) }}
     <fieldset>
         <legend>Bitte geben Sie Ihre Daten ein</legend>
-        <ul>
-            <li>
-                {{ form_label(form.username, 'Benutzername') }}: {{ form_widget(form.username) }}
-                {{ form_errors(form.username) }}
-            </li>
-            <li>
-                {{ form_label(form.email, 'E-Mail') }}: {{ form_widget(form.email) }}
-                {{ form_errors(form.email) }}
-            </li>
-            <li>
-                {{ form_label(form.password.first) }}: {{ form_widget(form.password.first) }}
-                {{ form_errors(form.password.first) }}
-            </li>
-            <li>
-                {{ form_label(form.password.second) }}: {{ form_widget(form.password.second) }}
-                {{ form_errors(form.password.second) }}
-            </li>
-        </ul>
+        <table>
+            <tr>
+                <td>{{ form_label(form.username, 'Benutzername') }}</td>
+                <td>{{ form_widget(form.username) }}</td>
+                <td>{{ form_errors(form.username) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.email, 'E-Mail') }}</td>
+                <td>{{ form_widget(form.email) }}</td>
+                <td>{{ form_errors(form.email) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.password.first) }}</td>
+                <td>{{ form_widget(form.password.first) }}</td>
+                <td>{{ form_errors(form.password.first) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.password.second) }}</td>
+                <td>{{ form_widget(form.password.second) }}</td>
+                <td>{{ form_errors(form.password.second) }}</td>
+            </tr>
+        </table>
     <input type="submit" value="registrieren">
     </fieldset>
     {{ form_errors(form) }}
