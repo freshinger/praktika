@@ -14,8 +14,8 @@
           <field name="position" type="string" />
           <field name="phone" type="string" />
           <field name="email" type="string" />
-          <many-to-one field="arbeitgeber" target-entity="Firma" inversed-by="ansprechpartner">
-            <join-column name="arbeitgeber_id" referenced-column-name="id" />
+          <many-to-one field="firma" target-entity="Firma" inversed-by="ansprechpartner">
+            <join-column name="company_id" referenced-column-name="id" />
           </many-to-one>
       </entity>
 </doctrine-mapping>

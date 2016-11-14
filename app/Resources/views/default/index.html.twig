@@ -12,7 +12,7 @@
 {% block javascripts %}
     {% javascripts '@AppBundle/Resources/public/js/*'
                     '@AppBundle/Resources/public/js/searchtool.js'%}
-        <script type="text/javascript" src="{{ searchtool.js }}"></script>
+        <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
 {% endblock %}
 

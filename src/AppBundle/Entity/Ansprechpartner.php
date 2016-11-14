@@ -40,7 +40,7 @@ class Ansprechpartner
     /**
      * @var Firma
      */
-    private $arbeitgeber;
+    private $firma;
 
 
     /**
@@ -161,7 +161,7 @@ class Ansprechpartner
     
     public function setFirma(\Appbundle\Entity\Firma $firma)
     {
-        $this->arbeitgeber = $firma;
+        $this->firma = $firma;
 
         return $this;
     }
@@ -169,7 +169,7 @@ class Ansprechpartner
     
     public function getFirma()
     {
-        return $this->arbeitgeber;
+        return $this->firma;
     }
     
     /**

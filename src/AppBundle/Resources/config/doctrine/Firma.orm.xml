@@ -15,7 +15,7 @@
 		  <field name="website" type="string" />
 		  <field name="description" type="string" />
 	
-            <one-to-many field="ansprechpartner" target-entity="Ansprechpartner" mapped-by="arbeitgeber"/>
+            <one-to-many field="ansprechpartner" target-entity="Ansprechpartner" mapped-by="firma"/>
             
       </entity>
 </doctrine-mapping>
