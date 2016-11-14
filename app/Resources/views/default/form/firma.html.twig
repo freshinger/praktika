@@ -1,5 +1,17 @@
 {% extends 'base.html.twig' %}
-
+{% block stylesheets %}
+<style>
+label {
+  width: 100px;
+  display: inline-block;
+  border-bottom: solid 1px;
+}
+li {
+  
+  list-style-type: none;
+}
+</style>
+{% endblock %}
 {% block body %}
     <h2>Erstelle einen neuen Firmeneintrag</h2>    
     {{ form_start(form) }}
@@ -30,13 +42,10 @@
                 {{ form_label(form.description, 'Beschreibung') }}: {{ form_widget(form.description) }}
                 {{ form_errors(form.description) }}
             </li>
-            <li>
-                {{ form_label(form.ansprechpartner, 'Ansprechpartner') }}: {{ form_widget(form.ansprechpartner) }}
-                {{ form_errors(form.ansprechpartner) }}
-            </li>
         </ul>
         <input type="submit" value="erstelle Firma">
     </fieldset>
+    {{ form_errors(form) }}
     {{ form_end(form) }}
     
     <br>Zurück zur <a href="{{ path('homepage') }}">Hauptseite</a>
