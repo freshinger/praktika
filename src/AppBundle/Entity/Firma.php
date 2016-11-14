@@ -2,6 +2,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Firma
@@ -53,7 +54,7 @@ class Firma
      */
     public function __construct()
     {
-        $this->ansprechpartner = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->ansprechpartner = new ArrayCollection();
     }
 
     /**
@@ -213,7 +214,7 @@ class Firma
     public function addAnsprechpartner(\Ansprechpartner $ansprechpartner)
     {
         $this->ansprechpartner[] = $ansprechpartner;
-
+        
         return $this;
     }
 
