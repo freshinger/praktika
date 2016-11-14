@@ -8,7 +8,9 @@
 {% endblock %}
 
 {% block javascripts %}
-    src="{{ asset('js/searchtool.js') }}"
+    {% javascripts '@src/Resources/public/js/*' %}
+        <script type="text/javascript" src="{{ searchtool.js }}"></script>
+    {% endjavascripts %}
 {% endblock %}
 
 {% block stylesheets %}
