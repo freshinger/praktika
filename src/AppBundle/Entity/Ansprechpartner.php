@@ -37,6 +37,11 @@ class Ansprechpartner
      */
     private $id;
 
+    /**
+     * @var Firma
+     */
+    private $arbeitgeber;
+
 
     /**
      * Set Prename
@@ -153,6 +158,20 @@ class Ansprechpartner
         return $this->email;
     }
 
+    
+    public function setFirma(\Firma $firma)
+    {
+        $this->arbeitgeber = $firma;
+
+        return $this;
+    }
+
+    
+    public function getFirma()
+    {
+        return $this->arbeitgeber;
+    }
+    
     /**
      * Get id
      *
