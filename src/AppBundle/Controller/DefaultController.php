@@ -72,13 +72,14 @@ class DefaultController extends Controller
     }
     
     /**
-    * @Route("/create/success/firma/{name}", name="form_success")
+    * @Route("/create/success/firma/{name}/{id}", name="form_success")
     */
 
-    public function successfirmaAction($name)
+    public function successfirmaAction($name, $id)
     {
            return $this->render('default/form/firma_success.html.twig', array(
-                   'name' => $name
+                   'name' => $name,
+                   'id' => $id
 			));
     }
 
@@ -100,7 +101,8 @@ class DefaultController extends Controller
                    $em->flush();
 
                    return $this->redirectToRoute('form_success', array(
-						'name' => $firma->getName()
+						'name' => $firma->getName(),
+                                                'id' => $firma->getId()
                    ));
            }
 
@@ -121,9 +123,9 @@ class DefaultController extends Controller
     }
 
     /**
-    * @Route("/create/contact", name="formcontact")
+    * @Route("/create/contact/for/{id}", name="formcontact")
     */
-    public function contactAction(Request $request)
+    public function contactAction(Request $request, $id)
     {
            $ansprechpartner = new Ansprechpartner();
            $form = $this->createForm('AppBundle\Form\AnsprechpartnerType', $ansprechpartner);
@@ -131,10 +133,12 @@ class DefaultController extends Controller
            $form->handleRequest($request);
 
            if($form->isSubmitted() && $form->isValid()){
-                   $firma = $form->getData();
-
+                   $firma = $this->getDoctrine()
+                           ->getRepository('AppBundle:Firma')
+                           ->find($id);
+                   $ansprechpartner->setFirma($firma);
                    $em = $this->getDoctrine()->getManager();
-                   $em->persist($firma);
+                   $em->persist($ansprechpartner);
                    $em->flush();
 
                    return $this->redirectToRoute('contact_success', array(
