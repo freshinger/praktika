@@ -26,6 +26,19 @@ class DefaultController extends Controller
     }
     
     /**
+     * @Route("/edit/user/{id}", name="edituser")
+     */
+    public function editUserAction(Request $request, $id)
+    {
+        $user = $this->getDoctrine()
+                           ->getRepository('AppBundle:User')
+                           ->find($id);
+        return $this->render('default/user/edit.html.twig', array(
+            'user' => $user,
+        ));
+    }
+    
+    /**
 	 * @Route("/create/user", name="registration")
 	 */
 	public function userAction(Request $request){
