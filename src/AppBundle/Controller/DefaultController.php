@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\User;
@@ -26,15 +27,36 @@ class DefaultController extends Controller
     }
     
     /**
-     * @Route("/edit/user/{id}", name="edituser")
+     * @Route("/edit/user", name="edituser")
+     * @Security("has_role('ROLE_USER')")
      */
-    public function editUserAction(Request $request, $id)
+    public function editUserAction(Request $request)
     {
+        $uid = $this->get('security.token_storage')->getToken()->getUser()->getId();
         $user = $this->getDoctrine()
                            ->getRepository('AppBundle:User')
-                           ->find($id);
-        return $this->render('default/user/edit.html.twig', array(
+                           ->find($uid);
+        $form = $this->createForm("AppBundle\Form\ProfilType", $user);
+	$form->handleRequest($request);
+        
+        // Teilnehmer in die Datenbank aufnehmen
+        if ($form->isSubmitted() && $form->isValid()) {
+			$em = $this->getDoctrine()->getManager();
+			
+			//$factory = $this->get('security.encoder_factory');
+			
+			//$encoder = $factory->getEncoder($user);
+			//$password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
+			//$user->setPassword($password);
+			
+            $em->persist($user);
+            $em->flush();
+            
+        }
+        
+        return $this->render('edit/user.html.twig', array(
             'user' => $user,
+            'form' => $form->createView()
         ));
     }
     
