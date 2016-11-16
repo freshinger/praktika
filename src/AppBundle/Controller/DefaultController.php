@@ -277,6 +277,25 @@ class DefaultController extends Controller
     }
     
     /**
+     * @Route("/delete/contact/{id}", name="deletecontact")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function deleteContactAction(Request $request, $id)
+    {
+        $ansprechpartner = $this->getDoctrine()
+                           ->getRepository('AppBundle:Ansprechpartner')
+                           ->find($id);
+        $name = $ansprechpartner->getSurname();
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($ansprechpartner);
+        $em->flush();
+        $msg = "Der Ansprechpartner: " . $name . " wurde erfolgreich gelöscht!";
+        return $this->render('default/confirm.html.twig', array(
+            'message' => $msg
+        ));
+    }
+    
+    /**
     * @Route("/create/success/contact/{name}", name="contact_success")
     */
     public function successContactAction($name)
@@ -317,4 +336,43 @@ class DefaultController extends Controller
            ));
     }
     
+    /**
+     * @Route("/edit/contact/{id}", name="editcontact")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function editContactAction(Request $request, $id)
+    {
+        
+        $ansprechpartner = $this->getDoctrine()
+                           ->getRepository('AppBundle:Ansprechpartner')
+                           ->find($id);
+        $form = $this->createForm("AppBundle\Form\AnsprechpartnerType", $ansprechpartner);
+	$form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+		
+            $em->persist($ansprechpartner);
+            $em->flush();
+            
+            if ($request->request->has('delete'))
+            {
+                return $this->redirectToRoute('deletecontact', array(
+                    'id' => $id
+                ));
+            }
+            
+            return $this->redirectToRoute('editcontact', array(
+                'id' => $id,
+                'message' => "Daten wurden erfolgreich gespeichert!",
+            ));
+            
+        }
+        
+        return $this->render('default/form/contact.html.twig', array(
+            'ansprechpartner' => $ansprechpartner,
+            'form' => $form->createView(),
+            'message' => $request->query->get('message') 
+        ));
+    }
 }

@@ -15,7 +15,11 @@
 		  <field name="website" type="string" />
 		  <field name="description" type="string" />
 	
-            <one-to-many field="ansprechpartner" target-entity="Ansprechpartner" mapped-by="firma"/>
+            <one-to-many field="ansprechpartner" target-entity="Ansprechpartner" mapped-by="firma" cascade="remove">
+                <cascade>
+                    <cascade-remove/>
+                </cascade>    
+            </one-to-many>
             
       </entity>
 </doctrine-mapping>
