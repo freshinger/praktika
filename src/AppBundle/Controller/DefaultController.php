@@ -20,7 +20,7 @@ class DefaultController extends Controller
      * @Route("/", name="homepage")
      */
     public function indexAction(Request $request)
-    {		
+    {
 		$defaultData = array('message' => 'Type your message here');
 		$form = $this->createFormBuilder($defaultData)
 				->add('searchbar', "Symfony\Component\Form\Extension\Core\Type\TextType")
@@ -32,8 +32,13 @@ class DefaultController extends Controller
 			// data is an array with "name", "email", and "message" keys
 			$value = $form->getData();
 			$repository = $this->getDoctrine()->getRepository('AppBundle:Firma');
-			$firma = $repository->findByName($value);
-			return $this->render('default/index.html.twig', array('firma' => $firma, 'form' => $form->createView()));
+			$query = $repository->createQueryBuilder('f')
+								->where('f.name = :value')
+								->setParameter('value', $value)
+								->orderBy('f.name', 'ASC')
+								->getQuery();
+			$firma = $query->getResult();
+			return $this->render('default/index.html.twig', array('firmen' => $firma, 'form' => $form->createView()));
 		}
         // replace this example code with whatever you need
         return $this->render('default/index.html.twig', array(
@@ -177,7 +182,7 @@ class DefaultController extends Controller
     }
     
     /**
-     * @Route("/edit/user/{id}", name="editfirma")
+     * @Route("/edit/firma/{id}", name="editfirma")
      * @Security("has_role('ROLE_USER')")
      */
     public function editFirmaAction(Request $request, $id)

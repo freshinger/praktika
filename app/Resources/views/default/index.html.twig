@@ -14,13 +14,10 @@
     <input type="submit" />
     {{ form_end(form) }}
     <div id="results">
-        {% if firma is defined %}
-            {{ firma.name }}
-            {{ firma.street }}
-            {{ firma.city }}
-            {{ firma.postcode }}
-            {{ firma.website }}
-            {{ firma.description }}
+        {% if firmen is defined %}
+            {% for firma in firmen %}
+                <a href="{{ path('editfirma', {'id': firma.id}) }}">{{ firma.name }}</a><br>
+            {% endfor %}
         {% endif %}
     </div>
 {% endblock %}
