@@ -45,8 +45,8 @@ class DefaultController extends Controller
 				$query = $repository->createQueryBuilder('f')
 									->where('f.name LIKE :value')
 									->orWhere('f.website LIKE :value')
-									//->orWhere('a.phone LIKE :Value')
-									//->andWhere('a.id = f.id')
+									//->orWhere('a.phone LIKE :value')
+									//->andWhere('a.company_id = f.id')
 									->setParameter('value', '%'.$value['searchbar'].'%')
 									->orderBy('f.name', 'ASC')
 									->getQuery();
