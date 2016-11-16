@@ -7,16 +7,20 @@
 		<input name="searchbar" id="searchbar" type="text" size="50">
         <input name="searchbutton" id="searchbutton" type="submit" value="Suchen" onclick="compsearchAction('value', document.getElementById('searchbar').value;)"></input><br>
         Suchen nach Firmenname, Telefonnumer oder Webadresse(www.beispiel.de)
-
-		<input name="searchbar" type="text" size="50" onkeyup="checkvalue('value', this.value);">
-        <input name="search" type="button" value="Suchen"></input><br>
-        Suchen nach Firmenname, Telefonnummer oder Webadresse
-
     </form>
-    
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+
+    <input type="submit" />
+    {{ form_end(form) }}
     <div id="results">
         {% if firma is defined %}
-            {{ firma }}
+            {{ firma.name }}
+            {{ firma.street }}
+            {{ firma.city }}
+            {{ firma.postcode }}
+            {{ firma.website }}
+            {{ firma.description }}
         {% endif %}
     </div>
 {% endblock %}
