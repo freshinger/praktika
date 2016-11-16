@@ -2,6 +2,9 @@
 
 {% block body %}
 <h2>{{ firma.name }}</h2>
+    {% if message is defined %}
+    {{ message }}
+    {% endif %}
     {{ form_start(form) }}
     <fieldset>
         <legend>Bitte geben Sie die Firmendaten ein</legend>
@@ -44,9 +47,12 @@
         <input type="submit" name="delete" id="delete" value="löschen">
     </fieldset>  
     {{ form_errors(form) }}
-    {% if message is defined %}
-    {{ message }}
-    {% endif %}
     {{ form_end(form) }}
+    <h3>Ansprechpartner</h3>
+    {% if firma.ansprechpartner is defined %}
+        {% for ansprechpartner in firma.ansprechpartner %}
+            {{ ansprechpartner.surname }}
+        {% endfor %}
+    {% endif %}
     <br>Zurück zur <a href="{{ path('homepage') }}">Hauptseite</a>
 {% endblock %}
