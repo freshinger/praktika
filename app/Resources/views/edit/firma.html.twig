@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h2>{{ firma.name }}</h2>
+    {{ form_start(form) }}
+    <fieldset>
+        <legend>Bitte geben Sie die Firmendaten ein</legend>
+        <table>
+            <tr>
+                <td>{{ form_label(form.name, 'Firmenname') }}</td>
+                <td>{{ form_widget(form.name) }}</td>
+                <td>{{ form_errors(form.name) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.street, 'Strasse und Hausnummer') }}</td>
+                <td>{{ form_widget(form.street) }}</td>
+                <td>{{ form_errors(form.street) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.postcode, 'PLZ') }}</td>
+                <td>{{ form_widget(form.postcode) }}</td>
+                <td>{{ form_errors(form.postcode) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.city, 'Stadt') }}</td>
+                <td>{{ form_widget(form.city) }}</td>
+                <td>{{ form_errors(form.city) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.website, 'Website') }}</td>
+                <td>{{ form_widget(form.website) }}</td>
+                <td>{{ form_errors(form.website) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.description, 'Beschreibung') }}</td>
+                <td>{{ form_widget(form.description) }}</td>
+                <td>{{ form_errors(form.description) }}</td>
+            </tr>
+        </table>
+    <input type="submit" value="speichern">
+    </fieldset>
+    <fieldset>
+        <legend>ACHTUNG!</legend>
+        <input type="submit" name="delete" id="delete" value="löschen">
+    </fieldset>  
+    {{ form_errors(form) }}
+    {% if message is defined %}
+    {{ message }}
+    {% endif %}
+    {{ form_end(form) }}
+    <br>Zurück zur <a href="{{ path('homepage') }}">Hauptseite</a>
+{% endblock %}
