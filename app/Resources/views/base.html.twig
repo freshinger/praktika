@@ -7,10 +7,17 @@
     </head>
     <body>
         {% block navbar %}
-            <a href="{{ path('login') }}">Login</a>
-            <a href="{{ path('registration') }}">registrieren</a><br>
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <a href="{{ path('edituser') }}">{{ app.user.username }}</a>
+                <a href="{{ path('logout') }}">Logout</a>
+            {% else %}
+                <a href="{{ path('login') }}">Login</a>
+                <a href="{{ path('registration') }}">registrieren</a><br>
+            {% endif %}
+            {% if is_granted('ROLE_ADMIN') %}
             <a href="{{ path('formfirma') }}">Firma eintragen</a>
             {#<a href="{{ path('formcontact') }}">Ansprechpartner eintragen</a>#}
+            {% endif %}
         {% endblock %}<br><br>
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}

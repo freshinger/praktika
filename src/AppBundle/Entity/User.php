@@ -48,13 +48,6 @@ class User implements UserInterface, \Serializable{
      * @ORM\Column(name="is_active", type="boolean")
      */
     private $isActive;
-    
-    public function __construct()
-    {
-        $this->isActive = true;
-        // may not be needed, see section on salt below
-        // $this->salt = md5(uniqid(null, true));
-    }
 
     /**
      * @var boolean
@@ -90,6 +83,20 @@ class User implements UserInterface, \Serializable{
      * @var string
      */
     private $phone;
+    
+    /**
+     * @var string
+     */
+    private $role;
+    
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->isActive = true;
+        $this->role = 'ROLE_USER';
+    }
     
     /**
      * Get id

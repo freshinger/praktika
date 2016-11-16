@@ -3,9 +3,15 @@
 {% block body %}
     <form name="search" action="" method="post">
 		<label for="searchbar">Firmensuche:</label><br>
+
 		<input name="searchbar" id="searchbar" type="text" size="50">
         <input name="searchbutton" id="searchbutton" type="submit" value="Suchen" onclick="compsearchAction('value', document.getElementById('searchbar').value;)"></input><br>
         Suchen nach Firmenname, Telefonnumer oder Webadresse(www.beispiel.de)
+
+		<input name="searchbar" type="text" size="50" onkeyup="checkvalue('value', this.value);">
+        <input name="search" type="button" value="Suchen"></input><br>
+        Suchen nach Firmenname, Telefonnummer oder Webadresse
+
     </form>
     
     <div id="results">
