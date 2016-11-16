@@ -33,16 +33,31 @@ class DefaultController extends Controller
 		$form->handleRequest($request);
 		
 		if ($form->isSubmitted() && $form->isValid()) {
-			// data is an array with "name", "email", and "message" keys
 			$value = $form->getData();
-			$repository = $this->getDoctrine()->getRepository('AppBundle:Firma');
-			$query = $repository->createQueryBuilder('f')
-								->where('f.name = :value')
-								->setParameter('value', $value['searchbar'])
-								->orderBy('f.name', 'ASC')
-								->getQuery();
-			$firma = $query->getResult();
-			return $this->render('default/index.html.twig', array('firmen' => $firma, 'form' => $form->createView()));
+			/*$em = $this->getDoctrine()->getManager();
+			$query = $em->createQuery(
+				'SELECT f
+				FROM AppBundle:Firma f, AppBundle:Ansprechpartner a
+				WHERE f.name LIKE :value
+				OR f.website LIKE :value
+				OR (a.phone LIKE :value AND a.id = f.id)
+				ORDER BY f.name ASC'
+			)->setParameter('value', '%'.$value['searchbar'].'%');
+			$firma = $query->getResult();*/
+			
+				$repository = $this->getDoctrine()->getRepository('AppBundle:Firma');
+				$query = $repository->createQueryBuilder('f')
+									->where('f.name LIKE :value')
+									->orWhere('f.website LIKE :value')
+									//->orWhere('a.phone LIKE :value')
+									//->andWhere('a.company_id = f.id')
+									->setParameter('value', '%'.$value['searchbar'].'%')
+									->orderBy('f.name', 'ASC')
+									->getQuery();
+				$firma = $query->getResult();
+				if (!empty($firma)){
+					return $this->render('default/index.html.twig', array('firmen' => $firma, 'form' => $form->createView()));
+				}
 		}
         // replace this example code with whatever you need
         return $this->render('default/index.html.twig', array(

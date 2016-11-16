@@ -1,18 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <form name="search" action="" method="post">
-		<label for="searchbar">Firmensuche:</label><br>
-
-		<input name="searchbar" id="searchbar" type="text" size="50">
-        <input name="searchbutton" id="searchbutton" type="submit" value="Suchen" onclick="compsearchAction('value', document.getElementById('searchbar').value;)"></input><br>
-        Suchen nach Firmenname, Telefonnumer oder Webadresse(www.beispiel.de)
-    </form>
     {{ form_start(form) }}
+    {{ form_label(form.searchbar, 'Firmensuche (Suchen nach Firmenname, Telefonnumer oder Webadresse(www.beispiel.de)') }}
     {{ form_widget(form) }}
-
     <input type="submit" />
     {{ form_end(form) }}
+    <br>
     <div id="results">
         {% if firmen is defined %}
             {% for firma in firmen %}
