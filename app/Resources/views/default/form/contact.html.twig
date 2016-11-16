@@ -13,7 +13,7 @@ li {
 </style>
 {% endblock %}
 {% block body %}
-    <h2>Trage einen neuen Ansprechpartner ein</h2> 
+    <h2>Ansprechpartner eintragen</h2> 
     {{ form_start(form) }}
     <fieldset>
         <legend>Bitte Daten vom Ansprechpartner eingeben</legend>
@@ -44,8 +44,14 @@ li {
                 <td>{{ form_errors(form.email) }}</td>
             </tr>
         </table>
-    <input type="submit" value="erstelle Ansprechpartner">
+    <input type="submit" value="speichern">
     </fieldset>
+    {%if ansprechpartner is defined%}
+    <fieldset>
+        <legend>ACHTUNG!</legend>
+        <input type="submit" name="delete" id="delete" value="löschen">
+    </fieldset> 
+    {%endif%}
     {{ form_errors(form) }}
     {{ form_end(form) }}
     
