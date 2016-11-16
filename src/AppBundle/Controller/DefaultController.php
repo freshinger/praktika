@@ -15,24 +15,35 @@ use AppBundle\Entity\Ansprechpartner;
 use AppBundle\Form\AnsprechpartnerType;
 
 class DefaultController extends Controller
-{
-	/**
-	 * Firmensuchfunktion
-	 */
-	public function compsearchAction(Request $request, $value){
-		$repository = $this->getDoctrine()->getRepository('AppBundle:Firma');
-        $firma = $repository->findByName('$value');
-        echo $twig->render('index.html.twig', array('firma' => $firma));
-	}
-	
+{	
     /**
      * @Route("/", name="homepage")
      */
     public function indexAction(Request $request)
     {
+		$defaultData = array('message' => 'Type your message here');
+		$form = $this->createFormBuilder($defaultData)
+				->add('searchbar', "Symfony\Component\Form\Extension\Core\Type\TextType")
+				->getForm();
+		
+		$form->handleRequest($request);
+		
+		if ($form->isSubmitted() && $form->isValid()) {
+			// data is an array with "name", "email", and "message" keys
+			$value = $form->getData();
+			$repository = $this->getDoctrine()->getRepository('AppBundle:Firma');
+			$query = $repository->createQueryBuilder('f')
+								->where('f.name = :value')
+								->setParameter('value', $value)
+								->orderBy('f.name', 'ASC')
+								->getQuery();
+			$firma = $query->getResult();
+			return $this->render('default/index.html.twig', array('firmen' => $firma, 'form' => $form->createView()));
+		}
         // replace this example code with whatever you need
         return $this->render('default/index.html.twig', array(
             'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
+			'form' => $form->createView()
         ));
     }
     
@@ -47,7 +58,7 @@ class DefaultController extends Controller
                            ->getRepository('AppBundle:User')
                            ->find($uid);
         $form = $this->createForm("AppBundle\Form\ProfilType", $user);
-	$form->handleRequest($request);
+		$form->handleRequest($request);
         
         // Teilnehmer in die Datenbank aufnehmen
         if ($form->isSubmitted() && $form->isValid()) {
@@ -171,7 +182,7 @@ class DefaultController extends Controller
     }
     
     /**
-     * @Route("/edit/user/{id}", name="editfirma")
+     * @Route("/edit/firma/{id}", name="editfirma")
      * @Security("has_role('ROLE_USER')")
      */
     public function editFirmaAction(Request $request, $id)
