@@ -11,8 +11,12 @@ use AppBundle\Entity\User;
 use AppBundle\Form\UserType;
 use AppBundle\Entity\Firma;
 use AppBundle\Form\FirmaType;
+use AppBundle\Entity\Praktikum;
+use AppBundle\Form\PraktikumType;
 use AppBundle\Entity\Ansprechpartner;
 use AppBundle\Form\AnsprechpartnerType;
+
+//@TODO: Klasse aufspalten in unterklassen, da zu groß
 
 class DefaultController extends Controller
 {	
@@ -34,7 +38,7 @@ class DefaultController extends Controller
 			$repository = $this->getDoctrine()->getRepository('AppBundle:Firma');
 			$query = $repository->createQueryBuilder('f')
 								->where('f.name = :value')
-								->setParameter('value', $value)
+								->setParameter('value', $value['searchbar'])
 								->orderBy('f.name', 'ASC')
 								->getQuery();
 			$firma = $query->getResult();
@@ -268,6 +272,24 @@ class DefaultController extends Controller
     }
     
     /**
+     * @Route("/delete/praktikum/{id}", name="deletepraktikum")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function deletePraktikumAction(Request $request, $id)
+    {
+        $praktikum = $this->getDoctrine()
+                           ->getRepository('AppBundle:Praktikum')
+                           ->find($id);
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($praktikum);
+        $em->flush();
+        $msg = "Das Praktikum wurde gelöscht!";
+        return $this->render('default/confirm.html.twig', array(
+            'message' => $msg
+        ));
+    }
+    
+    /**
     * @Route("/create/success/contact/{name}", name="contact_success")
     */
     public function successContactAction($name)
@@ -343,6 +365,88 @@ class DefaultController extends Controller
         
         return $this->render('default/form/contact.html.twig', array(
             'ansprechpartner' => $ansprechpartner,
+            'form' => $form->createView(),
+            'message' => $request->query->get('message') 
+        ));
+    }
+    
+    /**
+    * @Route("/show/praktikum", name="showpraktikum")
+    */
+    public function showPraktikumAction(Request $request)
+    {
+           $praktika = $this->getDoctrine()
+                           ->getRepository('AppBundle:Praktikum')
+                           ->findAll();
+
+           return $this->render('default/praktika.html.twig', array(
+                   'praktika' => $praktika
+           ));
+    }
+    
+    /**
+    * @Route("/create/praktikum", name="formpraktikum")
+    */
+    public function praktikumAction(Request $request)
+    {
+           $praktikum = new Praktikum();
+           $form = $this->createForm('AppBundle\Form\PraktikumType', $praktikum);
+
+           $form->handleRequest($request);
+
+           if($form->isSubmitted() && $form->isValid()){
+                $praktikum = $form->getData();
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($praktikum);
+                $em->flush();
+
+                $msg = "Das Praktikum wurde erfolgreich gelistet!";
+                return $this->render('default/confirm.html.twig', array(
+                    'message' => $msg
+                ));
+           }
+
+           return $this->render('default/form/praktikum.html.twig', array(
+                   'form' => $form->createView()
+           ));
+    }
+    
+    /**
+     * @Route("/edit/praktikum/{id}", name="editpraktikum")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function editPraktikumAction(Request $request, $id)
+    {
+        
+        $praktikum = $this->getDoctrine()
+                           ->getRepository('AppBundle:Praktikum')
+                           ->find($id);
+        $form = $this->createForm("AppBundle\Form\PraktikumType", $praktikum);
+	$form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+		
+            $em->persist($praktikum);
+            $em->flush();
+            
+            if ($request->request->has('delete'))
+            {
+                return $this->redirectToRoute('deletepraktikum', array(
+                    'id' => $id
+                ));
+            }
+            
+            return $this->redirectToRoute('editpraktikum', array(
+                'id' => $id,
+                'message' => "Daten wurden erfolgreich gespeichert!",
+            ));
+            
+        }
+        
+        return $this->render('default/form/praktikum.html.twig', array(
+            'praktikum' => $praktikum,
             'form' => $form->createView(),
             'message' => $request->query->get('message') 
         ));

@@ -45,7 +45,7 @@ class Kontakt
      * @param \User $user
      * @return Kontakt
      */
-    public function setTeilnehmer(\User $user = null)
+    public function setTeilnehmer(\AppBundle\Entity\User $user = null)
     {
         $this->user = $user;
 
@@ -68,7 +68,7 @@ class Kontakt
      * @param \Ansprechpartner $ansprechpartner
      * @return Kontakt
      */
-    public function setAnsprechpartner(\Ansprechpartner $ansprechpartner = null)
+    public function setAnsprechpartner(\AppBundle\Entity\Ansprechpartner $ansprechpartner = null)
     {
         $this->ansprechpartner = $ansprechpartner;
 
@@ -91,7 +91,7 @@ class Kontakt
      * @param \Korrespondenz $korrespondenz
      * @return Kontakt
      */
-    public function setKorrespondenz(\Korrespondenz $korrespondenz = null)
+    public function setKorrespondenz(\AppBundle\Entity\Korrespondenz $korrespondenz = null)
     {
         $this->korrespondenz = $korrespondenz;
 

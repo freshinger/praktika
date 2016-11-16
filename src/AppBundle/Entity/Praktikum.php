@@ -124,7 +124,7 @@ class Praktikum
      * @param \Teilnehmer $teilnehmer
      * @return Praktikum
      */
-    public function setUser(\User $user = null)
+    public function setUser(\AppBundle\Entity\User $user = null)
     {
         $this->user = $user;
 
@@ -147,7 +147,7 @@ class Praktikum
      * @param \Firma $firma
      * @return Praktikum
      */
-    public function setFirma(\Firma $firma = null)
+    public function setFirma(\AppBundle\Entity\Firma $firma = null)
     {
         $this->firma = $firma;
 

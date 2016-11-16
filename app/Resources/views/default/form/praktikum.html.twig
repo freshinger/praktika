@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+<style>
+label {
+  width: 100px;
+  display: inline-block;
+  border-bottom: solid 1px;
+}
+li {
+  
+  list-style-type: none;
+}
+</style>
+{% endblock %}
+{% block body %}
+    <h2>Erstelle einen Praktikumseintrag</h2>    
+    {{ form_start(form) }}
+    <fieldset>
+        <legend>Bitte Praktikumsdaten eingeben</legend>
+        <table>
+            <tr>
+                <td>{{ form_label(form.startdatum, 'Start Datum') }}</td>
+                <td>{{ form_widget(form.startdatum) }}</td>
+                <td>{{ form_errors(form.startdatum) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.enddatum, 'End Datum') }}</td>
+                <td>{{ form_widget(form.enddatum) }}</td>
+                <td>{{ form_errors(form.enddatum) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.beruf, 'Beruf') }}</td>
+                <td>{{ form_widget(form.beruf) }}</td>
+                <td>{{ form_errors(form.beruf) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.user, 'Praktikant') }}</td>
+                <td>{{ form_widget(form.user) }}</td>
+                <td>{{ form_errors(form.user) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.firma, 'Firma') }}</td>
+                <td>{{ form_widget(form.firma) }}</td>
+                <td>{{ form_errors(form.firma) }}</td>
+            </tr>
+        </table>
+        <input type="submit" value="speichern">
+    </fieldset>
+    {%if praktikum is defined%}
+    <fieldset>
+        <legend>ACHTUNG!</legend>
+        <input type="submit" name="delete" id="delete" value="löschen">
+    </fieldset> 
+    {%endif%}
+    {{ form_errors(form) }}
+    {{ form_end(form) }}
+    
+    <br>Zurück zur <a href="{{ path('homepage') }}">Hauptseite</a>
+{% endblock %}
