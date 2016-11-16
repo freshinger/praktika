@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+{% for firma in firmen %}
+    {% if is_granted('ROLE_USER') %}
+    <a href="{{ path('editfirma', {'id': firma.id}) }}">{{ firma.name }}</a><br>
+    {% else %}
+    {{ firma.name }}<br>
+    {% endif %}
+{% endfor %}
+{% endblock %}

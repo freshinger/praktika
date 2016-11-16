@@ -14,8 +14,10 @@
                 <a href="{{ path('login') }}">Login</a>
                 <a href="{{ path('registration') }}">registrieren</a><br>
             {% endif %}
-            {% if is_granted('ROLE_ADMIN') %}
+            <br>
+            {% if is_granted('ROLE_USER') %}
             <a href="{{ path('formfirma') }}">Firma eintragen</a>
+            <a href="{{ path('showfirma') }}">Firma anzeigen</a>
             {#<a href="{{ path('formcontact') }}">Ansprechpartner eintragen</a>#}
             {% endif %}
         {% endblock %}<br><br>
