@@ -33,12 +33,40 @@ class DefaultController extends Controller
 			$value = $form->getData();
 			$repository = $this->getDoctrine()->getRepository('AppBundle:Firma');
 			$query = $repository->createQueryBuilder('f')
-								->where('f.name = :value')
-								->setParameter('value', $value)
+								->where('f.name LIKE :value')
+								->orWhere('f.website LIKE :value')
+								//->orWhere('a.phone LIKE :Value')
+								//->andWhere('a.id = f.id')
+								->setParameter('value', '%'.$value['searchbar'].'%')
 								->orderBy('f.name', 'ASC')
 								->getQuery();
 			$firma = $query->getResult();
-			return $this->render('default/index.html.twig', array('firmen' => $firma, 'form' => $form->createView()));
+			if (empty($firma)){
+				$repository = $this->getDoctrine()->getRepository('AppBundle:Ansprechpartner');
+				$query = $repository->createQueryBuilder('a')
+									->where('a.phone LIKE :value')
+									->orWhere('f.website LIKE :value')
+									//->orWhere('a.phone LIKE :Value')
+									//->andWhere('a.id = f.id')
+									->setParameter('value', '%'.$value['searchbar'].'%')
+									->orderBy('f.name', 'ASC')
+									->getQuery();
+				$firma = $query->getResult();
+
+			}
+			else{
+				$repository = $this->getDoctrine()->getRepository('AppBundle:Firma');
+				$query = $repository->createQueryBuilder('f')
+									->where('f.name LIKE :value')
+									->orWhere('f.website LIKE :value')
+									//->orWhere('a.phone LIKE :Value')
+									//->andWhere('a.id = f.id')
+									->setParameter('value', '%'.$value['searchbar'].'%')
+									->orderBy('f.name', 'ASC')
+									->getQuery();
+				$firma = $query->getResult();
+				return $this->render('default/index.html.twig', array('firmen' => $firma, 'form' => $form->createView()));
+			}
 		}
         // replace this example code with whatever you need
         return $this->render('default/index.html.twig', array(
