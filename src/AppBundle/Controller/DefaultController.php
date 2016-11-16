@@ -51,7 +51,9 @@ class DefaultController extends Controller
 									->orderBy('f.name', 'ASC')
 									->getQuery();
 				$firma = $query->getResult();
-			return $this->render('default/index.html.twig', array('firmen' => $firma, 'form' => $form->createView()));
+				if (!empty($firma)){
+					return $this->render('default/index.html.twig', array('firmen' => $firma, 'form' => $form->createView()));
+				}
 		}
         // replace this example code with whatever you need
         return $this->render('default/index.html.twig', array(
