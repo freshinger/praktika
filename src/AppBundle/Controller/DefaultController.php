@@ -34,18 +34,19 @@ class DefaultController extends Controller
 		
 		if ($form->isSubmitted() && $form->isValid()) {
 			$value = $form->getData();
-			/*$em = $this->getDoctrine()->getManager();
+			$em = $this->getDoctrine()->getManager();
 			$query = $em->createQuery(
-				'SELECT f
-				FROM AppBundle:Firma f, AppBundle:Ansprechpartner a
+				"SELECT f
+				FROM AppBundle:Firma f
+                                JOIN AppBundle:Ansprechpartner a
 				WHERE f.name LIKE :value
 				OR f.website LIKE :value
-				OR (a.phone LIKE :value AND a.id = f.id)
-				ORDER BY f.name ASC'
+				OR (a.phone LIKE :value AND IDENTITY(a.firma, 'id') = f.id)
+				ORDER BY f.name ASC"
 			)->setParameter('value', '%'.$value['searchbar'].'%');
-			$firma = $query->getResult();*/
+			$firma = $query->getResult();
 			
-				$repository = $this->getDoctrine()->getRepository('AppBundle:Firma');
+				/*$repository = $this->getDoctrine()->getRepository('AppBundle:Firma');
 				$query = $repository->createQueryBuilder('f')
 									->where('f.name LIKE :value')
 									->orWhere('f.website LIKE :value')
@@ -53,7 +54,7 @@ class DefaultController extends Controller
 									//->andWhere('a.company_id = f.id')
 									->setParameter('value', '%'.$value['searchbar'].'%')
 									->orderBy('f.name', 'ASC')
-									->getQuery();
+									->getQuery();*/
 				$firma = $query->getResult();
 				if (!empty($firma)){
 					return $this->render('default/index.html.twig', array('firmen' => $firma, 'form' => $form->createView()));
