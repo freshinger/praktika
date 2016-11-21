@@ -233,14 +233,14 @@ class User implements UserInterface, \Serializable{
     public function setSurname($surname)
     {
         $this->surname = $surname;
-
+        
         return $this;
     }
 
     /**
      * Get surname
      *
-     * @return string 
+     * @return string
      */
     public function getSurname()
     {
@@ -256,7 +256,7 @@ class User implements UserInterface, \Serializable{
     public function setStreet($street)
     {
         $this->street = $street;
-
+        
         return $this;
     }
 

@@ -19,13 +19,18 @@ class ProfilType extends AbstractType{
 			//	'invalid_message' => 'Die Passwörter müssen übereinstimmen!',
 			//	'first_options'  => array('label' => 'Passwort'),
 			//	'second_options' => array('label' => 'Passwort wiederholen')))
-                        ->add('prename', "Symfony\Component\Form\Extension\Core\Type\TextType")
-                        ->add('surname', "Symfony\Component\Form\Extension\Core\Type\TextType")
-                        ->add('street', "Symfony\Component\Form\Extension\Core\Type\TextType")
-                        ->add('city', "Symfony\Component\Form\Extension\Core\Type\TextType")
-                        ->add('postcode', "Symfony\Component\Form\Extension\Core\Type\TextType")
-                        ->add('phone', "Symfony\Component\Form\Extension\Core\Type\TextType")
-                ;
+                        ->add('prename', "Symfony\Component\Form\Extension\Core\Type\TextType", array(
+							'required' => false))
+                        ->add('surname', "Symfony\Component\Form\Extension\Core\Type\TextType", array(
+							'required' => false))
+                        ->add('street', "Symfony\Component\Form\Extension\Core\Type\TextType", array(
+							'required' => false))
+                        ->add('city', "Symfony\Component\Form\Extension\Core\Type\TextType", array(
+							'required' => false))
+                        ->add('postcode', "Symfony\Component\Form\Extension\Core\Type\TextType", array(
+							'required' => false))
+                        ->add('phone', "Symfony\Component\Form\Extension\Core\Type\TextType", array(
+							'required' => false));
 	}
 	
 	public function configureOptions(OptionsResolver $resolver){
