@@ -46,6 +46,7 @@ class DefaultController extends Controller
 			)->setParameter('value', '%'.$value['searchbar'].'%');
 			$firma = $query->getResult();
 			
+			// Querybuildercode, funktioniert nicht
 				/*$repository = $this->getDoctrine()->getRepository('AppBundle:Firma');
 				$query = $repository->createQueryBuilder('f')
 									->where('f.name LIKE :value')
@@ -439,7 +440,7 @@ class DefaultController extends Controller
                            ->getRepository('AppBundle:Praktikum')
                            ->find($id);
         $form = $this->createForm("AppBundle\Form\PraktikumType", $praktikum);
-	$form->handleRequest($request);
+		$form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -467,4 +468,31 @@ class DefaultController extends Controller
             'message' => $request->query->get('message') 
         ));
     }
+	
+	/**
+     * @Route("/list/active", name="listactive")
+     */
+    public function listactiveAction(Request $request)
+    {
+		$em = $this->getDoctrine()->getManager();
+		$query = $em->createQuery('SELECT p
+								  FROM AppBundle:Praktikum p
+								  WHERE p.startdatum < :today
+								  AND p.enddatum > :today')
+							->setParameter('today', new \DateTime());
+		$praktika = $query->getResult();
+		
+		// Querybuildercode, funktioniert noch nicht
+		/*$praktika = $this->getDoctrine()->getRepository('AppBundle:Praktikum');
+        $query = $praktika->createQueryBuilder('p')
+									//->where('p.startdatum < :today')
+									//->andWhere('p.enddatum > :today')
+									//->setParameter('today', 'CURRENT_DATE()')
+									->orderBy('p.startdatum', 'ASC')
+									->getQuery();*/
+		
+           return $this->render('default/listactive.html.twig', array(
+                   'praktika' => $praktika
+           ));
+	}
 }

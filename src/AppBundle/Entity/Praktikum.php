@@ -55,7 +55,7 @@ class Praktikum
     /**
      * Get startdatum
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getStartdatum()
     {
@@ -78,7 +78,7 @@ class Praktikum
     /**
      * Get enddatum
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getEnddatum()
     {

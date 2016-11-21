@@ -11,7 +11,7 @@ use AppBundle\Entity\Ansprechpartner;
 use AppBundle\Form\AnsprechpartnerType;
 
 class SearchController extends Controller
-{
+{		
     public function searchAction(Request $request)
     {		
 		$defaultData = array('message' => 'Type your message here');

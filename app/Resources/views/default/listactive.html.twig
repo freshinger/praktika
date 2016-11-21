@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+{% for praktikum in praktika %}
+    {% if is_granted('ROLE_USER') %}
+    <a href="{{ path('editpraktikum', {'id': praktikum.id}) }}">{{ praktikum.user.username }} bei {{ praktikum.firma.name }}</a><br>
+    {% else %}
+    {{ praktikum.user.username }} bei {{ praktikum.firma.name }}<br>
+    {% endif %}
+{% endfor %}
+{% endblock %}
