@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+{% for user in users %}
+    {% if is_granted('ROLE_USER') %}
+    <a href="{{ path('edituser', {'id': user.id}) }}">{{ user.username }}</a> {{ user.email }} / Vorname: {{ user.prename }} / Nachname: {{ user.surname }}<br>
+    {% else %}
+    {{ user.username }}<br>
+    {% endif %}
+{% endfor %}
+{% endblock %}

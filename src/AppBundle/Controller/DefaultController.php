@@ -521,15 +521,15 @@ class DefaultController extends Controller
     }
 	
 	/**
-     * @Route("/list/active", name="listactive")
+     * @Route("/show/active", name="showactive")
      */
-    public function listactiveAction(Request $request)
+    public function showActiveAction(Request $request)
     {
 		$em = $this->getDoctrine()->getManager();
 		$query = $em->createQuery('SELECT p
 								  FROM AppBundle:Praktikum p
-								  WHERE p.startdatum < :today
-								  AND p.enddatum > :today')
+								  WHERE p.startdatum <= :today
+								  AND p.enddatum >= :today')
 							->setParameter('today', new \DateTime());
 		$praktika = $query->getResult();
 		
@@ -546,4 +546,18 @@ class DefaultController extends Controller
                    'praktika' => $praktika
            ));
 	}
+	
+	/**
+    * @Route("/show/users", name="showusers")
+    */
+    public function showUsersAction(Request $request)
+    {
+           $users = $this->getDoctrine()
+                           ->getRepository('AppBundle:User')
+                           ->findAll();
+
+           return $this->render('default/listusers.html.twig', array(
+                   'users' => $users
+           ));
+    }
 }
