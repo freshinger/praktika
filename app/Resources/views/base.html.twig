@@ -23,8 +23,9 @@
             {#<a href="{{ path('formcontact') }}">Ansprechpartner eintragen</a>#}
             <br>
             <a href="{{ path('formpraktikum') }}">Praktikum eintragen</a>
-            <a href="{{ path('showpraktikum') }}">Praktikum anzeigen</a>
-            <a href="{{ path('listactive') }}">Aktive Praktika</a>
+            <a href="{{ path('showpraktikum') }}">Praktikum anzeigen</a><br>
+            <a href="{{ path('showactive') }}">Aktive Praktika</a>
+            <a href="{{ path('showusers') }}">Teilnehmerliste</a>
             {% endif %}
         {% endblock %}<br><br>
         {% block body %}{% endblock %}
