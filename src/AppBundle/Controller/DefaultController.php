@@ -15,6 +15,8 @@ use AppBundle\Entity\Praktikum;
 use AppBundle\Form\PraktikumType;
 use AppBundle\Entity\Ansprechpartner;
 use AppBundle\Form\AnsprechpartnerType;
+use AppBundle\Entity\Kontakt;
+use AppBundle\Form\KontaktType;
 
 //@TODO: Klasse aufspalten in unterklassen, da zu groß
 
@@ -199,6 +201,24 @@ class DefaultController extends Controller
 
            return $this->render('default/firmen.html.twig', array(
                    'firmen' => $firmen
+           ));
+    }
+    
+    /**
+    * @Route("/show/relationships", name="showrelationships")
+    */
+    public function showRelationshipsAction(Request $request)
+    {
+           $uid = $this->get('security.token_storage')->getToken()->getUser()->getId();
+           $user = $this->getDoctrine()
+                           ->getRepository('AppBundle:User')
+                           ->find($uid);
+           $relationships = $this->getDoctrine()
+                           ->getRepository('AppBundle:Kontakt')
+                           ->findByUser($user);
+
+           return $this->render('default/relationships.html.twig', array(
+                   'kontakte' => $relationships
            ));
     }
     
@@ -401,6 +421,37 @@ class DefaultController extends Controller
            ));
     }
     
+    /**
+    * @Route("/create/relationship", name="createrelationship")
+    */
+    public function relationshipAction(Request $request)
+    {
+           $uid = $this->get('security.token_storage')->getToken()->getUser()->getId();
+           $user = $this->getDoctrine()
+                           ->getRepository('AppBundle:User')
+                           ->find($uid);
+           $relationship = new Kontakt();
+           $form = $this->createForm('AppBundle\Form\KontaktType', $relationship);
+
+           $form->handleRequest($request);
+
+           if($form->isSubmitted() && $form->isValid()){
+                $relationship = $form->getData();
+                $relationship->setUser($user);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($relationship);
+                $em->flush();
+
+                $msg = "Das Kontakt wurde erfolgreich gelistet!";
+                return $this->render('default/confirm.html.twig', array(
+                    'message' => $msg
+                ));
+           }
+
+           return $this->render('default/form/relationship.html.twig', array(
+                   'form' => $form->createView()
+           ));
+    }
     /**
     * @Route("/create/praktikum", name="formpraktikum")
     */

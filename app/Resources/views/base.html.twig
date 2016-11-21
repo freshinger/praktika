@@ -9,6 +9,7 @@
         {% block navbar %}
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                 <a href="{{ path('edituser') }}">{{ app.user.username }}</a>
+                <a href="{{ path('showrelationships') }}">Kontakte</a>
                 <a href="{{ path('logout') }}">Logout</a>
             {% else %}
                 <a href="{{ path('login') }}">Login</a>

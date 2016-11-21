@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h2>Kontakte</h2>
+{% if kontakte is not empty %}
+    {% for kontakt in kontakte %}
+        {% if kontakt.korrespondenz is not null %}
+            <a href="{{ path('showcorrespondence', {'kontakt': kontakt.id }) }}">{{ kontakt.ansprechpartner.surname }}</a><br>
+        {% else %}
+            {{ kontakt.ansprechpartner.surname }}<br>
+        {% endif %}
+    {% endfor %}
+{% else %}
+    <p>Noch keine Kontakte vorhanden</p>
+{% endif %}
+<a href="{{ path('createrelationship') }}">Neu Hinzufügen</a>
+<br>Zurück zur <a href="{{ path('homepage') }}">Hauptseite</a>
+{% endblock %}
