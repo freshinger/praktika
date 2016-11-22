@@ -9,9 +9,9 @@
               <generator strategy="AUTO" />
           </id>
         
-          <one-to-one field="user" target-entity="User">
+          <many-to-one field="user" target-entity="User">
             <join-column name="user_id" referenced-column-name="id" />
-          </one-to-one>
+          </many-to-one>
           <one-to-one field="ansprechpartner" target-entity="Ansprechpartner">
             <join-column name="ansprechpartner_id" referenced-column-name="id" />
           </one-to-one>

@@ -5,10 +5,12 @@
 {% if kontakte is not empty %}
     {% for kontakt in kontakte %}
         {% if kontakt.korrespondenz is not null %}
-            <a href="{{ path('showcorrespondence', {'kontakt': kontakt.id }) }}">{{ kontakt.ansprechpartner.surname }}</a><br>
+            <a href="{{ path('showcorrespondence', {'kontakt': kontakt.id }) }}">{{ kontakt.ansprechpartner.surname }}</a>
         {% else %}
-            {{ kontakt.ansprechpartner.surname }}<br>
+            {{ kontakt.ansprechpartner.surname }}
         {% endif %}
+        <a href="{{ path('deleterelationship', {'id': kontakt.id }) }}">Löschen</a>
+        <br>
     {% endfor %}
 {% else %}
     <p>Noch keine Kontakte vorhanden</p>

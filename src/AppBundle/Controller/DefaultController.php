@@ -85,6 +85,10 @@ class DefaultController extends Controller
         
         // Teilnehmer in die Datenbank aufnehmen
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($request->request->has('delete'))
+            {
+                return $this->redirectToRoute('deleteuser');
+            }
 			$em = $this->getDoctrine()->getManager();
 			
 			//$factory = $this->get('security.encoder_factory');
@@ -290,6 +294,23 @@ class DefaultController extends Controller
     }
     
     /**
+     * @Route("/delete/user", name="deleteuser")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function deleteUserAction(Request $request)
+    {
+        $uid = $this->get('security.token_storage')->getToken()->getUser()->getId();
+        $user = $this->getDoctrine()
+                           ->getRepository('AppBundle:User')
+                           ->find($uid);
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($user);
+        $em->flush();
+        
+        return $this->redirectToRoute('logout');
+    }
+    
+    /**
      * @Route("/delete/contact/{id}", name="deletecontact")
      * @Security("has_role('ROLE_USER')")
      */
@@ -303,6 +324,25 @@ class DefaultController extends Controller
         $em->remove($ansprechpartner);
         $em->flush();
         $msg = "Der Ansprechpartner: " . $name . " wurde erfolgreich gelöscht!";
+        return $this->render('default/confirm.html.twig', array(
+            'message' => $msg
+        ));
+    }
+    
+    /**
+     * @Route("/delete/relationship/{id}", name="deleterelationship")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function deleteRelationshipAction(Request $request, $id)
+    {
+        $relationship = $this->getDoctrine()
+                           ->getRepository('AppBundle:Kontakt')
+                           ->find($id);
+        
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($relationship);
+        $em->flush();
+        $msg = "Der Kontakt wurde erfolgreich gelöscht!";
         return $this->render('default/confirm.html.twig', array(
             'message' => $msg
         ));
