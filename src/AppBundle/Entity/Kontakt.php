@@ -45,7 +45,7 @@ class Kontakt
      * @param \User $user
      * @return Kontakt
      */
-    public function setTeilnehmer(\AppBundle\Entity\User $user = null)
+    public function setUser(\AppBundle\Entity\User $user = null)
     {
         $this->user = $user;
 
