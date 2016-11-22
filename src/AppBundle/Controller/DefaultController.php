@@ -559,45 +559,4 @@ class DefaultController extends Controller
             'message' => $request->query->get('message') 
         ));
     }
-	
-	/**
-     * @Route("/show/active", name="showactive")
-     */
-    public function showActiveAction(Request $request)
-    {
-		$em = $this->getDoctrine()->getManager();
-		$query = $em->createQuery('SELECT p
-								  FROM AppBundle:Praktikum p
-								  WHERE p.startdatum <= :today
-								  AND p.enddatum >= :today')
-							->setParameter('today', new \DateTime());
-		$praktika = $query->getResult();
-		
-		// Querybuildercode, funktioniert noch nicht
-		/*$praktika = $this->getDoctrine()->getRepository('AppBundle:Praktikum');
-        $query = $praktika->createQueryBuilder('p')
-									//->where('p.startdatum < :today')
-									//->andWhere('p.enddatum > :today')
-									//->setParameter('today', 'CURRENT_DATE()')
-									->orderBy('p.startdatum', 'ASC')
-									->getQuery();*/
-		
-           return $this->render('default/listactive.html.twig', array(
-                   'praktika' => $praktika
-           ));
-	}
-	
-	/**
-    * @Route("/show/users", name="showusers")
-    */
-    public function showUsersAction(Request $request)
-    {
-           $users = $this->getDoctrine()
-                           ->getRepository('AppBundle:User')
-                           ->findAll();
-
-           return $this->render('default/listusers.html.twig', array(
-                   'users' => $users
-           ));
-    }
 }

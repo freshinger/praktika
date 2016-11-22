@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h2>Profil</h2>
+    {{ form_start(form) }}
+    <fieldset>
+        <legend>Bitte geben Sie Ihre Daten ein</legend>
+        <table>
+            <tr>
+                <td>{{ form_label(form.username, 'Benutzername') }}</td>
+                <td>{{ form_widget(form.username) }}</td>
+                <td>{{ form_errors(form.username) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.email, 'E-Mail') }}</td>
+                <td>{{ form_widget(form.email) }}</td>
+                <td>{{ form_errors(form.email) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.prename, 'Vorname') }}</td>
+                <td>{{ form_widget(form.prename) }}</td>
+                <td>{{ form_errors(form.prename) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.surname, 'Nachname') }}</td>
+                <td>{{ form_widget(form.surname) }}</td>
+                <td>{{ form_errors(form.surname) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.street, 'Strasse und Hausnummer') }}</td>
+                <td>{{ form_widget(form.street) }}</td>
+                <td>{{ form_errors(form.street) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.postcode, 'PLZ') }}</td>
+                <td>{{ form_widget(form.postcode) }}</td>
+                <td>{{ form_errors(form.postcode) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.city, 'Stadt') }}</td>
+                <td>{{ form_widget(form.city) }}</td>
+                <td>{{ form_errors(form.city) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.phone, 'Telefonnummer') }}</td>
+                <td>{{ form_widget(form.phone) }}</td>
+                <td>{{ form_errors(form.phone) }}</td>
+            </tr>
+        </table>
+    <input type="submit" value="speichern">
+    </fieldset>
+    {{ form_errors(form) }}
+    {{ form_end(form) }}
+    <br>Zurück zur <a href="{{ path('homepage') }}">Hauptseite</a>
+{% endblock %}
