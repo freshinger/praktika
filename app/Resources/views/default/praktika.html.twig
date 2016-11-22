@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
-
+{% block header %}
+Praktika
+{% endblock %}
 {% block body %}
 {% for praktikum in praktika %}
     {% if is_granted('ROLE_USER') %}

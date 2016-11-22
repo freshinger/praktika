@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
-
+{% block header %}
+Firmen
+{% endblock %}
 {% block body %}
 {% for firma in firmen %}
     {% if is_granted('ROLE_USER') %}

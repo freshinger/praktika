@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
-
+{% block header %}
+Teilnehmer
+{% endblock %}
 {% block body %}
 {% for user in users %}
     {% if is_granted('ROLE_USER') %}

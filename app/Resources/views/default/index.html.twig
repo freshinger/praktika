@@ -1,10 +1,13 @@
 {% extends 'base.html.twig' %}
 
+{% block header %}
+Praktikums-Firmen-Verwaltung
+{% endblock %}
 {% block body %}
-    {{ form_start(form) }}
-    {{ form_label(form.searchbar, 'Firmensuche (Suchen nach Firmenname, Telefonnumer oder Webadresse(www.beispiel.de)') }}
-    {{ form_widget(form) }}
-    <input type="submit" />
+    {{ form_start(form) }}<span class="glyphicon glyphicon-search" aria-hidden="true"></span> 
+    {{ form_label(form.searchbar, 'Firmensuche') }} 
+    {{ form_widget(form.searchbar) }}
+    <input type="submit" value="Suche"/>
     {{ form_end(form) }}
     <br>
     <div id="results">
@@ -17,11 +20,9 @@
 {% endblock %}
 
 {% block javascripts %}
+{{ parent() }}
     {% javascripts '@AppBundle/Resources/public/js/*'
                     '@AppBundle/Resources/public/js/searchtool.js' %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
-{% endblock %}
-
-{% block stylesheets %}
 {% endblock %}
