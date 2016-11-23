@@ -21,6 +21,6 @@ and open the template in the editor.
         <field name="city" type="string" nullable="true" />
         <field name="postcode" type="integer" nullable="true" />
         <field name="phone" type="string" nullable="true" />
-        <field name="admin" type="boolean" />
+        <field name="role" type="string" />
     </entity>
 </doctrine-mapping>

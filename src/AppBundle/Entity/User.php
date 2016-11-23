@@ -348,9 +348,20 @@ class User implements UserInterface, \Serializable{
         return null;
     }
     
+    public function getRole()
+    {
+        return $this->role;
+    }
+    
+    public function setRole($role)
+    {
+        $this->role = $role;
+        
+        return $this;
+    }
     public function getRoles()
     {
-        return array('ROLE_USER');
+        return array($this->getRole());
     }
 
     public function eraseCredentials()
