@@ -22,7 +22,12 @@ class Korrespondenz
      * @var string
      */
     private $content;
-
+    
+    /**
+     * @var \Kontakt
+     */
+    private $kontakt;
+    
     /**
      * @var integer
      */
@@ -106,5 +111,18 @@ class Korrespondenz
     public function getId()
     {
         return $this->id;
+    }
+    
+    public function setKontakt(\Appbundle\Entity\Kontakt $kontakt)
+    {
+        $this->kontakt = $kontakt;
+
+        return $this;
+    }
+
+    
+    public function getKontakt()
+    {
+        return $this->kontakt;
     }
 }

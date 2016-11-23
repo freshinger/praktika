@@ -17,6 +17,8 @@ use AppBundle\Entity\Ansprechpartner;
 use AppBundle\Form\AnsprechpartnerType;
 use AppBundle\Entity\Kontakt;
 use AppBundle\Form\KontaktType;
+use AppBundle\Entity\Korrespondenz;
+use AppBundle\Form\KonrrespondenzType;
 
 //@TODO: Klasse aufspalten in unterklassen, da zu groß
 
@@ -195,6 +197,24 @@ class DefaultController extends Controller
     }
     
     /**
+    * @Route("/show/correspondence/{kontakt_id}", name="showcorrespondence")
+    */
+    public function showKorrespondenzAction(Request $request, $kontakt_id)
+    {
+           $kontakt = $this->getDoctrine()
+                           ->getRepository('AppBundle:Kontakt')
+                           ->findOneById($kontakt_id);
+           $korrespondenzen = $this->getDoctrine()
+                           ->getRepository('AppBundle:Korrespondenz')
+                           ->findByKontakt($kontakt);
+
+           return $this->render('default/correspondence.html.twig', array(
+                   'kontakt' => $kontakt,
+                   'korrespondenzen' => $korrespondenzen
+           ));
+    }
+    
+    /**
     * @Route("/show/firma", name="showfirma")
     */
     public function showFirmaAction(Request $request)
@@ -367,6 +387,24 @@ class DefaultController extends Controller
     }
     
     /**
+     * @Route("/delete/correspondence/{id}", name="deletecorrespondence")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function deleteKorrespondenzAction(Request $request, $id)
+    {
+        $correspondence = $this->getDoctrine()
+                           ->getRepository('AppBundle:Korrespondenz')
+                           ->find($id);
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($correspondence);
+        $em->flush();
+        $msg = "Die Unterhaltung wurde gelöscht!";
+        return $this->render('default/confirm.html.twig', array(
+            'message' => $msg
+        ));
+    }
+    
+    /**
     * @Route("/create/success/contact/{name}", name="contact_success")
     */
     public function successContactAction($name)
@@ -482,7 +520,7 @@ class DefaultController extends Controller
                 $em->persist($relationship);
                 $em->flush();
 
-                $msg = "Das Kontakt wurde erfolgreich gelistet!";
+                $msg = "Der Kontakt wurde erfolgreich gelistet!";
                 return $this->render('default/confirm.html.twig', array(
                     'message' => $msg
                 ));
@@ -492,6 +530,40 @@ class DefaultController extends Controller
                    'form' => $form->createView()
            ));
     }
+
+    /**
+    * @Route("/create/correspondence/{kontakt_id}", name="createcorrespondence")
+    */
+    public function correspondenceAction(Request $request, $kontakt_id)
+    {
+           $kontakt = $this->getDoctrine()
+                           ->getRepository('AppBundle:Kontakt')
+                           ->find($kontakt_id);
+           $correspondence = new Korrespondenz();
+           $form = $this->createForm('AppBundle\Form\KorrespondenzType', $correspondence);
+
+           $form->handleRequest($request);
+
+           if($form->isSubmitted() && $form->isValid()){
+                $correspondence = $form->getData();
+                $kontakt->addKorrespondenz($correspondence);
+                $correspondence->setKontakt($kontakt);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($correspondence);
+                $em->persist($kontakt);
+                $em->flush();
+
+                $msg = "Die Korrespondenz wurde erfolgreich erstellt!";
+                return $this->render('default/confirm.html.twig', array(
+                    'message' => $msg
+                ));
+           }
+
+           return $this->render('default/form/correspondence.html.twig', array(
+                   'form' => $form->createView()
+           ));
+    }
+    
     /**
     * @Route("/create/praktikum", name="formpraktikum")
     */
