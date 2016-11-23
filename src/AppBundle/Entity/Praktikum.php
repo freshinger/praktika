@@ -29,7 +29,7 @@ class Praktikum
     private $id;
 
     /**
-     * @var \User
+     * @var \Teilnehmer
      */
     private $user;
 
@@ -119,9 +119,9 @@ class Praktikum
     }
 
     /**
-     * Set user
+     * Set teilnehmer
      *
-     * @param \User $user
+     * @param \Teilnehmer $teilnehmer
      * @return Praktikum
      */
     public function setUser(\AppBundle\Entity\User $user = null)

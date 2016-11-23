@@ -104,5 +104,5 @@ class AdminController extends Controller
             'form' => $form->createView(),
             'message' => $request->query->get('message') 
         ));
-    }
+	}
 }

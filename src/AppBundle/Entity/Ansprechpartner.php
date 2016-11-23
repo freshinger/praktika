@@ -41,19 +41,7 @@ class Ansprechpartner
      * @var Firma
      */
     private $firma;
-    
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $kontakt;
-    
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->kontakt = new ArrayCollection();
-    }
+
 
     /**
      * Set Prename
@@ -170,12 +158,7 @@ class Ansprechpartner
         return $this->email;
     }
 
-    /**
-     * Set firma
-     *
-     * @param \Firma $firma
-     * @return Ansprechpartner
-     */
+    
     public function setFirma(\Appbundle\Entity\Firma $firma)
     {
         $this->firma = $firma;
@@ -183,11 +166,7 @@ class Ansprechpartner
         return $this;
     }
 
-    /**
-     * Get firma
-     *
-     * @return \Firma 
-     */
+    
     public function getFirma()
     {
         return $this->firma;
