@@ -87,7 +87,7 @@ class User implements UserInterface, \Serializable{
     /**
      * @var string
      */
-    private $role = "ROLE_USER";
+    private $role;
     
     /**
      * Constructor
@@ -95,7 +95,7 @@ class User implements UserInterface, \Serializable{
     public function __construct()
     {
         $this->isActive = true;
-        $this->role = $role;
+        $this->role = 'ROLE_USER';
     }
     
     /**
@@ -348,9 +348,20 @@ class User implements UserInterface, \Serializable{
         return null;
     }
     
+    public function getRole()
+    {
+        return $this->role;
+    }
+    
+    public function setRole($role)
+    {
+        $this->role = $role;
+        
+        return $this;
+    }
     public function getRoles()
     {
-        return array($role);
+        return array($this->getRole());
     }
 
     public function eraseCredentials()
