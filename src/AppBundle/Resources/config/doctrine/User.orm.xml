@@ -1,8 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this template, choose Tools | Templates
-and open the template in the editor.
--->
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
@@ -21,6 +17,13 @@ and open the template in the editor.
         <field name="city" type="string" nullable="true" />
         <field name="postcode" type="integer" nullable="true" />
         <field name="phone" type="string" nullable="true" />
-        <field name="admin" type="boolean" />
+        <field name="role" type="string" />
+        
+        <!-- Cascade Optionen -->	
+        <one-to-one field="praktikum" target-entity="Praktikum" mapped-by="user" cascade="remove">
+            <cascade>
+                <cascade-remove/>
+            </cascade>    
+        </one-to-one>
     </entity>
 </doctrine-mapping>

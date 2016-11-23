@@ -1,21 +1,25 @@
-<!-- config/xml/Product.dcm.xml -->
+<?xml version="1.0" encoding="UTF-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                     http://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
 
-      <entity name="AppBundle\Entity\Ansprechpartner" table="contactperson">
-          <id name="id" type="integer">
-              <generator strategy="AUTO" />
-          </id>
+    <entity name="AppBundle\Entity\Ansprechpartner" table="contactperson">
+        <id name="id" type="integer">
+            <generator strategy="AUTO" />
+        </id>
 
-          <field name="prename" type="string" />
-          <field name="surname" type="string" />
-          <field name="position" type="string" />
-          <field name="phone" type="string" />
-          <field name="email" type="string" />
-          <many-to-one field="firma" target-entity="Firma" inversed-by="ansprechpartner">
+        <field name="prename" type="string" />
+        <field name="surname" type="string" />
+        <field name="position" type="string" />
+        <field name="phone" type="string" />
+        <field name="email" type="string" />
+        
+        <!-- Relationships -->	
+        <many-to-one field="firma" target-entity="Firma" inversed-by="ansprechpartner">
             <join-column name="company_id" referenced-column-name="id" />
-          </many-to-one>
-      </entity>
+        </many-to-one>
+          
+        <!-- Cascade Optionen -->
+    </entity>
 </doctrine-mapping>

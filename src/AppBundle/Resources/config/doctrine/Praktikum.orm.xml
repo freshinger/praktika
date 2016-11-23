@@ -1,22 +1,27 @@
-<!-- config/xml/Product.dcm.xml -->
+<?xml version="1.0" encoding="UTF-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                     http://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
 
-      <entity name="AppBundle\Entity\Praktikum" table="internship">
-          <id name="id" type="integer">
-              <generator strategy="AUTO" />
-          </id>
+    <entity name="AppBundle\Entity\Praktikum" table="internship">
+        <id name="id" type="integer">
+            <generator strategy="AUTO" />
+        </id>
 
-          <field name="startdatum" type="date" />
-          <field name="enddatum" type="date" />
-          <field name="beruf" type="string" />
-          <one-to-one field="user" target-entity="User">
+        <field name="startdatum" type="date" />
+        <field name="enddatum" type="date" />
+        <field name="beruf" type="string" />
+        
+        <!-- Relationships -->	
+        <one-to-one field="user" target-entity="User" inversed-by="Praktikum">
             <join-column name="user_id" referenced-column-name="id" />
-          </one-to-one>
-          <many-to-one field="firma" target-entity="Firma">
+        </one-to-one>
+        
+        <many-to-one field="firma" target-entity="Firma" inversed-by="praktikum">
             <join-column name="firma_id" referenced-column-name="id" />
-          </many-to-one>
-      </entity>
+        </many-to-one>
+        
+        <!-- Cascade Optionen -->	
+    </entity>
 </doctrine-mapping>
