@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+{% block header %}
+Korrespondenz mit {{ kontakt.ansprechpartner.surname }}
+{% endblock %}
+{% block body %}
+{% if korrespondenzen is defined %}
+    {% for korrespondenz in korrespondenzen %}
+        <p>
+            {{ korrespondenz.type }} am {{ korrespondenz.datum |date('d.m.Y')}} 
+            <a href="{{ path('deletecorrespondence', {'id': korrespondenz.id }) }}">Löschen</a><br>
+            {{ korrespondenz.content }}<br>
+        </p>
+    {% endfor %}
+{% else %}
+    <p>Noch nichts vorhanden</p>
+{% endif %}
+<a href="{{ path('createcorrespondence', {'kontakt_id': kontakt.id }) }}">Neu Erstellen</a>
+{% endblock %}

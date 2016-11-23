@@ -2,6 +2,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Kontakt
@@ -24,11 +25,18 @@ class Kontakt
     private $ansprechpartner;
 
     /**
-     * @var \Korrespondenz
+     * @var \Doctrine\Common\Collections\Collection
      */
     private $korrespondenz;
 
-
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->korrespondenz = new ArrayCollection();
+    }
+    
     /**
      * Get id
      *
@@ -91,13 +99,24 @@ class Kontakt
      * @param \Korrespondenz $korrespondenz
      * @return Kontakt
      */
-    public function setKorrespondenz(\AppBundle\Entity\Korrespondenz $korrespondenz = null)
+    public function addKorrespondenz(\AppBundle\Entity\Korrespondenz $korrespondenz = null)
     {
-        $this->korrespondenz = $korrespondenz;
+        $this->korrespondenz[] = $korrespondenz;
 
         return $this;
     }
 
+    /**
+     * Remove korrespondenz
+     *
+     * @param \Korrespondenz $korrespondenz
+     * @return Kontakt
+     */
+    public function removeKorrespondenz(\AppBundle\Entity\Korrespondenz $korrespondenz)
+    {
+        $this->korrespondenz->removeElement($korrespondenz);
+    }
+    
     /**
      * Get korrespondenz
      *

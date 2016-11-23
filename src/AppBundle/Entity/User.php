@@ -90,11 +90,6 @@ class User implements UserInterface, \Serializable{
     private $role = "ROLE_USER";
     
     /**
-     * @var \Praktikum
-     */
-    private $praktikum;
-    
-    /**
      * Constructor
      */
     public function __construct()
@@ -384,39 +379,6 @@ class User implements UserInterface, \Serializable{
             // see section on salt below
             // $this->salt
         ) = unserialize($serialized);
-    }
-    
-    /**
-     * Add praktikum
-     *
-     * @param \Praktikum $praktikum
-     * @return User
-     */
-    public function addPraktikum(\AppBundle\Entity\Praktikum $praktikum)
-    {
-        $this->praktikum[] = $praktikum;
-        
-        return $this;
-    }
-
-    /**
-     * Remove praktikum
-     *
-     * @param \Praktikum $praktikum
-     */
-    public function removePraktikum(\AppBundle\Entity\Praktikum $praktikum)
-    {
-        $this->praktikum->removeElement($praktikum);
-    }
-
-    /**
-     * Get praktikum
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getPraktikum()
-    {
-        return $this->praktikum;
     }
 }
 

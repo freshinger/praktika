@@ -19,11 +19,8 @@
         <field name="phone" type="string" nullable="true" />
         <field name="role" type="string" />
         
-        <!-- Cascade Optionen -->	
-        <one-to-one field="praktikum" target-entity="Praktikum" mapped-by="user" cascade="remove">
-            <cascade>
-                <cascade-remove/>
-            </cascade>    
-        </one-to-one>
+        <!-- Relationships -->
+        
+        <!-- Cascade Optionen -->
     </entity>
 </doctrine-mapping>

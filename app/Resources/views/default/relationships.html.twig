@@ -6,11 +6,7 @@ Kontakte
     <h2>Kontakte</h2>
 {% if kontakte is not empty %}
     {% for kontakt in kontakte %}
-        {% if kontakt.korrespondenz is not null %}
-            <a href="{{ path('showcorrespondence', {'kontakt': kontakt.id }) }}">{{ kontakt.ansprechpartner.surname }}</a>
-        {% else %}
-            {{ kontakt.ansprechpartner.surname }}
-        {% endif %}
+        <a href="{{ path('showcorrespondence', {'kontakt_id': kontakt.id }) }}">{{ kontakt.ansprechpartner.prename }} {{ kontakt.ansprechpartner.surname }}</a>
         <a href="{{ path('deleterelationship', {'id': kontakt.id }) }}">Löschen</a>
         <br>
     {% endfor %}
