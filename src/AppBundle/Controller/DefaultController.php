@@ -156,18 +156,6 @@ class DefaultController extends Controller
     }
     
     /**
-    * @Route("/create/success/firma/{name}/{id}", name="form_success")
-    */
-
-    public function successfirmaAction($name, $id)
-    {
-           return $this->render('default/form/firma_success.html.twig', array(
-                   'name' => $name,
-                   'id' => $id
-			));
-    }
-    
-    /**
     * @Route("/show/correspondence/{kontakt_id}", name="showcorrespondence")
     */
     public function showKorrespondenzAction(Request $request, $kontakt_id)
@@ -218,25 +206,6 @@ class DefaultController extends Controller
         $em->flush();
         
         return $this->redirectToRoute('logout');
-    }
-    
-    /**
-     * @Route("/delete/contact/{id}", name="deletecontact")
-     * @Security("has_role('ROLE_USER')")
-     */
-    public function deleteContactAction(Request $request, $id)
-    {
-        $ansprechpartner = $this->getDoctrine()
-                           ->getRepository('AppBundle:Ansprechpartner')
-                           ->find($id);
-        $name = $ansprechpartner->getSurname();
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($ansprechpartner);
-        $em->flush();
-        $msg = "Der Ansprechpartner: " . $name . " wurde erfolgreich gelöscht!";
-        return $this->render('default/confirm.html.twig', array(
-            'message' => $msg
-        ));
     }
     
     /**
@@ -299,81 +268,10 @@ class DefaultController extends Controller
     */
     public function successContactAction($name)
     {
-
            return $this->render('default/form/contact_success.html.twig', array(
                    'name' => $name
            ));
-    }
-
-    /**
-    * @Route("/create/contact/for/{id}", name="formcontact")
-    */
-    public function contactAction(Request $request, $id)
-    {
-           $ansprechpartner = new Ansprechpartner();
-           $form = $this->createForm('AppBundle\Form\AnsprechpartnerType', $ansprechpartner);
-
-           $form->handleRequest($request);
-
-           if($form->isSubmitted() && $form->isValid()){
-                   $firma = $this->getDoctrine()
-                           ->getRepository('AppBundle:Firma')
-                           ->find($id);
-                   $ansprechpartner->setFirma($firma);
-                   $em = $this->getDoctrine()->getManager();
-                   $em->persist($ansprechpartner);
-                   $em->flush();
-
-                   return $this->redirectToRoute('contact_success', array(
-                           'name' => $ansprechpartner->getPrename(). " " .
-                                $ansprechpartner->getSurname()
-                   ));
-           }
-
-           return $this->render('default/form/contact.html.twig', array(
-                   'form' => $form->createView()
-           ));
-    }
-    
-    /**
-     * @Route("/edit/contact/{id}", name="editcontact")
-     * @Security("has_role('ROLE_USER')")
-     */
-    public function editContactAction(Request $request, $id)
-    {
-        
-        $ansprechpartner = $this->getDoctrine()
-                           ->getRepository('AppBundle:Ansprechpartner')
-                           ->find($id);
-        $form = $this->createForm("AppBundle\Form\AnsprechpartnerType", $ansprechpartner);
-	$form->handleRequest($request);
-        
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-		
-            $em->persist($ansprechpartner);
-            $em->flush();
-            
-            if ($request->request->has('delete'))
-            {
-                return $this->redirectToRoute('deletecontact', array(
-                    'id' => $id
-                ));
-            }
-            
-            return $this->redirectToRoute('editcontact', array(
-                'id' => $id,
-                'message' => "Daten wurden erfolgreich gespeichert!",
-            ));
-            
-        }
-        
-        return $this->render('default/form/contact.html.twig', array(
-            'ansprechpartner' => $ansprechpartner,
-            'form' => $form->createView(),
-            'message' => $request->query->get('message') 
-        ));
-    }
+	}
     
     /**
     * @Route("/show/praktikum", name="showpraktikum")
