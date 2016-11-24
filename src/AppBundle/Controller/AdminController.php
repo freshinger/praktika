@@ -16,7 +16,7 @@ class AdminController extends Controller
 {		
     /**
      * @Route("/show/active", name="showactive")
-     * * @Security("has_role('ROLE_USER')")
+     * * @Security("has_role('ROLE_STAFF')")
      */
     public function showActiveAction(Request $request)
     {
@@ -44,7 +44,7 @@ class AdminController extends Controller
 	
 	/**
     * @Route("/show/users", name="showusers")
-    * * @Security("has_role('ROLE_USER')")
+    * * @Security("has_role('ROLE_STAFF')")
     */
     public function showUsersAction(Request $request)
     {
@@ -59,7 +59,7 @@ class AdminController extends Controller
 	
 	/**
      * @Route("/show/user/{id}", name="showuser")
-     * * @Security("has_role('ROLE_USER')")
+     * * @Security("has_role('ROLE_STAFF')")
      */
     public function showUserAction(Request $request, $id)
     {

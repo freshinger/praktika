@@ -19,8 +19,6 @@
         <field name="role" type="string" />
         
         <!-- Relationships -->
-        
         <!-- Cascade Optionen -->
-    </entity>
+        </entity>
 </doctrine-mapping>
-
