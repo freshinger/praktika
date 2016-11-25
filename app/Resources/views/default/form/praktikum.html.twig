@@ -23,11 +23,16 @@ Praktikum eintragen
                 <td>{{ form_widget(form.beruf) }}</td>
                 <td>{{ form_errors(form.beruf) }}</td>
             </tr>
+            {% if is_granted('ROLE_STAFF') %}
             <tr>
                 <td>{{ form_label(form.user, 'Praktikant') }}</td>
                 <td>{{ form_widget(form.user) }}</td>
                 <td>{{ form_errors(form.user) }}</td>
             </tr>
+            {% else %}
+                {# field has to set as rendered otherwise it will be displayed at the end #}
+                {% do form.user.setRendered %}
+            {% endif %}
             <tr>
                 <td>{{ form_label(form.firma, 'Firma') }}</td>
                 <td>{{ form_widget(form.firma) }}</td>
@@ -36,7 +41,7 @@ Praktikum eintragen
         </table>
         <input type="submit" value="speichern">
     </fieldset>
-    {%if praktikum is defined%}
+    {%if praktikum is defined and is_granted('ROLE_ADMIN')%}
     <fieldset>
         <legend>ACHTUNG!</legend>
         <input type="submit" name="delete" id="delete" value="löschen">
