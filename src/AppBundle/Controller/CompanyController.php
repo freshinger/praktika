@@ -9,8 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use AppBundle\Entity\Firma;
 use AppBundle\Form\FirmaType;
-use AppBundle\Entity\Ansprechpartner;
-use AppBundle\Form\AnsprechpartnerType;
+use AppBundle\Entity\Praktikum;
 
 class CompanyController extends Controller
 {														/* Firma Funktionen */

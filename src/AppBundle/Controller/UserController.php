@@ -112,17 +112,17 @@ class UserController extends Controller
         
         if ($form->isSubmitted() && $form->isValid())
 		{
-			$em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
-            
-            if ($request->request->has('delete'))
+			if ($request->request->has('delete'))
             {
-                return $this->redirectToRoute('showusers', array(
+                return $this->redirectToRoute('removeuser', array(
 						'id' => $id,
 						'message' => "Nutzer wurde erfolgreich gelöscht!",
                 ));
             }
+			
+			$em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
             
             return $this->redirectToRoute('showuser', array(
 					'id' => $id,
@@ -137,7 +137,7 @@ class UserController extends Controller
         ));
 	}
 	
-	/** Benutzer aus der Datenbank löschen
+	/** Seinen eigenen Benutzeraccount löschen
      * @Route("/delete/user", name="deleteuser")
      * @Security("has_role('ROLE_USER')")
      */
@@ -152,5 +152,28 @@ class UserController extends Controller
         $em->flush();
         
         return $this->redirectToRoute('logout');
+    }
+	
+	/** Benutzer aus der Datenbank löschen
+     * @Route("/delete/user/{id}", name="removeuser")
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function removeUserAction(Request $request, $id)
+    {
+        $user = $this->getDoctrine()
+                        ->getRepository('AppBundle:User')
+                        ->find($id);
+		$praktika = $this->getDoctrine()
+                        ->getRepository('AppBundle:Praktikum')
+						->findByUser($user);
+        $em = $this->getDoctrine()->getManager();
+		foreach($praktika AS $praktikum)
+		{
+			$em->remove($praktikum);
+		}
+        $em->remove($user);
+        $em->flush();
+        
+        return $this->redirectToRoute('showusers');
     }
 }

@@ -58,9 +58,14 @@ body { padding-top: 50px; }
                     </div>
                     <div class="panel-body">
                         <div class="list-group">
+                            {% if is_granted('ROLE_STAFF') %}
                             <a href="{{ path('formpraktikum') }}" class="list-group-item"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> eintragen</a>
                             <a href="{{ path('showpraktikum') }}" class="list-group-item"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> anzeigen</a>
                             <a href="{{ path('showactive') }}" class="list-group-item">Aktive Praktika</a>
+                            {% elseif is_granted('ROLE_USER') %}
+                            <a href="{{ path('formpraktikum') }}" class="list-group-item"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> eintragen</a>
+                            <a href="{{ path('showpraktikum') }}" class="list-group-item"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> anzeigen</a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -79,16 +84,19 @@ body { padding-top: 50px; }
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Teilnehmer</h3>
-                    </div>
-                    <div class="panel-body">
-                        <div class="list-group">
-                            <a href="{{ path('showusers') }}" class="list-group-item"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> anzeigen</a>
+                {% if is_granted('ROLE_STAFF') %}
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Teilnehmer</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="list-group">
+                                <a href="{{ path('registration') }}" class="list-group-item"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> eintragen</a>
+                                <a href="{{ path('showusers') }}" class="list-group-item"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> anzeigen</a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                {% endif %}
             </div>
         </div>
             {% endif %}

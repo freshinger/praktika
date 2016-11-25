@@ -59,10 +59,12 @@
         </table>
     <input type="submit" value="speichern">
     </fieldset>
-    <fieldset>
-        <legend>ACHTUNG!</legend>
-        <input type="submit" name="delete" id="delete" value="löschen">
-    </fieldset> 
+    {% if is_granted('ROLE_USER') %}
+        <fieldset>
+            <legend>ACHTUNG!</legend>
+            <input type="submit" name="delete" id="delete" value="löschen">
+        </fieldset>
+    {% endif %}
     {{ form_errors(form) }}
     {{ form_end(form) }}
     <br>Zurück zur <a href="{{ path('homepage') }}">Hauptseite</a>
