@@ -5,47 +5,46 @@ Praktikum eintragen
 {% block body %}
     <h2>Erstelle einen Praktikumseintrag</h2>    
     {{ form_start(form) }}
-    <fieldset>
-        <legend>Bitte Praktikumsdaten eingeben</legend>
-        <table>
-            <tr>
-                <td>{{ form_label(form.startdatum, 'Start Datum') }}</td>
-                <td>{{ form_widget(form.startdatum) }}</td>
-                <td>{{ form_errors(form.startdatum) }}</td>
-            </tr>
-            <tr>
-                <td>{{ form_label(form.enddatum, 'End Datum') }}</td>
-                <td>{{ form_widget(form.enddatum) }}</td>
-                <td>{{ form_errors(form.enddatum) }}</td>
-            </tr>
-            <tr>
-                <td>{{ form_label(form.beruf, 'Beruf') }}</td>
-                <td>{{ form_widget(form.beruf) }}</td>
-                <td>{{ form_errors(form.beruf) }}</td>
-            </tr>
-            {% if is_granted('ROLE_STAFF') %}
-            <tr>
-                <td>{{ form_label(form.user, 'Praktikant') }}</td>
-                <td>{{ form_widget(form.user) }}</td>
-                <td>{{ form_errors(form.user) }}</td>
-            </tr>
-            {% else %}
-                {# field has to set as rendered otherwise it will be displayed at the end #}
-                {% do form.user.setRendered %}
-            {% endif %}
-            <tr>
-                <td>{{ form_label(form.firma, 'Firma') }}</td>
-                <td>{{ form_widget(form.firma) }}</td>
-                <td>{{ form_errors(form.firma) }}</td>
-            </tr>
-        </table>
-        <input type="submit" value="speichern">
-    </fieldset>
+    <div class="form-group">
+        {{ form_label(form.startdatum, 'Start Datum') }}
+        {{ form_widget(form.startdatum) }}
+        {{ form_errors(form.startdatum) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.enddatum, 'End Datum') }}
+        {{ form_widget(form.enddatum) }}
+        {{ form_errors(form.enddatum) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.beruf, 'Beruf') }}
+        {{ form_widget(form.beruf) }}
+        {{ form_errors(form.beruf) }}
+    </div>
+    {% if is_granted('ROLE_STAFF') %}
+    <div class="form-group">
+        {{ form_label(form.user, 'Praktikant') }}
+        {{ form_widget(form.user) }}
+        {{ form_errors(form.user) }}
+    </div>
+    {% else %}
+        {# field has to set as rendered otherwise it will be displayed at the end #}
+        {% do form.user.setRendered %}
+    {% endif %}
+    <div class="form-group">
+        {{ form_label(form.firma, 'Firma') }}
+        {{ form_widget(form.firma) }}
+        {{ form_errors(form.firma) }}
+    </div>
+    <input type="submit" value="speichern" class="btn btn-default">
     {%if praktikum is defined and is_granted('ROLE_ADMIN')%}
-    <fieldset>
-        <legend>ACHTUNG!</legend>
-        <input type="submit" name="delete" id="delete" value="löschen">
-    </fieldset> 
+    <div class="panel panel-danger">
+        <div class="panel-heading">
+            <h3 class="panel-title">Achtung</h3>
+        </div>
+        <div class="panel-body">
+            <input type="submit" name="delete" id="delete" value="löschen" class="btn btn-warning">
+        </div>
+    </div>
     {%endif%}
     {{ form_errors(form) }}
     {{ form_end(form) }}
