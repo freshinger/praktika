@@ -10,6 +10,8 @@
 
           <field name="type" type="string" />
 	  <field name="datum" type="date" />
+	  
+	  <!-- Relationships -->
 	  <field name="content" type="string" />
           <many-to-one field="kontakt" target-entity="Kontakt" inversed-by="korrespondenz">
             <join-column name="kontakt_id" referenced-column-name="id" />

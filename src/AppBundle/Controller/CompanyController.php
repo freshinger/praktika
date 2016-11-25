@@ -17,6 +17,7 @@ class CompanyController extends Controller
 	
 	/** Neue Firma in die Datenbank aufnehmen
     * @Route("/create/firma", name="formfirma")
+    * @Security("has_role('ROLE_USER')")
     */
     public function firmaAction(Request $request)
     {
@@ -46,6 +47,7 @@ class CompanyController extends Controller
 	
 	/** Weiterleitung nach dem Anlegen einer neuen Firma
     * @Route("/create/success/firma/{name}/{id}", name="form_success")
+    * @Security("has_role('ROLE_USER')")
     */
     public function successfirmaAction($name, $id)
     {
@@ -57,6 +59,7 @@ class CompanyController extends Controller
 	
 	/** Liste aller eingetragenen Firmen anzeigen
     * @Route("/show/firma", name="showfirma")
+    * @Security("has_role('ROLE_USER')")
     */
     public function showFirmaAction(Request $request)
     {
@@ -69,7 +72,7 @@ class CompanyController extends Controller
         ));
     }
 	
-	/** Einen Datensatz aus der Firmentabelle mit Editierfunktion anzeigen
+	/** Eine Firma aus der Datenbank mit Editierfunktion anzeigen
      * @Route("/edit/firma/{id}", name="editfirma")
      * @Security("has_role('ROLE_USER')")
      */
@@ -109,7 +112,7 @@ class CompanyController extends Controller
 	
 	/** Firmeneintrag aus der Datenbank löschen, Ansprechpartner zu dieser Firma werden ebenfalls gelöscht (cascade)
      * @Route("/delete/firma/{id}", name="deletefirma")
-     * @Security("has_role('ROLE_USER')")
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function deleteFirmaAction(Request $request, $id)
     {
@@ -118,103 +121,19 @@ class CompanyController extends Controller
 						->find($id);
         $name = $firma->getName();
 		
+		$praktika = $this->getDoctrine()
+                        ->getRepository('AppBundle:Praktikum')
+						->findByFirma($firma);
+		
         $em = $this->getDoctrine()->getManager();
+		foreach($praktika AS $praktikum)
+		{
+			$em->remove($praktikum);
+		}
         $em->remove($firma);
         $em->flush();
 		
         $msg = "Die Firma: " . $name . " wurde erfolgreich gelöscht!";
-        return $this->render('default/confirm.html.twig', array(
-				'message' => $msg
-        ));
-    }
-	
-														/* Ansprechpartner Funktionen */
-	
-	/** Einen Ansprechpartner aus der Datenbank mit Editierfunktion anzeigen
-     * @Route("/edit/contact/{id}", name="editcontact")
-     * @Security("has_role('ROLE_USER')")
-     */
-    public function editContactAction(Request $request, $id)
-    {
-        $ansprechpartner = $this->getDoctrine()
-								->getRepository('AppBundle:Ansprechpartner')
-								->find($id);
-        $form = $this->createForm("AppBundle\Form\AnsprechpartnerType", $ansprechpartner);
-		$form->handleRequest($request);
-        
-        if ($form->isSubmitted() && $form->isValid())
-		{
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($ansprechpartner);
-            $em->flush();
-            
-            if ($request->request->has('delete'))
-            {
-                return $this->redirectToRoute('deletecontact', array(
-						'id' => $id
-                ));
-            }
-            
-            return $this->redirectToRoute('editcontact', array(
-					'id' => $id,
-					'message' => "Daten wurden erfolgreich gespeichert!",
-            ));
-        }
-        
-        return $this->render('default/form/contact.html.twig', array(
-				'ansprechpartner' => $ansprechpartner,
-				'form' => $form->createView(),
-				'message' => $request->query->get('message') 
-        ));
-    }
-	
-	/**  Legt einen neuen Ansprechpartner für ausgewählte Firma an
-    * @Route("/create/contact/for/{id}", name="formcontact")
-    */
-    public function contactAction(Request $request, $id)
-    {
-        $ansprechpartner = new Ansprechpartner();
-        $form = $this->createForm('AppBundle\Form\AnsprechpartnerType', $ansprechpartner);
-		
-        $form->handleRequest($request);
-			
-        if($form->isSubmitted() && $form->isValid())
-		{
-            $firma = $this->getDoctrine()
-							->getRepository('AppBundle:Firma')
-							->find($id);
-            $ansprechpartner->setFirma($firma);
-			
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($ansprechpartner);
-            $em->flush();
-			
-            return $this->redirectToRoute('contact_success', array(
-					'name' => $ansprechpartner->getPrename(). " " .$ansprechpartner->getSurname()
-            ));
-        }
-		
-        return $this->render('default/form/contact.html.twig', array(
-                'form' => $form->createView()
-        ));
-    }
-	
-	/** Ansprechpartner aus der Datenbank löschen
-     * @Route("/delete/contact/{id}", name="deletecontact")
-     * @Security("has_role('ROLE_USER')")
-     */
-    public function deleteContactAction(Request $request, $id)
-    {
-        $ansprechpartner = $this->getDoctrine()
-								->getRepository('AppBundle:Ansprechpartner')
-								->find($id);
-        $name = $ansprechpartner->getSurname();
-		
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($ansprechpartner);
-        $em->flush();
-		
-        $msg = "Der Ansprechpartner: " . $name . " wurde erfolgreich gelöscht!";
         return $this->render('default/confirm.html.twig', array(
 				'message' => $msg
         ));
