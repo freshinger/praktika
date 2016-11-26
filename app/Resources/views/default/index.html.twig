@@ -4,19 +4,40 @@
 Praktikums-Firmen-Verwaltung
 {% endblock %}
 {% block body %}
+<div class="row">
+    <div class="center-block text-center">
     {{ form_start(form) }}<span class="glyphicon glyphicon-search" aria-hidden="true"></span> 
     {{ form_label(form.searchbar, 'Firmensuche') }} 
     {{ form_widget(form.searchbar) }}
-    <input type="submit" value="Suche"/>
+    <input type="submit" value="Suche" class="btn btn-default"/>
     {{ form_end(form) }}
-    <br>
-    <div id="results">
-        {% if firmen is defined %}
-            {% for firma in firmen %}
-                <a href="{{ path('editfirma', {'id': firma.id}) }}">{{ firma.name }}</a><br>
-            {% endfor %}
-        {% endif %}
     </div>
+</div>
+<div id="results">
+    {% if firmen is defined %}
+    {% for firma in firmen %}
+    <div class="row">
+        <div class="col-md-4">
+            <a href="http://{{ firma.website | raw}}">{{ firma.website }}</a>
+            <address>
+            <strong>
+                <a href="{{ path('editfirma', {'id': firma.id}) }}">{{ firma.name }}</a>
+            </strong><br>
+            {{ firma.street }}<br>
+            {{ firma.postcode }} {{ firma.city }}
+            </address>
+        </div>
+        <div class="col-md-4"><em>Kurzbeschreibung:</em><br>{{ firma.description }}
+        </div>
+        <div class="col-md-4"><em>Ansprechpartner:</em><br>
+            {% for person in firma.ansprechpartner %}
+                {{ person.prename }} {{ person.surname }}
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+</div>
 {% endblock %}
 
 {% block javascripts %}
