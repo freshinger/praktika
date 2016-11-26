@@ -35,16 +35,22 @@ Praktikum eintragen
         {{ form_widget(form.firma) }}
         {{ form_errors(form.firma) }}
     </div>
-    <input type="submit" value="speichern" class="btn btn-default">
+    <p>
+        <input type="submit" value="speichern" class="btn btn-default">
+    </p>
     {%if praktikum is defined and is_granted('ROLE_ADMIN')%}
-    <div class="panel panel-danger">
-        <div class="panel-heading">
-            <h3 class="panel-title">Achtung</h3>
-        </div>
-        <div class="panel-body">
-            <input type="submit" name="delete" id="delete" value="löschen" class="btn btn-warning">
+<div class="row">
+    <div class="col-md-4">
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+                <h3 class="panel-title">Achtung</h3>
+            </div>
+            <div class="panel-body">
+                <input type="submit" name="delete" id="delete" value="löschen" class="btn btn-warning">
+            </div>
         </div>
     </div>
+</div>
     {%endif%}
     {{ form_errors(form) }}
     {{ form_end(form) }}

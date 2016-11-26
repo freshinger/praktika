@@ -60,10 +60,18 @@
     <input type="submit" value="speichern">
     </fieldset>
     {% if is_granted('ROLE_USER') %}
-        <fieldset>
-            <legend>ACHTUNG!</legend>
-            <input type="submit" name="delete" id="delete" value="löschen">
-        </fieldset>
+<div class="row">
+    <div class="col-md-4">
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+                <h3 class="panel-title">Achtung</h3>
+            </div>
+            <div class="panel-body">
+                <input type="submit" name="delete" id="delete" value="löschen" class="btn btn-warning">
+            </div>
+        </div>
+    </div>
+</div>
     {% endif %}
     {{ form_errors(form) }}
     {{ form_end(form) }}

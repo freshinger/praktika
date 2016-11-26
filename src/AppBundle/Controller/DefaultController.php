@@ -96,6 +96,24 @@ class DefaultController extends Controller
     }
     
     /**
+    * @Route("/show/relationships/{id}", name="showrelationshipsbyid")
+    */
+    public function showRelationshipsByIdAction(Request $request, $id)
+    {
+           
+           $user = $this->getDoctrine()
+                           ->getRepository('AppBundle:User')
+                           ->find($id);
+           $relationships = $this->getDoctrine()
+                           ->getRepository('AppBundle:Kontakt')
+                           ->findByUser($user);
+	
+           return $this->render('default/relationships.html.twig', array(
+                   'kontakte' => $relationships
+           ));
+    }
+    
+    /**
      * @Route("/delete/relationship/{id}", name="deleterelationship")
      * @Security("has_role('ROLE_USER')")
      */
