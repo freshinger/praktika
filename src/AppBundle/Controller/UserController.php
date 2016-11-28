@@ -157,10 +157,17 @@ class UserController extends Controller
 		$praktika = $this->getDoctrine()
                         ->getRepository('AppBundle:Praktikum')
 						->findByUser($user);
+		$kontakte = $this->getDoctrine()
+                        ->getRepository('AppBundle:Kontakt')
+						->findByUser($user);
         $em = $this->getDoctrine()->getManager();
 		foreach($praktika AS $praktikum)
 		{
 			$em->remove($praktikum);
+		}
+		foreach($kontakte AS $kontakt)
+		{
+			$em->remove($kontakt);
 		}
         $em->remove($user);
         $em->flush();

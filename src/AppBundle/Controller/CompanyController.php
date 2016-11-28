@@ -106,15 +106,25 @@ class CompanyController extends Controller
                         ->getRepository('AppBundle:Firma')
 						->find($id);
         $name = $firma->getName();
+		$ansprechpartner = $this->getDoctrine()
+                        ->getRepository('AppBundle:Ansprechpartner')
+						->findByFirma($firma);
 		
 		$praktika = $this->getDoctrine()
                         ->getRepository('AppBundle:Praktikum')
 						->findByFirma($firma);
+		$kontakte = $this->getDoctrine()
+                        ->getRepository('AppBundle:Kontakt')
+						->findByAnsprechpartner($ansprechpartner);
 		
         $em = $this->getDoctrine()->getManager();
 		foreach($praktika AS $praktikum)
 		{
 			$em->remove($praktikum);
+		}
+		foreach($kontakte AS $kontakt)
+		{
+			$em->remove($kontakt);
 		}
         $em->remove($firma);
         $em->flush();
