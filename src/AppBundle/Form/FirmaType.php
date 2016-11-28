@@ -15,8 +15,10 @@ class FirmaType extends AbstractType
 			->add('street', 'Symfony\Component\Form\Extension\Core\Type\TextType')
 			->add('city', 'Symfony\Component\Form\Extension\Core\Type\TextType')
 			->add('postcode', 'Symfony\Component\Form\Extension\Core\Type\TextType')
-			->add('website', 'Symfony\Component\Form\Extension\Core\Type\TextType')
-			->add('description', 'Symfony\Component\Form\Extension\Core\Type\TextType')
+			->add('website', "Symfony\Component\Form\Extension\Core\Type\TextType", array(
+				'required' => false))
+			->add('description', "Symfony\Component\Form\Extension\Core\Type\TextType", array(
+				'required' => false))
 		;
 	}
 	

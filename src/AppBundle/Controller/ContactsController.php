@@ -109,6 +109,7 @@ class ContactsController extends Controller
 	
 	/** Legt eine neue Korrespondenz an um Informationen einer Kontaktaufnahme festzuhalten
     * @Route("/create/correspondence/{kontakt_id}", name="createcorrespondence")
+    * @Security("has_role('ROLE_USER')")
     */
     public function correspondenceAction(Request $request, $kontakt_id)
     {
@@ -142,6 +143,7 @@ class ContactsController extends Controller
 	
 	/**
     * @Route("/show/correspondence/{kontakt_id}", name="showcorrespondence")
+    * @Security("has_role('ROLE_USER')")
     */
     public function showKorrespondenzAction(Request $request, $kontakt_id)
     {
