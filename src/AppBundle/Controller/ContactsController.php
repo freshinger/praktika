@@ -19,6 +19,7 @@ class ContactsController extends Controller
 	
 	/** Kontakt zu seinen eigenen persönlichen Kontakten hinzufügen
     * @Route("/create/relationship", name="createrelationship")
+    * @Security("has_role('ROLE_USER')")
     */
     public function relationshipAction(Request $request)
     {
@@ -51,6 +52,7 @@ class ContactsController extends Controller
 	
 	/** Zeigt seine eigenen angelegten Kontakte an
     * @Route("/show/relationships", name="showrelationships")
+    * @Security("has_role('ROLE_USER')")
     */
     public function showRelationshipsAction(Request $request)
     {
@@ -69,6 +71,7 @@ class ContactsController extends Controller
 	
 	/**
     * @Route("/show/relationships/{id}", name="showrelationshipsbyid")
+    * @Security("has_role('ROLE_STAFF')")
     */
     public function showRelationshipsByIdAction(Request $request, $id)
     {
