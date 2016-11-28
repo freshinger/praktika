@@ -14,6 +14,7 @@ use AppBundle\Form\AnsprechpartnerType;
 
 class ContactpersonController extends Controller
 {														/* Ansprechpartner Funktionen */
+	
 	/** Legt einen neuen Ansprechpartner für ausgewählte Firma an
     * @Route("/create/contact/for/{id}", name="formcontact")
     * @Security("has_role('ROLE_USER')")

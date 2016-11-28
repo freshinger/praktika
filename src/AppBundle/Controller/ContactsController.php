@@ -7,12 +7,14 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use AppBundle\Entity\Firma;
-use AppBundle\Form\FirmaType;
-use AppBundle\Entity\Praktikum;
+use AppBundle\Entity\User;
+use AppBundle\Form\KontaktType;
+use AppBundle\Entity\Kontakt;
+use AppBundle\Form\KorrespondenzType;
 
 class ContactsController extends Controller
-{														/* Firma Funktionen */
+{														/* Kontakt Funktionen */
+	
 	/** 
     * @Route("/create/relationship", name="createrelationship")
     */

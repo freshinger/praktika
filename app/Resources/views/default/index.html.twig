@@ -31,13 +31,15 @@ Praktikums-Firmen-Verwaltung
         </div>
         <div class="col-md-4"><em>Ansprechpartner:</em><br>
             <ul>
-            {% for person in firma.ansprechpartner %}
-                <li>{{ person.prename }} {{ person.surname }}</li>
-            {% endfor %}
+            {% if firma.ansprechpartner is defined %}
+                {% for person in firma.ansprechpartner %}
+                    <li>{{ person.prename }} {{ person.surname }}</li>
+                {% endfor %}
+            {% endif %}
             <ul>
         </div>
     </div>
-    {% endfor %}
+{% endfor %}
     {% endif %}
 </div>
 {% endblock %}
