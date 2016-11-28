@@ -33,25 +33,16 @@ class UserController extends Controller
 			
             $em->persist($user);
             $em->flush();
-            
-            return $this->redirectToRoute('reg_success',array(
-					'id' => $user->getId(),
-					'email' => $user->getEmail()));
+            $msg = "Account für ".$user->getEmail()." wurde erfolgreich registriert!";
+            return $this->render('default/confirm.html.twig', array(
+                'message' => $msg
+            ));
         }
 		
 		return $this->render('default/form/registration.html.twig', array(
 				'form' => $form->createView()
 		));
 	}
-	
-	/** Weiterleitung nach dem Anlegen eines neuen Benutzers
-    * @Route("/create/success/user/{id}/{email}", name="reg_success")
-    */
-    public function regsuccessAction($id, $email){
-           return $this->render('default/form/registration_success.html.twig', array(
-					'id' => $id,
-					'email' => $email));
-    }
 	
 	/** Wenn eingeloggt, Seine eigenen Benutzerdaten mit Editierfunktion anzeigen
      * @Route("/edit/user", name="edituser")

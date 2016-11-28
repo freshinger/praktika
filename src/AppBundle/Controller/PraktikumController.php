@@ -9,12 +9,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use AppBundle\Entity\Praktikum;
 use AppBundle\Form\PraktikumType;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 
 class PraktikumController extends Controller
 {														/* Praktikum Funktionen */
 	
 	/** Einen neuen Praktikumseintrag zwischen Firma und Teilnehmer eintragen
     * @Route("/create/praktikum", name="formpraktikum")
+    * @Security("has_role('ROLE_USER')")
     */
     public function praktikumAction(Request $request)
     {
@@ -24,13 +26,15 @@ class PraktikumController extends Controller
         $form->handleRequest($request);
 		
         if($form->isSubmitted() && $form->isValid())
-		{
-            $praktikum = $form->getData();
-			
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($praktikum);
-            $em->flush();
-			
+	{
+            try {
+                $this->save($praktikum);
+            } catch(UniqueConstraintViolationException $e) {
+                $msg = "Nur ein Praktikum pro User erlaubt!";
+                return $this->render('default/confirm.html.twig', array(
+                                    'message' => $msg
+                ));
+            }
             $msg = "Das Praktikum wurde erfolgreich gelistet!";
             return $this->render('default/confirm.html.twig', array(
                     'message' => $msg
@@ -44,12 +48,26 @@ class PraktikumController extends Controller
 	
 	/** Eine Liste aller Praktikas anzeigen
     * @Route("/show/praktikum", name="showpraktikum")
+    * @Security("has_role('ROLE_USER')")
     */
     public function showPraktikumAction(Request $request)
     {
-           $praktika = $this->getDoctrine()
+        // User können nur ihr eigenes Praktikum angucken
+        if ($this->get('security.context')->isGranted('ROLE_STAFF') === false) {
+            $uid = $this->get('security.token_storage')->getToken()
+                    ->getUser()->getId();
+            $user = $this->getDoctrine()
+                        ->getRepository('AppBundle:User')
+                        ->find($uid);  
+            $praktika = $this->getDoctrine()
+                           ->getRepository('AppBundle:Praktikum')
+                           ->findByUser($user);
+        } else {
+            $praktika = $this->getDoctrine()
                            ->getRepository('AppBundle:Praktikum')
                            ->findAll();
+        }
+           
 
            return $this->render('default/praktika.html.twig', array(
                    'praktika' => $praktika
@@ -66,26 +84,29 @@ class PraktikumController extends Controller
                            ->getRepository('AppBundle:Praktikum')
                            ->find($id);
         $form = $this->createForm("AppBundle\Form\PraktikumType", $praktikum);
-		$form->handleRequest($request);
+	$form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($praktikum);
-            $em->flush();
-            
             if ($request->request->has('delete'))
             {
                 return $this->redirectToRoute('deletepraktikum', array(
 						'id' => $id
                 ));
             }
-            
+            try {
+            $this->save($praktikum);
+            } catch(UniqueConstraintViolationException $e) {
+                $msg = "Nur ein Praktikum pro User erlaubt!";
+                return $this->render('default/confirm.html.twig', array(
+                                    'message' => $msg
+                ));
+            }
             return $this->redirectToRoute('editpraktikum', array(
 					'id' => $id,
 					'message' => "Daten wurden erfolgreich gespeichert!",
 			));
         }
-		
+	
         return $this->render('default/form/praktikum.html.twig', array(
 				'praktikum' => $praktikum,
 				'form' => $form->createView(),
@@ -128,5 +149,23 @@ class PraktikumController extends Controller
         return $this->render('default/confirm.html.twig', array(
 				'message' => $msg
         ));
+    }
+    
+    // Hilfsfunktion um daten in der datenbank abzuspeichern
+    private function save($praktikum) {
+        
+        $em = $this->getDoctrine()->getManager();
+        // User können nur ihr eigenes Praktikum ändern
+        if ($this->get('security.context')->isGranted('ROLE_STAFF') === false) {
+            $uid = $this->get('security.token_storage')->getToken()
+                    ->getUser()->getId();
+            $user = $this->getDoctrine()
+                        ->getRepository('AppBundle:User')
+                        ->find($uid);
+            $praktikum->setUser($user);
+        }
+        $em->persist($praktikum);
+        $em->flush();
+        
     }
 }

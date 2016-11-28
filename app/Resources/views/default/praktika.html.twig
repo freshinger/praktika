@@ -3,11 +3,31 @@
 Praktika
 {% endblock %}
 {% block body %}
-{% for praktikum in praktika %}
-    {% if is_granted('ROLE_USER') %}
-    <a href="{{ path('editpraktikum', {'id': praktikum.id}) }}">{{ praktikum.user.username }} bei {{ praktikum.firma.name }}</a><br>
-    {% else %}
-    {{ praktikum.user.username }} bei {{ praktikum.firma.name }}<br>
-    {% endif %}
-{% endfor %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Benutzer</th>
+            <th>Firma</th>
+            <th>Beruf</th>
+            <th>Start</th>
+            <th>Ende</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for praktikum in praktika %}
+        <tr>
+            <td>
+        <a href="{{ path('editpraktikum', {'id': praktikum.id}) }}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+        
+            </td>
+            <td>{{ praktikum.user.username }}</td>
+            <td>{{ praktikum.firma.name }}</td>
+            <td>{{ praktikum.beruf }}</td>
+            <td>{{ praktikum.startdatum |date('d.m.Y')}}</td>
+            <td>{{ praktikum.enddatum |date('d.m.Y')}}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
 {% endblock %}

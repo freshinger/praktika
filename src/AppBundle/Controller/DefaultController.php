@@ -59,14 +59,6 @@ class DefaultController extends Controller
         ));
     }
     
-	/**
-     * @Route("/admin")
-     */
-    public function adminAction()
-    {
-        return new Response('<html><body>Admin page!</body></html>');
-    }
-    
     /**
     * @Route("/show/correspondence/{kontakt_id}", name="showcorrespondence")
     */
@@ -94,6 +86,24 @@ class DefaultController extends Controller
            $user = $this->getDoctrine()
                            ->getRepository('AppBundle:User')
                            ->find($uid);
+           $relationships = $this->getDoctrine()
+                           ->getRepository('AppBundle:Kontakt')
+                           ->findByUser($user);
+	
+           return $this->render('default/relationships.html.twig', array(
+                   'kontakte' => $relationships
+           ));
+    }
+    
+    /**
+    * @Route("/show/relationships/{id}", name="showrelationshipsbyid")
+    */
+    public function showRelationshipsByIdAction(Request $request, $id)
+    {
+           
+           $user = $this->getDoctrine()
+                           ->getRepository('AppBundle:User')
+                           ->find($id);
            $relationships = $this->getDoctrine()
                            ->getRepository('AppBundle:Kontakt')
                            ->findByUser($user);

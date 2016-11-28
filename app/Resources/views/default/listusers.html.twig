@@ -3,11 +3,42 @@
 Teilnehmer
 {% endblock %}
 {% block body %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+            Login-Daten
+            </th>
+            <th>
+            Adresse
+            </th>
+            <th>
+            Kontakte
+            </th>
+        </tr>
+    </thead>
+    <tbody>
 {% for user in users %}
-    {% if is_granted('ROLE_USER') %}
-    <a href="{{ path('showuser', {'id': user.id}) }}">{{ user.username }}</a> {{ user.email }} / Vorname: {{ user.prename }} / Nachname: {{ user.surname }}<br>
+<tr>
+    <td>
+    <a href="{{ path('showuser', {'id': user.id}) }}">{{ user.username }}</a><br> 
+    {{ user.email }}
+    </td>
+    <td>
+    {% if user.prename is not empty %}
+    {{ user.prename }} {{ user.surname }}<br>
+    {{ user.street }}<br>
+    {{ user.postcode }} {{ user.city }}<br>
+    Tel.: {{ user.phone }}
     {% else %}
-    {{ user.username }}<br>
+    <a href="{{ path('showuser', {'id': user.id}) }}">Bitte Daten vervollständigen</a>
     {% endif %}
+    </td>
+    <td>
+    <a href="{{ path('showrelationshipsbyid', {'id': user.id}) }}">Kontakte einsehen</a>
+    </td>
+</tr>
 {% endfor %}
+    </tbody>
+</table>
 {% endblock %}

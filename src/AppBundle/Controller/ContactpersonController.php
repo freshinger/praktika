@@ -35,9 +35,10 @@ class ContactpersonController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($ansprechpartner);
             $em->flush();
-			
-            return $this->redirectToRoute('contact_success', array(
-					'name' => $ansprechpartner->getPrename(). " " .$ansprechpartner->getSurname()
+            $name = $ansprechpartner->getPrename(). " " .$ansprechpartner->getSurname();
+            $msg = "Der Ansprechpartner: ".$name." wurde erfolgreich in die Datenbank übertragen!";
+            return $this->render('default/confirm.html.twig', array(
+                'message' => $msg
             ));
         }
 		
@@ -45,17 +46,6 @@ class ContactpersonController extends Controller
                 'form' => $form->createView()
         ));
     }
-	
-	/** Weiterleitung nach dem Anlegen eines neuen Ansprechpartners
-    * @Route("/create/success/contact/{name}", name="contact_success")
-    * 
-    */
-    public function successContactAction($name)
-    {
-           return $this->render('default/form/contact_success.html.twig', array(
-                   'name' => $name
-           ));
-	}
 	
 	/** Einen Ansprechpartner aus der Datenbank mit Editierfunktion anzeigen
      * @Route("/edit/contact/{id}", name="editcontact")

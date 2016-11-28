@@ -33,26 +33,13 @@ class CompanyController extends Controller
             $em->persist($firma);
             $em->flush();
 			
-            return $this->redirectToRoute('form_success', array(
-					'name' => $firma->getName(),
+            return $this->redirectToRoute('formcontact', array(
 					'id' => $firma->getId()
 			));
         }
 		
 		return $this->render('default/form/firma.html.twig', array(
 				'form' => $form->createView()
-		));
-    }
-	
-	/** Weiterleitung nach dem Anlegen einer neuen Firma
-    * @Route("/create/success/firma/{name}/{id}", name="form_success")
-    * @Security("has_role('ROLE_USER')")
-    */
-    public function successfirmaAction($name, $id)
-    {
-        return $this->render('default/form/firma_success.html.twig', array(
-                'name' => $name,
-                'id' => $id
 		));
     }
 	

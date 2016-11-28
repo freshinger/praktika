@@ -3,11 +3,47 @@
 Firmen
 {% endblock %}
 {% block body %}
-{% for firma in firmen %}
-    {% if is_granted('ROLE_USER') %}
-    <a href="{{ path('editfirma', {'id': firma.id}) }}">{{ firma.name }}</a><br>
-    {% else %}
-    {{ firma.name }}<br>
-    {% endif %}
-{% endfor %}
+{% if firmen is defined %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+            Adresse    
+            </th>
+            <th>
+            Kurzbeschreibung
+            </th>
+            <th>
+            Ansprechpartner
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for firma in firmen %}
+    <tr>
+        <td>
+            <a href="http://{{ firma.website | raw}}">{{ firma.website }}</a>
+            <address>
+            <strong>
+                <a href="{{ path('editfirma', {'id': firma.id}) }}">{{ firma.name }}</a>
+            </strong><br>
+            {{ firma.street }}<br>
+            {{ firma.postcode }} {{ firma.city }}
+            </address>
+        </td>
+        <td>
+            {{ firma.description }}
+        </td>
+        <td>
+            <ul>
+            {% for person in firma.ansprechpartner %}
+                <li>{{ person.prename }} {{ person.surname }}</li>
+            {% endfor %}
+            </ul>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endif %}
 {% endblock %}

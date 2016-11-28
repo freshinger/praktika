@@ -48,11 +48,6 @@ class User implements UserInterface, \Serializable{
      * @ORM\Column(name="is_active", type="boolean")
      */
     private $isActive;
-
-    /**
-     * @var boolean
-     */
-    private $admin = "false";
     
     /**
      * @var string
@@ -177,30 +172,6 @@ class User implements UserInterface, \Serializable{
         return $this->password;
     }
     
-    /**
-     * Set admin
-     *
-     * @param string $admin
-     * @return User
-     */
-    public function setAdmin($admin)
-    {
-        $this->admin = $admin;
-
-        return $this;
-    }
-
-    /**
-     * Get admin
-     *
-     * @return string 
-     */
-    public function getAdmin()
-    {
-        return $this->admin;
-    }
-    
-
     /**
      * Set prename
      *
