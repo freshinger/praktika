@@ -11,10 +11,10 @@ Firmen
             Adresse    
             </th>
             <th>
-            Kurzbeschreibung
+            Ansprechpartner
             </th>
             <th>
-            Ansprechpartner
+            Informationen
             </th>
         </tr>
     </thead>
@@ -24,20 +24,34 @@ Firmen
         <td>
             <a href="http://{{ firma.website | raw}}">{{ firma.website }}</a>
             <address>
+            {% if is_granted('ROLE_STAFF') %}
             <strong>
                 <a href="{{ path('editfirma', {'id': firma.id}) }}">{{ firma.name }}</a>
             </strong><br>
+            {% else %}
+            <strong>
+                {{ firma.name }}
+            </strong><br>
+            {% endif %}
             {{ firma.street }}<br>
-            {{ firma.postcode }} {{ firma.city }}
-            </address>
-        </td>
-        <td>
+            {{ firma.postcode }} {{ firma.city }}<br>
             {{ firma.description }}
+            </address>
         </td>
         <td>
             <ul>
             {% for person in firma.ansprechpartner %}
-                <li>{{ person.prename }} {{ person.surname }}</li>
+                <li>{{ person.prename }} {{ person.surname }}<br>
+                    {{ person.position }}<br>
+                    {{ person.phone }} / {{ person.email }}</li>
+            {% endfor %}
+            </ul>
+        </td>
+        <td>
+            <ul>
+            {% for information in firma.information %}
+                <li>{{ information.title }}<br>
+                {{ information.content }}</li>
             {% endfor %}
             </ul>
         </td>

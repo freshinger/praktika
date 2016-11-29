@@ -14,33 +14,63 @@ Praktikums-Firmen-Verwaltung
     </div>
 </div>
 <div id="results">
-    {% if firmen is defined %}
+{% if firmen is defined %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+            Adresse    
+            </th>
+            <th>
+            Ansprechpartner
+            </th>
+            <th>
+            Informationen
+            </th>
+        </tr>
+    </thead>
+    <tbody>
     {% for firma in firmen %}
-    <div class="row">
-        <div class="col-md-4">
+    <tr>
+        <td>
             <a href="http://{{ firma.website | raw}}">{{ firma.website }}</a>
             <address>
+            {% if is_granted('ROLE_STAFF') %}
             <strong>
                 <a href="{{ path('editfirma', {'id': firma.id}) }}">{{ firma.name }}</a>
             </strong><br>
-            {{ firma.street }}<br>
-            {{ firma.postcode }} {{ firma.city }}
-            </address>
-        </div>
-        <div class="col-md-4"><em>Kurzbeschreibung:</em><br>{{ firma.description }}
-        </div>
-        <div class="col-md-4"><em>Ansprechpartner:</em><br>
-            <ul>
-            {% if firma.ansprechpartner is defined %}
-                {% for person in firma.ansprechpartner %}
-                    <li>{{ person.prename }} {{ person.surname }}</li><br>
-                {% endfor %}
+            {% else %}
+            <strong>
+                {{ firma.name }}
+            </strong><br>
             {% endif %}
+            {{ firma.street }}<br>
+            {{ firma.postcode }} {{ firma.city }}<br>
+            {{ firma.description }}
+            </address>
+        </td>
+        <td>
             <ul>
-        </div>
-    </div>
-{% endfor %}
-    {% endif %}
+            {% for person in firma.ansprechpartner %}
+                <li>{{ person.prename }} {{ person.surname }}<br>
+                    {{ person.position }}<br>
+                    {{ person.phone }} / {{ person.email }}</li>
+            {% endfor %}
+            </ul>
+        </td>
+        <td>
+            <ul>
+            {% for information in firma.information %}
+                <li>{{ information.title }}<br>
+                {{ information.content }}</li>
+            {% endfor %}
+            </ul>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endif %}
 </div>
 {% endblock %}
 
