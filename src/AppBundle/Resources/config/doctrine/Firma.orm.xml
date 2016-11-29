@@ -23,5 +23,10 @@
                 <cascade-remove/>
             </cascade>
 		</one-to-many>
+		<one-to-many field="information" target-entity="Information" mapped-by="firma" cascade="remove">
+            <cascade>
+                <cascade-remove/>
+            </cascade>
+		</one-to-many>
 	</entity>
 </doctrine-mapping>

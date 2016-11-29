@@ -17,6 +17,7 @@ class Ansprechpartner
      * @var string
      */
     private $surname;
+    
     /**
      * @var string
      */
@@ -33,7 +34,9 @@ class Ansprechpartner
     private $email;
 
     /**
-     * @var integer
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
@@ -41,7 +44,6 @@ class Ansprechpartner
      * @var Firma
      */
     private $firma;
-
 
     /**
      * Set Prename
@@ -158,7 +160,9 @@ class Ansprechpartner
         return $this->email;
     }
 
-    
+    /**
+     * Set firma
+     */
     public function setFirma(\Appbundle\Entity\Firma $firma)
     {
         $this->firma = $firma;
@@ -166,7 +170,9 @@ class Ansprechpartner
         return $this;
     }
 
-    
+    /**
+     * Get firma
+     */
     public function getFirma()
     {
         return $this->firma;

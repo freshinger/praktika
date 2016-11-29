@@ -21,5 +21,10 @@
         
         <!-- Relationships -->
         <!-- Cascade Optionen -->
-        </entity>
+        <one-to-many field="information" target-entity="Information" mapped-by="user" cascade="remove">
+            <cascade>
+                <cascade-remove/>
+            </cascade>
+		</one-to-many>
+    </entity>
 </doctrine-mapping>

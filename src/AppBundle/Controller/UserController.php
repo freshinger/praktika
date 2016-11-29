@@ -130,17 +130,17 @@ class UserController extends Controller { /* User Funktionen */
         $user = $this->getDoctrine()
                 ->getRepository('AppBundle:User')
                 ->find($uid);
-        $relationships = $this->getDoctrine()
-                ->getRepository('AppBundle:Kontakt')
+        $informationdata = $this->getDoctrine()
+                ->getRepository('AppBundle:Information')
                 ->findByUser($user);
         $praktika = $this->getDoctrine()
                 ->getRepository('AppBundle:Praktikum')
                 ->findByUser($user);
         $em = $this->getDoctrine()->getManager();
-        foreach($relationships as $relationship){
-            $em->remove($relationship);
+        foreach($informationdata as $information){
+            $em->remove($information);
         }
-        foreach ($praktika AS $praktikum) {
+        foreach ($praktika AS $praktikum){
             $em->remove($praktikum);
         }
         $em->remove($user);
@@ -164,15 +164,15 @@ class UserController extends Controller { /* User Funktionen */
         $praktika = $this->getDoctrine()
                 ->getRepository('AppBundle:Praktikum')
                 ->findByUser($user);
-        $kontakte = $this->getDoctrine()
-                ->getRepository('AppBundle:Kontakt')
+        $informationdata = $this->getDoctrine()
+                ->getRepository('AppBundle:Information')
                 ->findByUser($user);
         $em = $this->getDoctrine()->getManager();
         foreach ($praktika AS $praktikum) {
             $em->remove($praktikum);
         }
-        foreach ($kontakte AS $kontakt) {
-            $em->remove($kontakt);
+        foreach ($informationdata AS $information) {
+            $em->remove($information);
         }
         $em->remove($user);
         $em->flush();

@@ -96,7 +96,7 @@ class CompanyController extends Controller
         ));
     }
 	
-	/** Firmeneintrag aus der Datenbank löschen, Ansprechpartner zu dieser Firma werden ebenfalls gelöscht (cascade)
+	/** Firmeneintrag aus der Datenbank löschen, Ansprechpartner, Informationen und Praktikas in Verbindung zu dieser Firma werden ebenfalls gelöscht
      * @Route("/delete/firma/{id}", name="deletefirma")
      * @Security("has_role('ROLE_ADMIN')")
      */
@@ -113,18 +113,17 @@ class CompanyController extends Controller
 		$praktika = $this->getDoctrine()
                         ->getRepository('AppBundle:Praktikum')
 						->findByFirma($firma);
-		$kontakte = $this->getDoctrine()
-                        ->getRepository('AppBundle:Kontakt')
-						->findByAnsprechpartner($ansprechpartner);
+						
+		$informationdata = $this->getDoctrine()
+                        ->getRepository('AppBundle:Information')
+						->findByFirma($firma);
 		
         $em = $this->getDoctrine()->getManager();
-		foreach($praktika AS $praktikum)
-		{
+		foreach($praktika AS $praktikum){
 			$em->remove($praktikum);
 		}
-		foreach($kontakte AS $kontakt)
-		{
-			$em->remove($kontakt);
+		foreach($informationdata AS $information){
+			$em->remove($information);
 		}
         $em->remove($firma);
         $em->flush();
