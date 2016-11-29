@@ -26,7 +26,6 @@ body { padding-top: 50px; }
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                 <ul class="nav navbar-nav navbar-left">
                     <li role="presentation"><a href="{{ path('edituser') }}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> {{ app.user.username }}</a></li>
-                    <li role="presentation"><a href="{{ path('showrelationships') }}">Kontakte</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li role="presentation"><a href="{{ path('logout') }}"><span class="glyphicon glyphicon-off" aria-hidden="true"></span> Logout</a></li>
@@ -79,6 +78,7 @@ body { padding-top: 50px; }
                         <div class="list-group">
                             <a href="{{ path('formfirma') }}" class="list-group-item"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> eintragen</a>
                             <a href="{{ path('showfirma') }}" class="list-group-item"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> anzeigen</a>
+                            <a href="{{ path('homepage') }}" class="list-group-item"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Suchen</a>
                         </div>
                     </div>
                 </div>

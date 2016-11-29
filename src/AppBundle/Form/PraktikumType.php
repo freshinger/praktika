@@ -18,13 +18,10 @@ class PraktikumType extends AbstractType
 			->add('beruf', 'Symfony\Component\Form\Extension\Core\Type\TextType')
 			->add('user','Symfony\Bridge\Doctrine\Form\Type\EntityType', array(
                             'class' => 'AppBundle:User',
-                            'choice_label' => 'username'
-                        ))
+                            'choice_label' => 'username'))
 			->add('firma', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', array(
                             'class' => 'AppBundle:Firma',
-                            'choice_label' => 'name'
-                        ))
-		;
+                            'choice_label' => 'name'));
 	}
 	
 	public function configureOptions(OptionsResolver $resolver)

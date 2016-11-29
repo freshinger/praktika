@@ -16,9 +16,8 @@ class FirmaType extends AbstractType
 			->add('city', 'Symfony\Component\Form\Extension\Core\Type\TextType')
 			->add('postcode', 'Symfony\Component\Form\Extension\Core\Type\TextType')
 			->add('website', 'Symfony\Component\Form\Extension\Core\Type\TextType')
-			->add('description', 'Symfony\Component\Form\Extension\Core\Type\TextType', array(
-				'required' => false))
-		;
+			->add('description', 'Symfony\Component\Form\Extension\Core\Type\TextareaType', array(
+				'attr' => array('cols' => '50', 'rows' => '6')));
 	}
 	
 	public function configureOptions(OptionsResolver $resolver)

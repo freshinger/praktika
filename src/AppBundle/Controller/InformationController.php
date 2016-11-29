@@ -28,6 +28,12 @@ class InformationController extends Controller
 			
         if($form->isSubmitted() && $form->isValid())
 		{
+			$uid = $this->get('security.token_storage')->getToken()
+                    ->getUser()->getId();
+            $user = $this->getDoctrine()
+                        ->getRepository('AppBundle:User')
+                        ->find($uid);
+            $information->setUser($user);
             $firma = $this->getDoctrine()
 							->getRepository('AppBundle:Firma')
 							->find($id);

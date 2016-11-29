@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 
  /**
  * @ORM\Entity(repositoryClass="AppBundle\Entity\UserRepository")
@@ -85,12 +86,18 @@ class User implements UserInterface, \Serializable{
     private $role;
     
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $information;
+    
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->isActive = true;
         $this->role = 'ROLE_USER';
+        $this->information = new ArrayCollection();
     }
     
     /**
@@ -361,6 +368,39 @@ class User implements UserInterface, \Serializable{
             // see section on salt below
             // $this->salt
         ) = unserialize($serialized);
+    }
+    
+    /**
+     * Add information
+     *
+     * @param \Information $information
+     * @return User
+     */
+    public function addInformation(\AppBundle\Entity\Information $information)
+    {
+        $this->information[] = $information;
+        
+        return $this;
+    }
+
+    /**
+     * Remove information
+     *
+     * @param \Information $information
+     */
+    public function removeInformation(\AppBundle\Entity\Information $information)
+    {
+        $this->information->removeElement($information);
+    }
+
+    /**
+     * Get information
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getInformation()
+    {
+        return $this->information;
     }
 }
 

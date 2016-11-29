@@ -21,8 +21,7 @@ class AnsprechpartnerType extends AbstractType
 			->add('phone', 'Symfony\Component\Form\Extension\Core\Type\TextType', array(
 				'required' => false))
 			->add('email', 'Symfony\Component\Form\Extension\Core\Type\EmailType', array(
-				'required' => false))
-                        ;
+				'required' => false));
 	}
 	
 	public function configureOptions(OptionsResolver $resolver)

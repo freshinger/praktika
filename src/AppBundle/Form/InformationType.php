@@ -25,8 +25,9 @@ class InformationType extends AbstractType
                             )))
 			->add('datum', 'Symfony\Component\Form\Extension\Core\Type\DateType')
 			->add('title', 'Symfony\Component\Form\Extension\Core\Type\TextType')
-			->add('content', 'Symfony\Component\Form\Extension\Core\Type\TextareaType')
-                        ;
+			->add('content', 'Symfony\Component\Form\Extension\Core\Type\TextareaType', array(
+				'attr' => array('cols' => '50', 'rows' => '6')
+			));
 	}
 	
 	public function configureOptions(OptionsResolver $resolver)

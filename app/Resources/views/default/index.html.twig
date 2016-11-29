@@ -33,7 +33,7 @@ Praktikums-Firmen-Verwaltung
             <ul>
             {% if firma.ansprechpartner is defined %}
                 {% for person in firma.ansprechpartner %}
-                    <li>{{ person.prename }} {{ person.surname }}</li>
+                    <li>{{ person.prename }} {{ person.surname }}</li><br>
                 {% endfor %}
             {% endif %}
             <ul>
