@@ -95,7 +95,7 @@ class UserController extends Controller { /* User Funktionen */
                 ->find($id);
         $form = $this->createForm("AppBundle\Form\ProfilType", $user);
         $form->handleRequest($request);
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
             if ($request->request->has('delete')) {
                 return $this->redirectToRoute('removeuser', array(
@@ -103,21 +103,57 @@ class UserController extends Controller { /* User Funktionen */
                             'message' => "Nutzer wurde erfolgreich gelöscht!",
                 ));
             }
-
+            
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
-
+            
             return $this->redirectToRoute('showuser', array(
                         'id' => $id,
                         'message' => "Daten wurden erfolgreich gespeichert!",
             ));
         }
-
+        
         return $this->render('default/showuser.html.twig', array(
                     'user' => $user,
                     'form' => $form->createView(),
                     'message' => $request->query->get('message')
+        ));
+    }
+    
+    /** Benutzer in der Datenbank suchen anhand von Username, Email oder Nachname
+     * @Route("/search/user", name="searchuser")
+     * @Security("has_role('ROLE_STAFF')")
+     */
+    public function searchAction(Request $request)
+    {
+		$defaultData = array('message' => 'Type your message here');
+		$form = $this->createFormBuilder($defaultData)
+				->add('searchbar', "Symfony\Component\Form\Extension\Core\Type\TextType")
+				->getForm();
+		
+		$form->handleRequest($request);
+		
+		if ($form->isSubmitted() && $form->isValid()) {
+			$value = $form->getData();
+			$em = $this->getDoctrine()->getManager();
+			$query = $em->createQuery(
+				"SELECT u
+				FROM AppBundle:User u
+				WHERE u.username LIKE :value
+				OR u.surname LIKE :value
+				OR u.email LIKE :value
+				ORDER BY u.surname ASC"
+			)->setParameter('value', '%'.$value['searchbar'].'%');
+			$firma = $query->getResult();
+			
+			if (!empty($user)){
+				return $this->render('default/searchuser.html.twig', array('users' => $user, 'form' => $form->createView()));
+			}
+		}
+        return $this->render('default/searchuser.html.twig', array(
+            'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
+			'form' => $form->createView()
         ));
     }
 

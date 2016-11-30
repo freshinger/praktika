@@ -50,7 +50,7 @@ class ContactpersonController extends Controller
 	
 	/** Einen Ansprechpartner aus der Datenbank mit Editierfunktion anzeigen
      * @Route("/edit/contact/{id}", name="editcontact")
-     * @Security("has_role('ROLE_USER')")
+     * @Security("has_role('ROLE_STAFF')")
      */
     public function editContactAction(Request $request, $id)
     {

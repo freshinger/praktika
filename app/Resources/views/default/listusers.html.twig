@@ -13,7 +13,7 @@ Teilnehmer
             Adresse
             </th>
             <th>
-            Kontakte
+            Informationen
             </th>
         </tr>
     </thead>
@@ -25,17 +25,27 @@ Teilnehmer
     {{ user.email }}
     </td>
     <td>
-    {% if user.prename is not empty %}
-    {{ user.prename }} {{ user.surname }}<br>
-    {{ user.street }}<br>
-    {{ user.postcode }} {{ user.city }}<br>
-    Tel.: {{ user.phone }}
-    {% else %}
-    <a href="{{ path('showuser', {'id': user.id}) }}">Bitte Daten vervollständigen</a>
-    {% endif %}
+        {% if user.prename is not empty %}
+            {{ user.prename }} 
+        {% elseif user.surname is not empty %}
+            {{ user.surname }}<br>
+        {% elseif user.street is not empty %}
+            {{ user.street }}<br>
+        {% elseif user.postcode is not empty %}
+            {{ user.postcode }} 
+        {% elseif user.city is not empty %}
+            {{ user.city }}<br>
+        {% elseif user.phone is not empty %}
+            Tel.: {{ user.phone }}
+        {% endif %}<br>
+        <a href="{{ path('showuser', {'id': user.id}) }}">Daten bearbeiten</a>
     </td>
     <td>
-    <a href="{{ path('showrelationshipsbyid', {'id': user.id}) }}">Kontakte einsehen</a>
+        <ul>
+        {% for information in user.information %}
+            <li><a href="{{ path('editinformation', {'id': information.id }) }}">{{ information.title }}</a></li>
+        {% endfor %}
+        </ul>
     </td>
 </tr>
 {% endfor %}

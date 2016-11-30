@@ -56,6 +56,9 @@ Praktikums-Firmen-Verwaltung
                     {{ person.position }}<br>
                     {{ person.phone }} / {{ person.email }}</li>
             {% endfor %}
+            {% if is_granted('ROLE_USER') %}
+            <li><a href="{{ path('formcontact', {'id': firma.id}) }}">Neu Hinzufügen</a></li>
+            {% endif %}
             </ul>
         </td>
         <td>
@@ -64,6 +67,9 @@ Praktikums-Firmen-Verwaltung
                 <li>{{ information.title }}<br>
                 {{ information.content }}</li>
             {% endfor %}
+            {% if is_granted('ROLE_USER') %}
+            <li><a href="{{ path('forminformation', {'id': firma.id}) }}">Neu Hinzufügen</a></li>
+            {% endif %}
             </ul>
         </td>
     </tr>
@@ -72,12 +78,4 @@ Praktikums-Firmen-Verwaltung
 </table>
 {% endif %}
 </div>
-{% endblock %}
-
-{% block javascripts %}
-{{ parent() }}
-    {% javascripts '@AppBundle/Resources/public/js/*'
-                    '@AppBundle/Resources/public/js/searchtool.js' %}
-        <script type="text/javascript" src="{{ asset_url }}"></script>
-    {% endjavascripts %}
 {% endblock %}
