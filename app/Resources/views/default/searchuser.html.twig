@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+Praktikums-Firmen-Verwaltung
+{% endblock %}
+{% block body %}
+<div class="row">
+    <div class="center-block text-center">
+    {{ form_start(form) }}<span class="glyphicon glyphicon-search" aria-hidden="true"></span> 
+    {{ form_label(form.searchbar, 'Usersuche') }} 
+    {{ form_widget(form.searchbar) }}
+    <input type="submit" value="Suche" class="btn btn-default"/>
+    {{ form_end(form) }}
+    </div>
+</div>
+<div id="results">
+{% if users is defined %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+            Login-Daten 
+            </th>
+            <th>
+            Adresse
+            </th>
+            <th>
+            Informationen
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for user in users %}
+    <tr>
+        <td>
+            <a href="{{ path('showuser', {'id': user.id}) }}">{{ user.username }}</a><br> 
+            {{ user.email }}
+        <td>
+            <adress>
+            {% if user.prename is not empty %}
+            {{ user.prename }} 
+            {% elseif user.surname is not empty %}
+            {{ user.surname }}<br>
+            {% elseif user.street is not empty %}
+            {{ user.street }}<br>
+            {% elseif user.postcode is not empty %}
+            {{ user.postcode }} 
+            {% elseif user.city is not empty %}
+            {{ user.city }}<br>
+            {% elseif user.phone is not empty %}
+            Tel.: {{ user.phone }}
+            {% endif %}
+            </adress>
+            <a href="{{ path('showuser', {'id': user.id}) }}">Daten bearbeiten</a>
+        </td>
+        <td>
+            <ul>
+            {% for information in user.information %}
+                <li><a href="{{ path('editinformation', {'id': information.id }) }}">{{ information.title }}</a></li>
+            {% endfor %}
+            </ul>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+</div>
+{% endblock %}

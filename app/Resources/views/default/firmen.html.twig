@@ -45,6 +45,9 @@ Firmen
                     {{ person.position }}<br>
                     {{ person.phone }} / {{ person.email }}</li>
             {% endfor %}
+            {% if is_granted('ROLE_USER') %}
+            <li><a href="{{ path('formcontact', {'id': firma.id}) }}">Neu Hinzufügen</a></li>
+            {% endif %}
             </ul>
         </td>
         <td>
@@ -53,6 +56,9 @@ Firmen
                 <li>{{ information.title }}<br>
                 {{ information.content }}</li>
             {% endfor %}
+            {% if is_granted('ROLE_USER') %}
+            <li><a href="{{ path('forminformation', {'id': firma.id}) }}">Neu Hinzufügen</a></li>
+            {% endif %}
             </ul>
         </td>
     </tr>

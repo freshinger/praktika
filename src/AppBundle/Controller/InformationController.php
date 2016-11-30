@@ -56,7 +56,7 @@ class InformationController extends Controller
 	
 	/** Eine Firmeninformation aus der Datenbank mit Editierfunktion anzeigen
      * @Route("/edit/information/{id}", name="editinformation")
-     * @Security("has_role('ROLE_USER')")
+     * @Security("has_role('ROLE_STAFF')")
      */
     public function editInformationAction(Request $request, $id)
     {
