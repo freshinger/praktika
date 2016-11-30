@@ -69,9 +69,9 @@ Praktikums-Firmen-Verwaltung
             <ul>
             {% for information in firma.information %}
                 {% if is_granted('ROLE_STAFF') %}
-                    <li><a href="{{ path('editinformation', {'id': information.id }) }}">{{ information.title }}</a></li>
+                    <li><a href="{{ path('editinformation', {'id': information.id }) }}">{{ information.title }}</a> vom {{ information.datum|date('d.m.Y') }}</li>
                 {% else %}
-                    <li><strong>{{ information.title }}</strong><br>
+                    <li><strong>{{ information.title }}</strong> vom {{ information.datum|date('d.m.Y') }}<br>
                 {% endif %}
                 {{ information.content }}</li>
             {% endfor %}
