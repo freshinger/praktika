@@ -145,7 +145,7 @@ class UserController extends Controller { /* User Funktionen */
 				OR u.email LIKE :value
 				ORDER BY u.surname ASC"
 			)->setParameter('value', '%'.$value['searchbar'].'%');
-			$firma = $query->getResult();
+			$user = $query->getResult();
 			
 			if (!empty($user)){
 				return $this->render('default/searchuser.html.twig', array('users' => $user, 'form' => $form->createView()));

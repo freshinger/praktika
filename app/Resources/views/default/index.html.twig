@@ -52,7 +52,11 @@ Praktikums-Firmen-Verwaltung
         <td>
             <ul>
             {% for person in firma.ansprechpartner %}
-                <li>{{ person.prename }} {{ person.surname }}<br>
+                {% if is_granted('ROLE_STAFF') %}
+                    <li><a href="{{ path('editcontact', {'id': person.id }) }}">{{ person.prename }} {{ person.surname }}</a></li>
+                {% else %}
+                    <li><strong>{{ person.prename }} {{ person.surname }}</strong><br>
+                {% endif %}
                     {{ person.position }}<br>
                     {{ person.phone }} / {{ person.email }}</li>
             {% endfor %}
@@ -64,7 +68,11 @@ Praktikums-Firmen-Verwaltung
         <td>
             <ul>
             {% for information in firma.information %}
-                <li>{{ information.title }}<br>
+                {% if is_granted('ROLE_STAFF') %}
+                    <li><a href="{{ path('editinformation', {'id': information.id }) }}">{{ information.title }}</a></li>
+                {% else %}
+                    <li><strong>{{ information.title }}</strong><br>
+                {% endif %}
                 {{ information.content }}</li>
             {% endfor %}
             {% if is_granted('ROLE_USER') %}

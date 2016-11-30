@@ -58,24 +58,5 @@
     {% endif %}
     {{ form_errors(form) }}
     {{ form_end(form) }}
-    <h3>Ansprechpartner</h3>
-    <ul>
-    {% if firma.ansprechpartner is defined %}
-        {% for ansprechpartner in firma.ansprechpartner %}
-            <li><a href="{{ path('editcontact', {'id': ansprechpartner.id }) }}">{{ ansprechpartner.prename }} {{ ansprechpartner.surname }}</a></li>
-        {% endfor %}
-    {% endif %}
-        <li><a href="{{ path('formcontact', {'id': firma.id}) }}">Neu Hinzufügen</a></li>
-    </ul>
-    
-    <h3>Informationen</h3>
-    <ul>
-    {% if firma.information is defined %}
-        {% for information in firma.information %}
-            <li><a href="{{ path('editinformation', {'id': information.id }) }}">{{ information.title }}</a></li>
-        {% endfor %}
-    {% endif %}
-        <li><a href="{{ path('forminformation', {'id': firma.id}) }}">Neu Hinzufügen</a></li>
-    </ul>
     <br>Zurück zur <a href="{{ path('homepage') }}">Hauptseite</a>
 {% endblock %}
