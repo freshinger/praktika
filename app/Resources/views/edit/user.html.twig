@@ -1,65 +1,83 @@
 {% extends 'base.html.twig' %}
-
+{% block title %}Profil{% endblock %}
+{% block header %}Profil{% endblock %}
+{% block stylesheets %}
+{{ parent() }}
+<style>
+    input {
+        display: block;
+    }  
+    form {
+        margin-bottom: 10px;
+    }
+    
+</style>
+{% endblock %}
 {% block body %}
-<h2>Profil</h2>
-    {{ form_start(form) }}
-    <fieldset>
-        <legend>Bitte geben Sie Ihre Daten ein</legend>
-        <table>
-            <tr>
-                <td>{{ form_label(form.username, 'Benutzername') }}</td>
-                <td>{{ form_widget(form.username) }}</td>
-                <td>{{ form_errors(form.username) }}</td>
-            </tr>
-            <tr>
-                <td>{{ form_label(form.email, 'E-Mail') }}</td>
-                <td>{{ form_widget(form.email) }}</td>
-                <td>{{ form_errors(form.email) }}</td>
-            </tr>
-            {# <tr>
-                <td>{{ form_label(form.password.first) }}</td>
-                <td>{{ form_widget(form.password.first) }}</td>
-                <td>{{ form_errors(form.password.first) }}</td>
-            </tr>
-            <tr>
-                <td>{{ form_label(form.password.second) }}</td>
-                <td>{{ form_widget(form.password.second) }}</td>
-                <td>{{ form_errors(form.password.second) }}</td>
-            </tr> #}
-            <tr>
-                <td>{{ form_label(form.prename, 'Vorname') }}</td>
-                <td>{{ form_widget(form.prename) }}</td>
-                <td>{{ form_errors(form.prename) }}</td>
-            </tr>
-            <tr>
-                <td>{{ form_label(form.surname, 'Nachname') }}</td>
-                <td>{{ form_widget(form.surname) }}</td>
-                <td>{{ form_errors(form.surname) }}</td>
-            </tr>
-            <tr>
-                <td>{{ form_label(form.street, 'Strasse und Hausnummer') }}</td>
-                <td>{{ form_widget(form.street) }}</td>
-                <td>{{ form_errors(form.street) }}</td>
-            </tr>
-            <tr>
-                <td>{{ form_label(form.postcode, 'PLZ') }}</td>
-                <td>{{ form_widget(form.postcode) }}</td>
-                <td>{{ form_errors(form.postcode) }}</td>
-            </tr>
-            <tr>
-                <td>{{ form_label(form.city, 'Stadt') }}</td>
-                <td>{{ form_widget(form.city) }}</td>
-                <td>{{ form_errors(form.city) }}</td>
-            </tr>
-            <tr>
-                <td>{{ form_label(form.phone, 'Telefonnummer') }}</td>
-                <td>{{ form_widget(form.phone) }}</td>
-                <td>{{ form_errors(form.phone) }}</td>
-            </tr>
-        </table>
-    <input type="submit" value="speichern">
-    </fieldset>
-    {% if is_granted('ROLE_USER') %}
+<div class="row">
+    <div class="col-md-6">
+        <h2>Daten</h2>
+        {{ form_start(form) }}
+        <div class="form-group">
+        {{ form_label(form.username, 'Benutzername') }}
+        {{ form_widget(form.username) }}
+        {{ form_errors(form.username) }}
+        </div>
+        <div class="form-group">
+        {{ form_label(form.email, 'E-Mail') }}
+        {{ form_widget(form.email) }}
+        {{ form_errors(form.email) }}
+        </div>
+        {# <tr>
+            <td>{{ form_label(form.password.first) }}</td>
+            <td>{{ form_widget(form.password.first) }}</td>
+            <td>{{ form_errors(form.password.first) }}</td>
+        </tr>
+        <tr>
+            <td>{{ form_label(form.password.second) }}</td>
+            <td>{{ form_widget(form.password.second) }}</td>
+            <td>{{ form_errors(form.password.second) }}</td>
+        </tr> #}
+        <div class="form-group">
+        {{ form_label(form.prename, 'Vorname') }}
+        {{ form_widget(form.prename) }}
+        {{ form_errors(form.prename) }}
+        </div>
+        <div class="form-group">
+        {{ form_label(form.surname, 'Nachname') }}
+        {{ form_widget(form.surname) }}
+        {{ form_errors(form.surname) }}
+        </div>
+        <div class="form-group">
+        {{ form_label(form.street, 'Strasse und Hausnummer') }}
+        {{ form_widget(form.street) }}
+        {{ form_errors(form.street) }}
+        </div>
+        <div class="form-group">
+        {{ form_label(form.postcode, 'PLZ') }}
+        {{ form_widget(form.postcode) }}
+        {{ form_errors(form.postcode) }}
+        </div>
+        <div class="form-group">
+        {{ form_label(form.city, 'Stadt') }}
+        {{ form_widget(form.city) }}
+        {{ form_errors(form.city) }}
+        </div>
+        <div class="form-group">
+        {{ form_label(form.phone, 'Telefonnummer') }}
+        {{ form_widget(form.phone) }}
+        {{ form_errors(form.phone) }}
+        </div>
+    <input type="submit" value="speichern" class="btn btn-default">
+    {{ form_errors(form) }}
+    {{ form_end(form) }}
+    </div>
+    <div class="col-md-6">
+        <h2>Optionen</h2>
+        <a href="{{ path('changepassword') }}">Passwort ändern</a>
+    </div>
+</div>
+{% if is_granted('ROLE_USER') %}
 <div class="row">
     <div class="col-md-4">
         <div class="panel panel-danger">
@@ -72,8 +90,6 @@
         </div>
     </div>
 </div>
-    {% endif %}
-    {{ form_errors(form) }}
-    {{ form_end(form) }}
-    <br>Zurück zur <a href="{{ path('homepage') }}">Hauptseite</a>
+{% endif %}
+<br>Zurück zur <a href="{{ path('homepage') }}">Hauptseite</a>
 {% endblock %}

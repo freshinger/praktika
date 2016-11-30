@@ -220,4 +220,39 @@ class UserController extends Controller { /* User Funktionen */
         return $this->redirectToRoute('showusers');
     }
 
+/** Passwort ändern
+     * @Route("/edit/password", name="changepassword")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function editUserPasswordAction(Request $request) {
+        $uid = $this->get('security.token_storage')->getToken()->getUser()->getId();
+        $user = $this->getDoctrine()
+                ->getRepository('AppBundle:User')
+                ->find($uid);
+        $form = $this->createForm("AppBundle\Form\UserPasswordType", $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+            $factory = $this->get('security.encoder_factory');
+            $encoder = $factory->getEncoder($user);
+            $password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
+            $user->setPassword($password);
+            
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+            
+            $msg = "Passwort wurde erfolgreich geändert!";
+            return $this->render('default/confirm.html.twig', array(
+                        'message' => $msg
+            ));
+        }
+
+        return $this->render('edit/password.html.twig', array(
+                    'user' => $user,
+                    'form' => $form->createView()
+        ));
+    }    
+    
 }
