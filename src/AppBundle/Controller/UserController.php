@@ -242,6 +242,11 @@ class UserController extends Controller { /* User Funktionen */
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
+            
+            $msg = "Passwort wurde erfolgreich geändert!";
+            return $this->render('default/confirm.html.twig', array(
+                        'message' => $msg
+            ));
         }
 
         return $this->render('edit/password.html.twig', array(
