@@ -25,12 +25,12 @@ class ContactpersonController extends Controller
         $form = $this->createForm('AppBundle\Form\AnsprechpartnerType', $ansprechpartner);
 		
         $form->handleRequest($request);
-			
+		$firma = $this->getDoctrine()
+						->getRepository('AppBundle:Firma')
+						->find($id);
         if($form->isSubmitted() && $form->isValid())
 		{
-            $firma = $this->getDoctrine()
-							->getRepository('AppBundle:Firma')
-							->find($id);
+            
             $ansprechpartner->setFirma($firma);
 			
             $em = $this->getDoctrine()->getManager();
@@ -44,7 +44,8 @@ class ContactpersonController extends Controller
         }
 		
         return $this->render('default/form/contact.html.twig', array(
-                'form' => $form->createView()
+                'form' => $form->createView(),
+				'firma' => $firma
         ));
     }
 	
