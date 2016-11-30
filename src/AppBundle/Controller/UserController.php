@@ -72,7 +72,7 @@ class UserController extends Controller { /* User Funktionen */
     }
 
     /** Zeigt eine Liste aller registrierten Benutzer für die Mitarbeiter
-     * @Route("/show/users", name="showusers")
+     * @Route("/show/user", name="showusers")
      * @Security("has_role('ROLE_STAFF')")
      */
     public function showUsersAction(Request $request) {

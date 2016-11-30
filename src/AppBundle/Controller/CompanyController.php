@@ -59,7 +59,7 @@ class CompanyController extends Controller
     }
 	
 	/** Eine Firma aus der Datenbank mit Editierfunktion anzeigen
-     * @Route("/edit/firma/{id}", name="editfirma")
+     * @Route("/show/firma/{id}", name="editfirma")
      * @Security("has_role('ROLE_STAFF')")
      */
     public function editFirmaAction(Request $request, $id)
