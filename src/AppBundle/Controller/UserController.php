@@ -114,7 +114,7 @@ class UserController extends Controller { /* User Funktionen */
             ));
         }
         
-        return $this->render('default/showuser.html.twig', array(
+        return $this->render('edit/user.html.twig', array(
                     'user' => $user,
                     'form' => $form->createView(),
                     'message' => $request->query->get('message')
@@ -220,7 +220,7 @@ class UserController extends Controller { /* User Funktionen */
         return $this->redirectToRoute('showusers');
     }
 
-/** Passwort ändern
+/** Eigenes Passwort ändern
      * @Route("/edit/password", name="changepassword")
      * @Security("has_role('ROLE_USER')")
      */
@@ -254,5 +254,38 @@ class UserController extends Controller { /* User Funktionen */
                     'form' => $form->createView()
         ));
     }    
-    
+    /** Passwort anderer User ändern
+     * @Route("/edit/password/{id}", name="changepasswordof")
+     * @Security("has_role('ROLE_STAFF')")
+     */
+    public function editUserPasswordOfAction(Request $request, $id) {
+        
+        $user = $this->getDoctrine()
+                ->getRepository('AppBundle:User')
+                ->find($id);
+        $form = $this->createForm("AppBundle\Form\UserPasswordType", $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+            $factory = $this->get('security.encoder_factory');
+            $encoder = $factory->getEncoder($user);
+            $password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
+            $user->setPassword($password);
+            
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+            
+            $msg = "Passwort wurde erfolgreich geändert!";
+            return $this->render('default/confirm.html.twig', array(
+                        'message' => $msg
+            ));
+        }
+
+        return $this->render('edit/password.html.twig', array(
+                    'user' => $user,
+                    'form' => $form->createView()
+        ));
+    } 
 }

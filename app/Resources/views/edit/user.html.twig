@@ -14,9 +14,20 @@
 </style>
 {% endblock %}
 {% block body %}
+{% if message is defined and message is not empty %}
+<div class="panel panel-success">
+  <div class="panel-heading">
+    <h3 class="panel-title"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> </h3>
+  </div>
+  <div class="panel-body">
+    {{ message }}
+  </div>
+</div>
+{% endif %}
 <div class="row">
     <div class="col-md-6">
         <h2>Daten</h2>
+        
         {{ form_start(form) }}
         <div class="form-group">
         {{ form_label(form.username, 'Benutzername') }}
@@ -28,16 +39,6 @@
         {{ form_widget(form.email) }}
         {{ form_errors(form.email) }}
         </div>
-        {# <tr>
-            <td>{{ form_label(form.password.first) }}</td>
-            <td>{{ form_widget(form.password.first) }}</td>
-            <td>{{ form_errors(form.password.first) }}</td>
-        </tr>
-        <tr>
-            <td>{{ form_label(form.password.second) }}</td>
-            <td>{{ form_widget(form.password.second) }}</td>
-            <td>{{ form_errors(form.password.second) }}</td>
-        </tr> #}
         <div class="form-group">
         {{ form_label(form.prename, 'Vorname') }}
         {{ form_widget(form.prename) }}
@@ -74,7 +75,11 @@
     </div>
     <div class="col-md-6">
         <h2>Optionen</h2>
+        {% if is_granted('ROLE_STAFF') %}
+         <a href="{{ path('changepasswordof', {'id': user.id}) }}">Passwort ändern</a>    
+        {% else %}
         <a href="{{ path('changepassword') }}">Passwort ändern</a>
+        {% endif %}
     </div>
 </div>
 {% if is_granted('ROLE_USER') %}
