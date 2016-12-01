@@ -23,7 +23,8 @@ class InformationType extends AbstractType
                                 'persönlich' => 'persönlich',
                                 'sonst' => 'anderes'
                             )))
-			->add('datum', 'Symfony\Component\Form\Extension\Core\Type\DateType')
+			->add('datum', 'Symfony\Component\Form\Extension\Core\Type\DateType', array(
+				'required' => false))
 			->add('title', 'Symfony\Component\Form\Extension\Core\Type\TextType')
 			->add('content', 'Symfony\Component\Form\Extension\Core\Type\TextareaType', array(
 				'attr' => array('cols' => '50', 'rows' => '6')
