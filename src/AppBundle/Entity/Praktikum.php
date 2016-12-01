@@ -40,7 +40,12 @@ class Praktikum
      */
     private $firma;
 
-
+    public function __construct()
+    {
+        $this->startdatum = new \DateTime();
+        $this->enddatum = new \DateTime();
+    }
+    
     /**
      * Set startdatum
      *

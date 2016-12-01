@@ -17,11 +17,16 @@ Firmeninformation eintragen
                 <td>{{ form_widget(form.type) }}</td>
                 <td>{{ form_errors(form.type) }}</td>
             </tr>
+            {% if is_granted('ROLE_STAFF') and information is defined %}
             <tr>
                 <td>{{ form_label(form.datum, 'Datum') }}</td>
                 <td>{{ form_widget(form.datum) }}</td>
                 <td>{{ form_errors(form.datum) }}</td>
             </tr>
+            {% else %}
+                {# field has to set as rendered otherwise it will be displayed at the end #}
+                {% do form.datum.setRendered %}
+            {% endif %}
             <tr>
                 <td>{{ form_label(form.title, 'Titel') }}</td>
                 <td>{{ form_widget(form.title) }}</td>

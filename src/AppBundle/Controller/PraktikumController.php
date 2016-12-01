@@ -84,7 +84,7 @@ class PraktikumController extends Controller
                            ->getRepository('AppBundle:Praktikum')
                            ->find($id);
         $form = $this->createForm("AppBundle\Form\PraktikumType", $praktikum);
-	$form->handleRequest($request);
+		$form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
             if ($request->request->has('delete'))
