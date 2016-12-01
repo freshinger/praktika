@@ -39,7 +39,9 @@ Ansprechpartner eintragen
                 <td>{{ form_errors(form.email) }}</td>
             </tr>
         </table>
-    <input type="submit" value="speichern">
+    <p>
+        <input type="submit" value="speichern" class="btn btn-default">
+    </p>
     </fieldset>
     {%if ansprechpartner is defined and is_granted('ROLE_ADMIN')%}
 <div class="row">

@@ -38,7 +38,9 @@ Firmeninformation eintragen
                 <td>{{ form_errors(form.content) }}</td> 
             </tr>
         </table>
-    <input type="submit" value="erstellen">
+    <p>
+        <input type="submit" value="erstellen" class="btn btn-default">
+    </p>
     </fieldset>
     {%if information is defined and is_granted('ROLE_ADMIN')%}
 <div class="row">

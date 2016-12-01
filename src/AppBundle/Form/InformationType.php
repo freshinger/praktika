@@ -17,11 +17,11 @@ class InformationType extends AbstractType
 		$builder
 			->add('type', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', array(
                             'choices' => array(
-                                'Telefongespräch' => 'telefon',
-                                'E-Mailaustausch' => 'email',
-                                'Praktikumsbesuch' => 'praktikumsbesuch',
+                                'telefon' => 'Telefongespräch',
+                                'email' => 'E-Mailaustausch',
+                                'praktikumsbesuch' => 'Praktikumsbesuch',
                                 'persönlich' => 'persönlich',
-                                'anderes' => 'sonst'
+                                'sonst' => 'anderes'
                             )))
 			->add('datum', 'Symfony\Component\Form\Extension\Core\Type\DateType')
 			->add('title', 'Symfony\Component\Form\Extension\Core\Type\TextType')
