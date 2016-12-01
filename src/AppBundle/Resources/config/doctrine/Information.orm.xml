@@ -8,7 +8,7 @@
 			<generator strategy="AUTO" />
         </id>
 		
-		<field name="datum" type="date" />
+		<field name="datum" type="date" nullable="true" />
 		<field name="type" type="string" />
 		<field name="title" type="string" />
         <field name="content" type="string" />
