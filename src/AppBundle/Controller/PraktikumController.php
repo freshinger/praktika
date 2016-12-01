@@ -14,7 +14,7 @@ use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 class PraktikumController extends Controller
 {														/* Praktikum Funktionen */
 	
-	/** Einen neuen Praktikumseintrag zwischen Firma und Teilnehmer eintragen
+    /** Einen neuen Praktikumseintrag zwischen Firma und Teilnehmer eintragen
     * @Route("/create/praktikum", name="formpraktikum")
     * @Security("has_role('ROLE_USER')")
     */
@@ -46,7 +46,7 @@ class PraktikumController extends Controller
         ));
     }
 	
-	/** Eine Liste aller Praktikas anzeigen
+    /** Eine Liste aller Praktikas anzeigen
     * @Route("/show/praktikum", name="showpraktikum")
     * @Security("has_role('ROLE_USER')")
     */
@@ -74,9 +74,9 @@ class PraktikumController extends Controller
            ));
     }
 	
-	/** Einen Praktikumseintrag mit Editierfunktion anzeigen
+    /** Einen Praktikumseintrag mit Editierfunktion anzeigen
      * @Route("/edit/praktikum/{id}", name="editpraktikum")
-     * @Security("has_role('ROLE_USER')")
+     * @Security("has_role('ROLE_STAFF')")
      */
     public function editPraktikumAction(Request $request, $id)
     {
@@ -114,7 +114,48 @@ class PraktikumController extends Controller
         ));
     }
 	
-	/** Zeigt eine Liste aller zur Zeit aktiven Praktika an
+    /** Eigenen Praktikumseintrag mit Editierfunktion anzeigen
+     * @Route("/edit/praktikum", name="editmypraktikum")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function editMyPraktikumAction(Request $request)
+    {
+        $uid = $this->get('security.token_storage')->getToken()
+                    ->getUser()->getId();
+        $praktikum = $this->getDoctrine()
+                           ->getRepository('AppBundle:Praktikum')
+                           ->findOneByUser($uid);
+        $form = $this->createForm("AppBundle\Form\PraktikumType", $praktikum);
+		$form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($request->request->has('delete'))
+            {
+                return $this->redirectToRoute('deletepraktikum', array(
+						'id' => $id
+                ));
+            }
+            try {
+            $this->save($praktikum);
+            } catch(UniqueConstraintViolationException $e) {
+                $msg = "Nur ein Praktikum pro User erlaubt!";
+                return $this->render('default/confirm.html.twig', array(
+                                    'message' => $msg
+                ));
+            }
+            return $this->redirectToRoute('editmypraktikum', array(
+					'id' => $id,
+					'message' => "Daten wurden erfolgreich gespeichert!",
+			));
+        }
+	
+        return $this->render('default/form/praktikum.html.twig', array(
+				'praktikum' => $praktikum,
+				'form' => $form->createView(),
+				'message' => $request->query->get('message') 
+        ));
+    }
+    /** Zeigt eine Liste aller zur Zeit aktiven Praktika an
      * @Route("/show/active", name="showactive")
      * @Security("has_role('ROLE_STAFF')")
      */
@@ -133,7 +174,7 @@ class PraktikumController extends Controller
         ));
 	}
 	
-	/** Löschen eines Praktikumeintrags aus der Datenbank
+    /** Löschen eines Praktikumeintrags aus der Datenbank
      * @Route("/delete/praktikum/{id}", name="deletepraktikum")
      * @Security("has_role('ROLE_ADMIN')")
      */
