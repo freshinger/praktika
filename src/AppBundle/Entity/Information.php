@@ -57,6 +57,11 @@ class Information
         return $this->id;
     }
     
+    public function __construct()
+    {
+        $this->datum = new \DateTime();
+    }
+    
     /**
      * Set datum
      *

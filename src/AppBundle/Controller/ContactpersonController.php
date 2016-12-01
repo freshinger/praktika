@@ -28,14 +28,15 @@ class ContactpersonController extends Controller
 		$firma = $this->getDoctrine()
 						->getRepository('AppBundle:Firma')
 						->find($id);
+						
         if($form->isSubmitted() && $form->isValid())
 		{
-            
             $ansprechpartner->setFirma($firma);
 			
             $em = $this->getDoctrine()->getManager();
             $em->persist($ansprechpartner);
             $em->flush();
+			
             $name = $ansprechpartner->getPrename(). " " .$ansprechpartner->getSurname();
             $msg = "Der Ansprechpartner: ".$name." wurde erfolgreich in die Datenbank übertragen!";
             return $this->render('default/confirm.html.twig', array(
