@@ -3,7 +3,11 @@
 Ansprechpartner eintragen
 {% endblock %}
 {% block body %}
-    <h2>Ansprechpartner für {{ firma.name }} eintragen</h2>
+    {% if ansprechpartner is defined %}
+        <h2>Ansprechpartner für {{ ansprechpartner.firma.name }} eintragen</h2>
+    {% else %}
+        <h2>Ansprechpartner für {{ firma.name }} eintragen</h2>
+    {% endif %}
     {{ form_start(form) }}
     <fieldset>
         

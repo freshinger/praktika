@@ -8,11 +8,11 @@
             <generator strategy="AUTO" />
         </id>
 
-        <field name="prename" type="string" />
+        <field name="prename" type="string" nullable="true" />
         <field name="surname" type="string" />
-        <field name="position" type="string" />
-        <field name="phone" type="string" />
-        <field name="email" type="string" />
+        <field name="position" type="string" nullable="true" />
+        <field name="phone" type="string" nullable="true" />
+        <field name="email" type="string" nullable="true" />
         
         <!-- Relationships -->
         <many-to-one field="firma" target-entity="Firma" inversed-by="ansprechpartner">
