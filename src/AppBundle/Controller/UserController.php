@@ -288,4 +288,33 @@ class UserController extends Controller { /* User Funktionen */
                     'form' => $form->createView()
         ));
     } 
+    
+    /** User Rechte ändern
+     * @Route("/edit/rights/{id}", name="changerights")
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function editUserRightsAction(Request $request, $id) {
+        
+        $user = $this->getDoctrine()
+                ->getRepository('AppBundle:User')
+                ->find($id);
+        $form = $this->createForm("AppBundle\Form\UserRightsType", $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+            
+            $msg = "Rechte wurde erfolgreich geändert!";
+            return $this->render('default/confirm.html.twig', array(
+                        'message' => $msg
+            ));
+        }
+
+        return $this->render('edit/rights.html.twig', array(
+                    'user' => $user,
+                    'form' => $form->createView()
+        ));
+    }
 }

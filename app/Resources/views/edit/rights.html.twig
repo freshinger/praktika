@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+{% block title %}Profil{% endblock %}
+{% block header %}Rechtevergabe{% endblock %}
+
+{% block body %} 
+<h2>Rechtevergabe für {{ user.username }}</h2>
+Aktuelle Rechte: 
+{% if user.role == "ROLE_USER" %}
+Benutzer
+{% elseif user.role == "ROLE_STAFF"%}
+Mitarbeiter
+{% else %}
+Administrator
+{% endif %}
+{{ form_start(form) }}
+    <div class="form-group">
+    {{ form_label(form.role, 'Rechte') }}
+    {{ form_widget(form.role) }}
+    {{ form_errors(form.role) }}
+    </div>
+
+<input type="submit" value="speichern" class="btn btn-default">
+{{ form_errors(form) }}
+{{ form_end(form) }}
+{% endblock %}

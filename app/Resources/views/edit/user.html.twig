@@ -80,6 +80,19 @@
         {% else %}
         <a href="{{ path('changepassword') }}">Passwort ändern</a>
         {% endif %}
+        <br>
+        {% if is_granted('ROLE_ADMIN')%}
+        <a href="{{ path('changerights', {'id': user.id}) }}">Rechte ändern</a>
+        <br>
+        {% endif %}
+        Aktuelle Rechte: 
+        {% if user.role == "ROLE_USER" %}
+        Benutzer
+        {% elseif user.role == "ROLE_STAFF"%}
+        Mitarbeiter
+        {% else %}
+        Administrator
+        {% endif %}
     </div>
 </div>
 {% if is_granted('ROLE_USER') %}
