@@ -25,7 +25,10 @@ class InformationController extends Controller
         $form = $this->createForm('AppBundle\Form\InformationType', $information);
 		
         $form->handleRequest($request);
-			
+		$firma = $this->getDoctrine()
+						->getRepository('AppBundle:Firma')
+						->find($id);
+		
         if($form->isSubmitted() && $form->isValid())
 		{
 			$uid = $this->get('security.token_storage')->getToken()
@@ -34,23 +37,22 @@ class InformationController extends Controller
                         ->getRepository('AppBundle:User')
                         ->find($uid);
             $information->setUser($user);
-            $firma = $this->getDoctrine()
-							->getRepository('AppBundle:Firma')
-							->find($id);
             $information->setFirma($firma);
 			
             $em = $this->getDoctrine()->getManager();
             $em->persist($information);
             $em->flush();
-            $name = $firma->getName();
+			
+			$name = $firma->getName();
             $msg = "Die Information für die Firma ".$name." wurde erfolgreich eingetragen!";
             return $this->render('default/confirm.html.twig', array(
-                'message' => $msg
+                'message' => $msg,
             ));
         }
 		
         return $this->render('default/form/information.html.twig', array(
-                'form' => $form->createView()
+                'form' => $form->createView(),
+				'firma' => $firma
         ));
     }
 	

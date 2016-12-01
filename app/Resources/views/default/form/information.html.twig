@@ -3,7 +3,11 @@
 Firmeninformation eintragen
 {% endblock %}
 {% block body %}
-    <h2>Firmeninformation eintragen</h2> 
+    {% if information is defined %}
+        <h2>Information für {{ information.firma.name }} bearbeiten</h2>
+    {% else %}
+        <h2>Information für {{ firma.name }} eintragen</h2>
+    {% endif %}
     {{ form_start(form) }}
     <fieldset>
         <legend>Bitte die Informationen eingeben</legend>
