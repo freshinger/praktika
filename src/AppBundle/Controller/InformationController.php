@@ -38,6 +38,7 @@ class InformationController extends Controller
                         ->find($uid);
             $information->setUser($user);
             $information->setFirma($firma);
+            $information->setDatum(\DateTime::createFromFormat('d-m-Y', date('d-m-Y')));
 			
             $em = $this->getDoctrine()->getManager();
             $em->persist($information);
