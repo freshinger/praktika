@@ -23,7 +23,7 @@ use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 
 class PraktikumController extends Controller {
 
-    /** 
+    /**
      * Create
      * Einen neuen Praktikumseintrag zwischen Firma und Teilnehmer eintragen
      * 
@@ -53,7 +53,7 @@ class PraktikumController extends Controller {
         ));
     }
 
-    /** 
+    /**
      * Read all
      * Eine Liste aller Praktikas anzeigen
      * 
@@ -72,16 +72,24 @@ class PraktikumController extends Controller {
                 ->getRepository('AppBundle:Praktikum')
                 ->findByUser($user);
         } else {
-            $praktika = $this->getDoctrine()
-                ->getRepository('AppBundle:Praktikum')
-                ->findAll();
+            /* $praktika = $this->getDoctrine()
+              ->getRepository('AppBundle:Praktikum')
+              ->findAll(); */
+            $em = $this->getDoctrine()->getManager();
+            $query = $em->createQuery(
+                "SELECT p
+                FROM AppBundle:Praktikum p, AppBundle:User u
+                WHERE IDENTITY(p.user, 'id') = (u.id)
+                ORDER BY u.username ASC"
+            );
+            $praktika = $query->getResult();
         }
         return $this->render('default/praktika.html.twig', array(
             'praktika' => $praktika
         ));
     }
-    
-   /** 
+
+    /**
      * Read active
      * Zeigt eine Liste aller zur Zeit aktiven Praktika an
      * 
@@ -91,18 +99,20 @@ class PraktikumController extends Controller {
     public function showActiveAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery(
-            'SELECT p
-            FROM AppBundle:Praktikum p
+            "SELECT p
+            FROM AppBundle:Praktikum p, AppBundle:User u
             WHERE p.startdatum <= :today
-            AND p.enddatum >= :today')
+            AND p.enddatum >= :today
+            AND IDENTITY(p.user, 'id') = (u.id)
+            ORDER BY u.username ASC")
             ->setParameter('today', new \DateTime());
         $praktika = $query->getResult();
         return $this->render('default/listactive.html.twig', array(
             'praktika' => $praktika
         ));
     }
-    
-    /** 
+
+    /**
      * Update
      * Einen Praktikumseintrag mit Editierfunktion anzeigen
      * 
@@ -141,7 +151,7 @@ class PraktikumController extends Controller {
         ));
     }
 
-    /** 
+    /**
      * Update only oneself
      * Eigenen Praktikumseintrag mit Editierfunktion anzeigen
      * 
@@ -182,7 +192,7 @@ class PraktikumController extends Controller {
         ));
     }
 
-    /** 
+    /**
      * Delete
      * Löschen eines Praktikumeintrags aus der Datenbank
      * 
