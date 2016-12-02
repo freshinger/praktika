@@ -26,16 +26,21 @@ Teilnehmer
     </td>
     <td>
         {% if user.prename is not empty %}
-            {{ user.prename }} 
-        {% elseif user.surname is not empty %}
+            {{ user.prename }}
+        {% endif %}
+        {% if user.surname is not empty %}
             {{ user.surname }}<br>
-        {% elseif user.street is not empty %}
+        {% endif %}
+        {% if user.street is not empty %}
             {{ user.street }}<br>
-        {% elseif user.postcode is not empty %}
-            {{ user.postcode }} 
-        {% elseif user.city is not empty %}
+        {% endif %}
+        {% if user.postcode is not empty %}
+            {{ user.postcode }}
+        {% endif %}
+        {% if user.city is not empty %}
             {{ user.city }}<br>
-        {% elseif user.phone is not empty %}
+        {% endif %}
+        {% if user.phone is not empty %}
             Tel.: {{ user.phone }}
         {% endif %}<br>
         <a href="{{ path('showuser', {'id': user.id}) }}">Daten bearbeiten</a>
