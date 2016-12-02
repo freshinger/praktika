@@ -7,12 +7,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 /*
- *  
+ * Standard Controller zum einloggen.
+ * So von Symfony vorgegeben.
  */
 
 class SecurityController extends Controller {
 
     /**
+     * Login
+     * 
      * @Route("/login", name="login")
      */
     public function loginAction(Request $request) {
@@ -29,5 +32,4 @@ class SecurityController extends Controller {
                     'error' => $error,
         ));
     }
-
 }
