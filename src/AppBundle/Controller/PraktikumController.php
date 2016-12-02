@@ -191,6 +191,21 @@ class PraktikumController extends Controller {
             'message' => $request->query->get('message')
         ));
     }
+    /** Zeigt eine Liste aller zur Zeit aktiven Praktika an
+     * @Route("/show/active", name="showactive")
+     * @Security("has_role('ROLE_STAFF')")
+     */
+    public function showActiveAction(Request $request)
+    {
+		$em = $this->getDoctrine()->getManager();
+		$query = $em->createQuery("SELECT p
+								  FROM AppBundle:Praktikum p, AppBundle:User u
+									WHERE p.startdatum <= :today
+									AND p.enddatum >= :today
+									AND IDENTITY(p.user, 'id') = (u.id)
+									ORDER BY u.username ASC")
+							->setParameter('today', new \DateTime());
+		$praktika = $query->getResult();
 
     /**
      * Delete

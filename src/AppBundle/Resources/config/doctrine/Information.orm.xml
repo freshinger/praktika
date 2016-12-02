@@ -9,8 +9,8 @@
         </id>
 		
 		<field name="datum" type="date" nullable="true" />
-		<field name="type" type="string" />
-		<field name="title" type="string" />
+		<field name="infotype" type="string" />
+		<field name="infotitle" type="string" />
         <field name="content" type="string" />
 		
 		<!-- Relationships -->

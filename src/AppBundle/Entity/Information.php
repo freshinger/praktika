@@ -25,12 +25,12 @@ class Information
     /**
      * @var string
      */
-    private $type;
+    private $infotype;
     
     /**
      * @var string
      */
-    private $title;
+    private $infotitle;
     
     /**
      * @var string
@@ -86,49 +86,49 @@ class Information
     }
     
     /**
-     * Set type
+     * Set infotype
      *
-     * @param string $type
+     * @param string $infotype
      * @return Information
      */
-    public function setType($type)
+    public function setInfotype($infotype)
     {
-        $this->type = $type;
+        $this->infotype = $infotype;
         
         return $this;
     }
 
     /**
-     * Get type
+     * Get infotype
      *
      * @return string 
      */
-    public function getType()
+    public function getInfotype()
     {
-        return $this->type;
+        return $this->infotype;
     }
     
     /**
-     * Set title
+     * Set infotitle
      *
-     * @param string $title
+     * @param string $infotitle
      * @return Information
      */
-    public function setTitle($title)
+    public function setInfotitle($infotitle)
     {
-        $this->title = $title;
+        $this->infotitle = $infotitle;
         
         return $this;
     }
 
     /**
-     * Get title
+     * Get infotitle
      *
      * @return string 
      */
-    public function getTitle()
+    public function getInfotitle()
     {
-        return $this->type;
+        return $this->infotitle;
     }
     
     /**
