@@ -61,7 +61,7 @@ Teilnehmersuche
         <td>
             <ul>
             {% for information in user.information %}
-                <li><a href="{{ path('editinformation', {'id': information.id }) }}">{{ information.title }}</a> vom {{ information.datum|date('d.m.Y') }}</li>
+                <li><a href="{{ path('editinformation', {'id': information.id }) }}">{{ information.infotitle }}</a> vom {{ information.datum|date('d.m.Y') }}</li>
             {% endfor %}
             </ul>
         </td>

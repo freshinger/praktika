@@ -47,7 +47,10 @@ Firmen
                     <li><strong>{{ person.prename }} {{ person.surname }}</strong><br>
                 {% endif %}
                     {{ person.position }}<br>
-                    {{ person.phone }} / {{ person.email }}</li>
+                {% if person.phone is not empty %}
+                    Tel. {{ person.phone }}<br>
+                {% endif %}
+                    {{ person.email }}</li>
             {% endfor %}
             {% if is_granted('ROLE_USER') %}
             <li><a href="{{ path('formcontact', {'id': firma.id}) }}">Neu Hinzufügen</a></li>
@@ -58,9 +61,9 @@ Firmen
             <ul>
             {% for information in firma.information %}
                 {% if is_granted('ROLE_STAFF') %}
-                    <li><a href="{{ path('editinformation', {'id': information.id }) }}">{{ information.title }}</a> vom {{ information.datum|date('d.m.Y') }}</li>
+                    <li><a href="{{ path('editinformation', {'id': information.id }) }}">{{ information.infotitle }}</a> vom {{ information.datum|date('d.m.Y') }}</li>
                 {% else %}
-                    <li><strong>{{ information.title }}</strong> vom {{ information.datum|date('d.m.Y') }}<br>
+                    <li><strong>{{ information.infotitle }}</strong> vom {{ information.datum|date('d.m.Y') }}<br>
                 {% endif %}
                 {{ information.content }}</li>
             {% endfor %}

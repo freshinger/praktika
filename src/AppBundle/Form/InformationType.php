@@ -15,16 +15,17 @@ class InformationType extends AbstractType
     	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$builder
-			->add('type', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', array(
+			->add('infotype', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', array(
                             'choices' => array(
+				'information' => 'Information',
                                 'telefon' => 'Telefongespräch',
+				'persönlich' => 'persönlich',
                                 'email' => 'E-Mailaustausch',
                                 'praktikumsbesuch' => 'Praktikumsbesuch',
-                                'persönlich' => 'persönlich',
                                 'sonst' => 'anderes'
                             )))
 			->add('datum', 'Symfony\Component\Form\Extension\Core\Type\DateType')
-			->add('title', 'Symfony\Component\Form\Extension\Core\Type\TextType')
+			->add('infotitle', 'Symfony\Component\Form\Extension\Core\Type\TextType')
 			->add('content', 'Symfony\Component\Form\Extension\Core\Type\TextareaType', array(
 				'attr' => array('cols' => '50', 'rows' => '6')
 			));

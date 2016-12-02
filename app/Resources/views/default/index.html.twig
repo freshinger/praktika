@@ -58,7 +58,10 @@ Firmensuche
                     <li><strong>{{ person.prename }} {{ person.surname }}</strong><br>
                 {% endif %}
                     {{ person.position }}<br>
-                    {{ person.phone }} / {{ person.email }}</li>
+                {% if person.phone is not empty %}
+                    Tel. {{ person.phone }}<br>
+                {% endif %}
+                    {{ person.email }}</li>
             {% endfor %}
             {% if is_granted('ROLE_USER') %}
             <li><a href="{{ path('formcontact', {'id': firma.id}) }}">Neu Hinzufügen</a></li>
