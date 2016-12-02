@@ -78,7 +78,7 @@ class UserController extends Controller { /* User Funktionen */
     public function showUsersAction(Request $request) {
         $users = $this->getDoctrine()
                 ->getRepository('AppBundle:User')
-                ->findAll();
+                ->findBy(array(), array('username'=>'asc'));
 
         return $this->render('default/listusers.html.twig', array(
                     'users' => $users
@@ -143,7 +143,7 @@ class UserController extends Controller { /* User Funktionen */
 				WHERE u.username LIKE :value
 				OR u.surname LIKE :value
 				OR u.email LIKE :value
-				ORDER BY u.surname ASC"
+				ORDER BY u.username ASC"
 			)->setParameter('value', '%'.$value['searchbar'].'%');
 			$user = $query->getResult();
 			

@@ -63,9 +63,17 @@ class PraktikumController extends Controller
                            ->getRepository('AppBundle:Praktikum')
                            ->findByUser($user);
         } else {
-            $praktika = $this->getDoctrine()
+            /*$praktika = $this->getDoctrine()
                            ->getRepository('AppBundle:Praktikum')
-                           ->findAll();
+                           ->findAll();*/
+			$em = $this->getDoctrine()->getManager();
+			$query = $em->createQuery(
+				"SELECT p
+				FROM AppBundle:Praktikum p, AppBundle:User u
+				WHERE IDENTITY(p.user, 'id') = (u.id)
+				ORDER BY u.username ASC"
+			);
+			$praktika = $query->getResult();
         }
            
 
@@ -162,10 +170,12 @@ class PraktikumController extends Controller
     public function showActiveAction(Request $request)
     {
 		$em = $this->getDoctrine()->getManager();
-		$query = $em->createQuery('SELECT p
-								  FROM AppBundle:Praktikum p
-								  WHERE p.startdatum <= :today
-								  AND p.enddatum >= :today')
+		$query = $em->createQuery("SELECT p
+								  FROM AppBundle:Praktikum p, AppBundle:User u
+									WHERE p.startdatum <= :today
+									AND p.enddatum >= :today
+									AND IDENTITY(p.user, 'id') = (u.id)
+									ORDER BY u.username ASC")
 							->setParameter('today', new \DateTime());
 		$praktika = $query->getResult();
 

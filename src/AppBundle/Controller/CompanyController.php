@@ -51,7 +51,7 @@ class CompanyController extends Controller
     {
         $firmen = $this->getDoctrine()
                         ->getRepository('AppBundle:Firma')
-                        ->findAll();
+                        ->findBy(array(), array('name'=>'asc'));
 		
         return $this->render('default/firmen.html.twig', array(
                 'firmen' => $firmen
